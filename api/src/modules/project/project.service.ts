@@ -3,48 +3,37 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectModel, SequelizeModule } from '@nestjs/sequelize';
-import { Sequelize } from 'sequelize-typescript';
-import { Image } from 'src/models/image.model';
+/* import { InjectModel } from '@nestjs/sequelize'; */
+import { InjectRepository } from '@nestjs/typeorm';
 
-import { Project } from 'src/models/project.model';
-import { Skill } from 'src/models/skill.model';
-import { Tool } from 'src/models/tool.model';
+//Used Models
+import { Project } from 'src/models/project.entity';
+import { Skill } from 'src/models/skill.entity';
+import { Tool } from 'src/models/tool.entity';
+import { Repository } from 'typeorm';
 
-export interface bodyCreate {
-
-  name: string
-  description: string
-  inicio: Date
-  durationDays: number
-  repositoryLink: string
-  deployLink: string
-  relevance: number
-  company: string
-  images: Image[]
-  skills: Skill[]
-  tools: Tool[]
-}
+//DTO
+import { CreateProjectDto, UpdateProjectDto } from './dto';
 
 @Injectable()
 export class ProjectService {
-  constructor(@InjectModel(Project) private project: typeof Project) {}
+  constructor(@InjectRepository(Project) private projectRepository: Repository<Project>) {}
 
-  async getAll() {
+  async getAll(): Promise<Project[] | NotFoundException | InternalServerErrorException> {
     try {
-      let allProject: Project[] = await this.project.findAll();
+      let allProject: Project[] = await this.projectRepository.find();
       if (allProject.length < 1) {
         return new NotFoundException('Empty List');
       }
       return allProject;
     } catch (error) {
-      return new InternalServerErrorException('Database Error');
+      return new InternalServerErrorException('Database Error');  //Error nest with error server
     }
   }
 
-  async getOne(id: string) {
+  async getOne(id: string): Promise<Project[] | NotFoundException | InternalServerErrorException> {
     try {
-      let oneProject: Project[] = await this.project.findAll();
+      let oneProject: Project[] = await this.projectRepository.find();
       if (oneProject.length < 1) {
         return new NotFoundException('Empty List');
       }
@@ -54,19 +43,39 @@ export class ProjectService {
     }
   }
 
-  async createProject(body: Project) {
+  async createProject(body: CreateProjectDto) {
     try {
-      const newProject = new this.project(body)
+      const newProject = await this.projectRepository.create(body)
+      await this.projectRepository.save(newProject)
+      
       /**
        * Agregar imagenes
        * Agregar Skills
        * Agregar Tools
        */
-      await newProject.save()
       return newProject
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
   }
 
+  async updateProject(id: string, body: UpdateProjectDto) {
+    try {
+      //PRELOAD   busca y actualiza, hace un merge
+      const modifiedProyect = this.projectRepository.find()
+      let proyect = await this.projectRepository.find()
+      return proyect
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+  }
+
+  async deleteProject(id: string): Promise<"SE ELIMINO CORRECTAMENTE" | InternalServerErrorException> {
+    try {
+      const deleteProject = await this.projectRepository.delete(id)
+      return "SE ELIMINO CORRECTAMENTE"
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+  }
 }
