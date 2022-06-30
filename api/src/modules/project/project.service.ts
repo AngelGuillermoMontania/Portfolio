@@ -3,7 +3,6 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-/* import { InjectModel } from '@nestjs/sequelize'; */
 import { InjectRepository } from '@nestjs/typeorm';
 
 //Used Models
@@ -14,6 +13,19 @@ import { Repository } from 'typeorm';
 
 //DTO
 import { CreateProjectDto, UpdateProjectDto } from './dto';
+
+import fs, { access } from 'fs'
+import 'dotenv/config'
+import { S3Client, CreateBucketCommand } from '@aws-sdk/client-s3';
+
+
+const client = new S3Client({
+  region: process.env.AWS_BUCKET_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCES_KEY || "",
+    secretAccessKey: process.env.AWS_PRIVATE_KEY || ""
+  }
+});
 
 @Injectable()
 export class ProjectService {
@@ -43,13 +55,26 @@ export class ProjectService {
     }
   }
 
-  async createProject(body: CreateProjectDto) {
+  async createProject(body: CreateProjectDto, files: Array<Express.Multer.File>) {
     try {
-      const newProject = await this.projectRepository.create(body)
-      await this.projectRepository.save(newProject)
+      const newProject = this.projectRepository.create(body)  //Create the project
+      await this.projectRepository.save(newProject)   //Save the project
+
+      /* Init load images S3 */
+      let listResponse = []
+      files.forEach(async element => {
+        const fileStream = fs.createReadStream(element.path)
+        const bucketParams = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Body: fileStream,
+          Key: element.filename
+        };
       
+        listResponse.push(await client.send(new CreateBucketCommand(bucketParams)))
+      })
+      /* Finish load images S3 */
+
       /**
-       * Agregar imagenes
        * Agregar Skills
        * Agregar Tools
        */

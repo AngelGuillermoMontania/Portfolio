@@ -9,7 +9,10 @@ import {
   Post,
   Put,
   Query,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { Repository } from 'sequelize-typescript';
 import { Project } from 'src/models/project.entity';
 import { CreateProjectDto, UpdateProjectDto } from './dto';
@@ -35,8 +38,9 @@ export class ProjectController {
   }
 
   @Post() //o tambien Put
-  createProject(@Body() body: CreateProjectDto) {
-    return this.projectService.createProject(body)
+  @UseInterceptors(FilesInterceptor('files'))
+  createProject(@Body() body: CreateProjectDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+    return this.projectService.createProject(body, files)
   }
 
   @Put(':id')
