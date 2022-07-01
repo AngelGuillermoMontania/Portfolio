@@ -3,19 +3,18 @@ import { Project } from './project.entity';
 
 @Entity()
 export class Tool {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @Column()
+  name: string;
 
-    @Column()
-    name: string
+  @Column('simple-array')
+  image: string[];
 
-    @Column("simple-array")
-    image: string[]
+  @Column()
+  nivel: string;
 
-    @Column()
-    nivel: string
-
-    @ManyToMany(() => Project, (project) => project.skills)
-    projects: Project[]
+  @ManyToMany(() => Project, (project) => project.skills)
+  projects: Project[];
 }

@@ -9,11 +9,13 @@ async function bootstrap() {
   } */,
   );
 
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,   //Transform all requests into dto
-    whitelist: true,   //Detect unnecessary past data
-    forbidNonWhitelisted: true    //Returns a error with information about the data passed that is not necessary
-  }))
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true, //Transform all requests into dto
+      whitelist: true, //Detect unnecessary past data
+      forbidNonWhitelisted: true, //Returns a error with information about the data passed that is not necessary
+    }),
+  );
 
   await app.listen(3001);
 }

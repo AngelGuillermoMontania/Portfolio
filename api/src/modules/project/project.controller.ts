@@ -15,7 +15,7 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Repository } from 'sequelize-typescript';
 import { Project } from 'src/models/project.entity';
-import { CreateProjectDto, UpdateProjectDto } from './dto';
+import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
 import { ProjectService } from './project.service';
 
 interface Order {
@@ -27,29 +27,36 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Get()
-  getProjects(/* @Query() query: Order */): Promise<Project[] | InternalServerErrorException> {
+  getProjects(/* @Query() query: Order */): Promise<
+    Project[] | InternalServerErrorException
+  > {
     //Si quito
     return this.projectService.getAll();
   }
 
   @Get(':id')
-  getOneProject(@Param('id') id: string): Promise<NotFoundException | Project[] | InternalServerErrorException> {
+  getOneProject(@Param('id') id: string) {
     return this.projectService.getOne(id);
   }
 
   @Post() //o tambien Put
   @UseInterceptors(FilesInterceptor('files'))
-  createProject(@Body() body: CreateProjectDto, @UploadedFiles() files: Array<Express.Multer.File>) {
-    return this.projectService.createProject(body, files)
+  createProject(
+    @Body() body: CreateUpdateProjectDto,
+    @UploadedFiles() files: Array<Express.Multer.File>,
+  ) {
+    return this.projectService.createProject(body, files);
   }
 
   @Put(':id')
-  editProject(@Param('id') id: string, @Body() body: UpdateProjectDto) {
+  editProject(@Param('id') id: string, @Body() body: CreateUpdateProjectDto) {
     return this.projectService.updateProject(id, body);
   }
 
   @Delete(':id')
-  destroyProject(@Param('id') id: string):Promise<"SE ELIMINO CORRECTAMENTE" | InternalServerErrorException> {
+  destroyProject(
+    @Param('id') id: string,
+  ): Promise<'SE ELIMINO CORRECTAMENTE' | InternalServerErrorException> {
     return this.projectService.deleteProject(id);
   }
 }

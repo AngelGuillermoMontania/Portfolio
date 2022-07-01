@@ -2,20 +2,18 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Reference {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @Column()
+  link: string;
 
-    @Column()
-    link: string
+  @Column()
+  name: string;
 
-    @Column()
-    name: string
+  @Column()
+  message: string;
 
-    @Column()
-    message: string
-
-    @Column()
-    image: string
-
+  @Column()
+  image: string;
 }

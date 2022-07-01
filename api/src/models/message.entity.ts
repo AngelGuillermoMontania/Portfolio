@@ -2,17 +2,15 @@ import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Message {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @Column()
+  title: string;
 
-    @Column()
-    title: string
+  @Column()
+  body: string;
 
-    @Column()
-    body: string
-
-    @Column()
-    email: string
-
+  @Column()
+  email: string;
 }
