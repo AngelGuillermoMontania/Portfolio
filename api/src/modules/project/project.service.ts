@@ -14,7 +14,7 @@ import { Repository } from 'typeorm';
 //DTO
 import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
 
-import fs, { access } from 'fs';
+import fs from 'fs';
 import 'dotenv/config';
 import { S3Client, CreateBucketCommand } from '@aws-sdk/client-s3';
 
@@ -32,7 +32,7 @@ export class ProjectService {
     @InjectRepository(Project) private projectRepository: Repository<Project>,
   ) {}
 
-  async getAll(): Promise<
+  async getAllProjects(): Promise<
     Project[] | NotFoundException | InternalServerErrorException
   > {
     try {
@@ -46,7 +46,7 @@ export class ProjectService {
     }
   }
 
-  async getOne(id: string) {
+  async getOneProject(id: string) {
     try {
       let oneProject = await this.projectRepository.findOne({
         where: {
@@ -94,7 +94,7 @@ export class ProjectService {
     }
   }
 
-  async updateProject(id: string, body: CreateUpdateProjectDto) {
+  async editProject(id: string, body: CreateUpdateProjectDto) {
     try {
       //PRELOAD   busca y actualiza, hace un merge
       const modifiedProyect = this.projectRepository.find();

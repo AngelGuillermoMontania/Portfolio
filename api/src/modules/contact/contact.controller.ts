@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+
 import { ContactService } from './contact.service';
 import { CreateUpdateContactDto } from './dto/create-update-contact.dto';
 
@@ -8,7 +9,7 @@ export class ContactController {
 
   @Get()
   getContact() {
-    return this.contactService.theContact();
+    return this.contactService.getTheContact();
   }
 
   @Post()
@@ -18,6 +19,6 @@ export class ContactController {
 
   @Put()
   putContact(@Body() body: CreateUpdateContactDto) {
-    this.contactService.updateContact(body);
+    this.contactService.editContact(body);
   }
 }

@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+
 import { AboutService } from './about.service';
 import { CreateUpdateAboutDto } from './dto/create-update-about.dto';
 
@@ -8,7 +9,7 @@ export class AboutController {
 
   @Get()
   getAbout() {
-    return this.aboutService.theAbout();
+    return this.aboutService.getTheAbout();
   }
 
   @Post()
@@ -18,6 +19,6 @@ export class AboutController {
 
   @Put()
   putAbout(@Body() body: CreateUpdateAboutDto) {
-    return this.aboutService.updateAbout(body);
+    return this.aboutService.editAbout(body);
   }
 }

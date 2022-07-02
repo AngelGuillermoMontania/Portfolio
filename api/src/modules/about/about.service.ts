@@ -1,7 +1,8 @@
 import { Body, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { About } from 'src/models/about.entity';
+
 import { Repository } from 'typeorm';
+import { About } from 'src/models/about.entity';
 import { CreateUpdateAboutDto } from './dto/create-update-about.dto';
 
 @Injectable()
@@ -10,7 +11,7 @@ export class AboutService {
     @InjectRepository(About) private aboutRepository: Repository<About>,
   ) {}
 
-  async theAbout() {
+  async getTheAbout() {
     try {
       const about = await this.aboutRepository.find();
       return about[0];
@@ -29,7 +30,7 @@ export class AboutService {
     }
   }
 
-  async updateAbout(body: CreateUpdateAboutDto) {
+  async editAbout(body: CreateUpdateAboutDto) {
     try {
       const aboutSearch = await this.aboutRepository.find();
       const about = await this.aboutRepository.update(

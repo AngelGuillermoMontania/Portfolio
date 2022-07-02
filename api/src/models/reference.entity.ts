@@ -6,9 +6,6 @@ export class Reference {
   id: string;
 
   @Column()
-  link: string;
-
-  @Column()
   name: string;
 
   @Column()

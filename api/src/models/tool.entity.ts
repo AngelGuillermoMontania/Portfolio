@@ -9,8 +9,8 @@ export class Tool {
   @Column()
   name: string;
 
-  @Column('simple-array')
-  image: string[];
+  @Column()
+  image: string;
 
   @Column()
   nivel: string;

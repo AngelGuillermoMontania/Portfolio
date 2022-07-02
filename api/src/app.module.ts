@@ -18,6 +18,13 @@ import 'dotenv/config';
 import { User } from './models/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ContactModule } from './modules/contact/contact.module';
+import { MessageModule } from './modules/message/message.module';
+import { ReferenceModule } from './modules/reference/reference.module';
+import { ResumeModule } from './modules/resume/resume.module';
+import { SkillModule } from './modules/skill/skill.module';
+import { SoftSkillModule } from './modules/soft-skill/soft.module';
+import { ToolModule } from './modules/tool/tool.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -47,6 +54,13 @@ import { ContactModule } from './modules/contact/contact.module';
     ProjectModule,
     AboutModule,
     ContactModule,
+    MessageModule,
+    ReferenceModule,
+    ResumeModule,
+    SkillModule,
+    SoftSkillModule,
+    ToolModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
