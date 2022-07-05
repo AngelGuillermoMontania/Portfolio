@@ -6,9 +6,11 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { storageMulter } from 'src/configMulter';
 
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
 import { ToolService } from './tool.service';
@@ -22,10 +24,17 @@ export class ToolController {
     this.toolService.getAllTool();
   }
 
+  @Post('image')
+  @UseInterceptors(FileInterceptor('file', {
+    storage: storageMulter
+  }))
+  postImageTool(@UploadedFile() file: Express.Multer.File) {
+    return this.toolService.createImageTool(file);
+  }
+
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  postSkill(@Body() body: CreateUpdateToolDto, file: Express.Multer.File) {
-    this.toolService.createTool(body, file);
+  postDataTool(@Body() body: CreateUpdateToolDto) {
+    return this.toolService.createDataTool(body);
   }
 
   @Put()

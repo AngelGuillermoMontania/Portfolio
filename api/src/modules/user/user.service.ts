@@ -12,13 +12,10 @@ export class UserService {
 
   async userExist(email: string) {
     try {
-      const user = this.userRepository.findBy({
-        email,
+      const user = await this.userRepository.find({
+        where: {email},
       });
-      return {
-        ...user,
-        exist: true,
-      };
+      return user;
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }

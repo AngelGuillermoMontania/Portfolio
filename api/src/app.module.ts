@@ -22,7 +22,7 @@ import { MessageModule } from './modules/message/message.module';
 import { ReferenceModule } from './modules/reference/reference.module';
 import { ResumeModule } from './modules/resume/resume.module';
 import { SkillModule } from './modules/skill/skill.module';
-import { SoftSkillModule } from './modules/soft-skill/soft.module';
+import { SoftModule } from './modules/soft/soft.module';
 import { ToolModule } from './modules/tool/tool.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -35,8 +35,8 @@ import { UserModule } from './modules/user/user.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: 'portfolio',
-      synchronize: true,
-      autoLoadEntities: true, //Automatic Load Models Database
+      /* synchronize: true,
+      autoLoadEntities: true, //Automatic Load Models Database */
       logging: false,
       entities: [
         Project,
@@ -58,7 +58,7 @@ import { UserModule } from './modules/user/user.module';
     ReferenceModule,
     ResumeModule,
     SkillModule,
-    SoftSkillModule,
+    SoftModule,
     ToolModule,
     UserModule,
   ],

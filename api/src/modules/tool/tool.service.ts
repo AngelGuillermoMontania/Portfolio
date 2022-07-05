@@ -5,8 +5,8 @@ import { Repository } from 'typeorm';
 import { Tool } from 'src/models/tool.entity';
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
 
-import { S3Client, CreateBucketCommand } from '@aws-sdk/client-s3';
-import fs from 'fs';
+import { S3Client, CreateBucketCommand, PutObjectCommand } from '@aws-sdk/client-s3';
+import fs, { createReadStream } from 'fs';
 import 'dotenv/config';
 
 const client = new S3Client({
@@ -32,26 +32,36 @@ export class ToolService {
     }
   }
 
-  async createTool(body: CreateUpdateToolDto, file: Express.Multer.File) {
-    /* Init load images S3 */
-    let listImage = [];
-    let fileStream = fs.createReadStream(file.path);
-    const bucketParams = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Body: file.stream,
-      Key: file.filename,
-    };
-    listImage.push(await client.send(new CreateBucketCommand(bucketParams)));
+  async createImageTool(file: Express.Multer.File) {
+    const fileStream = createReadStream(file.path)
+    try {   
+      /* Init load images S3 */
+      let listImage = [];
+      const bucketParams = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Body: fileStream,
+        Key: file.filename,
+      };
+      console.log(bucketParams)
+      listImage.push(await client.send(new PutObjectCommand(bucketParams)));
+      return {
+        name: file.filename
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+    
+  }
 
-    /* console.log(listImage) */
-
-    /* Finish load images S3 */
-    /* const newSkill = this.skillRepository.create({
-            ...body,
-            image: listImage[0]
-        }) 
-        this.skillRepository.save(newSkill)
-        */
+  async createDataTool(body: CreateUpdateToolDto) {
+    try {
+      const newTool = this.toolRepository.create(body)
+      await this.toolRepository.save(body)
+      return newTool
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+    
   }
 
   async editTool(

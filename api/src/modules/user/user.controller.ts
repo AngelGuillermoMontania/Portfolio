@@ -8,11 +8,11 @@ export class UserController {
 
   @Get()
   getUser(@Query('email') email: string) {
-    this.userService.userExist(email);
+    return this.userService.userExist(email);
   }
 
   @Post()
   postUser(@Query('email') email: string) {
-    this.userService.createUser(email);
+    return this.userService.createUser(email);
   }
 }

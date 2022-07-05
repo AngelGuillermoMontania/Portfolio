@@ -8,6 +8,8 @@ async function bootstrap() {
     logger: false
   } */,
   );
+  
+  app.enableCors()
 
   app.useGlobalPipes(
     new ValidationPipe({
