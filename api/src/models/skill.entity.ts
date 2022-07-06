@@ -13,7 +13,7 @@ export class Skill {
   image: string;
 
   @Column()
-  nivel: string;
+  level: string;
 
   @ManyToMany(() => Project, (project) => project.skills)
   projects: Project[];

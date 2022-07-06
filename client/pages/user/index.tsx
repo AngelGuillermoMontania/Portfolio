@@ -3,30 +3,44 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { useUser } from '@auth0/nextjs-auth0'
+import { props } from '../../components/user/Button'
+
+import Button from '../../components/user/Button'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import Router, { useRouter } from 'next/router'
 
 const Home: NextPage = () => {
 
-  const { user, error } = useUser()
 
-  console.log(error)
+  //ELIMINAR JWT DESDE SESSIONSTORAGE
+
+  const [ userDB, setUserDB ] = useState<boolean>(false)
+  const router = useRouter()
+
+ /*  useEffect(() => {
+    if(user) {
+      axios(`http://localhost:3001/user?email=${user.email}`)
+        .then(data => setUserDB(data.data.exist))
+    }
+  }, [user]) */
+
+  console.log(userDB)
+
   return (
-    <div>
+    <div className="bg-slate-900 h-screen">
       <Head>
         <title>Angel Guillermo Montaña</title>
       </Head>
       {
-        user ? 
-          <div className="flex justify-center py-4">
-            <Link href={"/user/tool"}>
-              <button className="bg-blue-600 p-4 rounded-xl">
-                <h2>Create Tool</h2>
-              </button>
-            </Link>
+
+          <div>
+            <div className="flex justify-around items-center py-4">
+              <Button title={"Tool"} href={"/user/tool"}/>
+            </div>
+            <a href="/api/auth/logout" className="text-white bg-red-600 p-2">LogOut</a>
           </div>
-        : <a href='/api/auth/login'>Login</a>
       }
-      
     </div>
   )
 }

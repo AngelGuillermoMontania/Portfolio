@@ -25,6 +25,8 @@ import { SkillModule } from './modules/skill/skill.module';
 import { SoftModule } from './modules/soft/soft.module';
 import { ToolModule } from './modules/tool/tool.module';
 import { UserModule } from './modules/user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -35,8 +37,8 @@ import { UserModule } from './modules/user/user.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: 'portfolio',
-      /* synchronize: true,
-      autoLoadEntities: true, //Automatic Load Models Database */
+      synchronize: true,
+      autoLoadEntities: true, //Automatic Load Models Database
       logging: false,
       entities: [
         Project,
@@ -61,8 +63,9 @@ import { UserModule } from './modules/user/user.module';
     SoftModule,
     ToolModule,
     UserModule,
+    AuthModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

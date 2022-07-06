@@ -8,5 +8,5 @@ export class CreateUpdateSkillDto {
   readonly image: string;
 
   @IsString()
-  readonly nivel: string;
+  readonly level: string;
 }

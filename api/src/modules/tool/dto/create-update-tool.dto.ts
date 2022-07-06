@@ -8,5 +8,5 @@ export class CreateUpdateToolDto {
   readonly image: string;
 
   @IsString()
-  readonly nivel: string;
+  readonly level: string;
 }

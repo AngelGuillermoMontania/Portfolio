@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 
 import { AboutService } from './about.service';
 import { CreateUpdateAboutDto } from './dto/create-update-about.dto';
@@ -21,4 +21,6 @@ export class AboutController {
   putAbout(@Body() body: CreateUpdateAboutDto) {
     return this.aboutService.editAbout(body);
   }
+
+  
 }
