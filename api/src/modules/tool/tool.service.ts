@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { Tool } from 'src/models/tool.entity';
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
 
-import { S3Client, CreateBucketCommand, PutObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteBucketCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import fs, { createReadStream } from 'fs';
 import 'dotenv/config';
 
@@ -36,22 +36,37 @@ export class ToolService {
   async createImageTool(file: Express.Multer.File) {
     const fileStream = createReadStream(file.path)
     try {   
-      /* Init load images S3 */
       let listImage = [];
       const bucketParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
         Body: fileStream,
         Key: file.filename,
       };
-      console.log(bucketParams)
       listImage.push(await client.send(new PutObjectCommand(bucketParams)));
       return {
         name: file.filename
       }
     } catch (error) {
-      console.log(error.message)
+      return new InternalServerErrorException('Database Error/S3')
     }
     
+  }
+
+  async destroyImageTool(id: string) {
+    try {
+      const deleteImageTool = await this.toolRepository.findOneBy({id})
+      let listImage = [];
+        const bucketParams = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: deleteImageTool?.image,
+        };
+        listImage.push(await client.send(new DeleteObjectCommand(bucketParams)));
+        return {
+          name: deleteImageTool?.image
+        }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
   }
 
   async createDataTool(body: CreateUpdateToolDto) {
@@ -67,31 +82,20 @@ export class ToolService {
 
   async editTool(
     body: CreateUpdateToolDto,
-    file: Express.Multer.File,
     id: string,
   ) {
-    if (file) {
-      /* Delete image S3 */
-      /* Init load images S3 */
-      let listImage = [];
-      let fileStream = fs.createReadStream(file.path);
-      const bucketParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Body: file.stream,
-        Key: file.filename,
-      };
-      listImage.push(await client.send(new CreateBucketCommand(bucketParams)));
-
-      /* console.log(listImage) */
-
-      /* Finish load images S3 */
+    try {
+      const newToolEdit = await this.toolRepository.update({
+        id
+      }, body)
+      const toolEdit = await this.toolRepository.findOne({where: {
+        id
+      }})
+      return toolEdit
+    } catch (error) {
+      return new InternalServerErrorException("Database Error")
     }
-    /* const newSkill = this.skillRepository.create({
-            ...body,
-            image: listImage[0]
-        }) 
-        this.skillRepository.save(newSkill)
-        */
+    
   }
 
   async destroyTool(id: string) {

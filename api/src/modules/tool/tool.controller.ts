@@ -7,10 +7,12 @@ import {
   Put,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storageMulter } from 'src/configMulter';
+import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
 import { ToolService } from './tool.service';
@@ -21,9 +23,10 @@ export class ToolController {
 
   @Get()
   getAll() {
-    this.toolService.getAllTool();
+    return this.toolService.getAllTool();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('image')
   @UseInterceptors(FileInterceptor('file', {
     storage: storageMulter
@@ -32,21 +35,28 @@ export class ToolController {
     return this.toolService.createImageTool(file);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Delete('image')
+  DeleteImageTool(@Query('id') id: string) {
+    return this.toolService.destroyImageTool(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
   postDataTool(@Body() body: CreateUpdateToolDto) {
     return this.toolService.createDataTool(body);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put()
-  @UseInterceptors(FileInterceptor('file'))
   putSkill(
     @Body() body: CreateUpdateToolDto,
-    file: Express.Multer.File,
-    @Query('id') id: string,
+    @Query('id') id: string
   ) {
-    this.toolService.editTool(body, file, id);
+    return this.toolService.editTool(body, id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete()
   deleteSkill(@Query('id') id: string) {
     this.toolService.destroyTool(id);

@@ -4,12 +4,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import CreateTool from '../../../components/user/tool/createTool'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+
 import ButtonLogout from '../../../components/user/ButtonLogout'
-import EditTool from '../../../components/user/tool/editTool'
-import DeleteTool from '../../../components/user/tool/deleteTool'
+import CreateSkill from '../../../components/user/skill/createSkill'
+/* import EditSkill from '../../../components/user/tool/editSkill'
+import DeleteSkill from '../../../components/user/tool/deleteSkill' */
 
 class tools {
   "id": string
@@ -18,10 +19,10 @@ class tools {
   "level": string
 }
 
-const Tool: NextPage = () => {
+const Skill: NextPage = () => {
 
   const [userDB, setUserDB] = useState<boolean>(false)
-  const [allTools, setAllTools] = useState<Array<tools>>([])
+  const [allSkills, setAllSkills] = useState<Array<tools>>([])
 
   const [token, setToken] = useState<boolean>(false)
 
@@ -30,9 +31,9 @@ const Tool: NextPage = () => {
     if (Token) {
       setToken(!token)
     }
-    axios("http://localhost:3001/tool", {
+    axios("http://localhost:3001/skill", {
       headers: { "Authorization": `Bearer ${token}` }
-    }).then(data => setAllTools(data.data))
+    }).then(data => setAllSkills(data.data))
   }, [])
 
   return (
@@ -49,9 +50,9 @@ const Tool: NextPage = () => {
               </p>
             </Link>
             <div className='h-5/6'>
-              <CreateTool token={sessionStorage.getItem("Token")} allTools={allTools} />
-              <EditTool token={sessionStorage.getItem("Token")} allTools={allTools} />
-              <DeleteTool token={sessionStorage.getItem("Token")} allTools={allTools} />
+              <CreateSkill token={sessionStorage.getItem("Token")} allSkills={allSkills} />
+{/*               <EditTool token={sessionStorage.getItem("Token")} allTools={allTools} />
+              <DeleteTool token={sessionStorage.getItem("Token")} allTools={allTools} /> */}
             </div>
             <ButtonLogout />
           </div> : <div>Not authorized</div>
@@ -62,4 +63,4 @@ const Tool: NextPage = () => {
   )
 }
 
-export default Tool
+export default Skill

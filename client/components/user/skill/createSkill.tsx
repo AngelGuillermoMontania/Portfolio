@@ -7,39 +7,39 @@ import axios from 'axios'
 
 class props {
     "token": string | null
-    "allTools": Array<Object>
+    "allSkills": Array<Object>
   }
 
 function CreateTool (props: props) {
 
-    const [dataTool, setDataTool] = useState<Object>({
+    const [dataSkill, setDataSkill] = useState<Object>({
         name: "",
         level: "",
     })
-    const [imageTool, setImageTool] = useState<File>(new File([], "new"))
+    const [imageSkill, setImageSkill] = useState<File>(new File([], "new"))
 
-    const handleTool = (event: ChangeEvent<HTMLInputElement>): void => {
-        setDataTool({
-            ...dataTool,
+    const handleSkill = (event: ChangeEvent<HTMLInputElement>): void => {
+        setDataSkill({
+            ...dataSkill,
             [event.target.name]: event.target.value
         })
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
-        event.target.files && setImageTool(event.target.files[0])
+        event.target.files && setImageSkill(event.target.files[0])
     }
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
             const formDataImage: FormData = new FormData()
-            formDataImage.append("file", imageTool)
-            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3001/tool/image`, formDataImage, {
+            formDataImage.append("file", imageSkill)
+            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3001/skill/image`, formDataImage, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             const nameImageS3: string = postImage.data.name
-            const postDataTool: Object = await axios.post("http://localhost:3001/tool", {
-                ...dataTool,
+            const postDataSkill: Object = await axios.post("http://localhost:3001/skill", {
+                ...dataSkill,
                 image: nameImageS3
             }, {
                 headers: {"Authorization": `Bearer ${props.token}`}
@@ -53,20 +53,20 @@ function CreateTool (props: props) {
     return (
       
             <div className="h-1/3 flex flex-col items-center justify-center">
-                <p className="text-white text-xl">CREATE TOOL:</p>
+                <p className="text-white text-xl">CREATE SKILL:</p>
                 <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
                     <input
                         type="text"
                         placeholder="Name"
                         name="name"
-                        onChange={e => handleTool(e)}
+                        onChange={e => handleSkill(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input
                         type="text"
                         placeholder="Level de 0 a 10"
                         name="level"
-                        onChange={e => handleTool(e)}
+                        onChange={e => handleSkill(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input

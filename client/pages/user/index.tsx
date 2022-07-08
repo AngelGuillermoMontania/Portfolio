@@ -2,47 +2,42 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-import { props } from '../../components/user/Button'
-
-import Button from '../../components/user/Button'
+import CreateTool from '../../components/user/tool/createTool'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import Router, { useRouter } from 'next/router'
+import ButtonOption from '../../components/user/ButtonOption'
+import ButtonLogout from '../../components/user/ButtonLogout'
 
 const Home: NextPage = () => {
 
-
-  //ELIMINAR JWT DESDE SESSIONSTORAGE
-
-  const [ userDB, setUserDB ] = useState<boolean>(false)
   const router = useRouter()
+  const [ token, setToken ] = useState<boolean>(false)
 
- /*  useEffect(() => {
-    if(user) {
-      axios(`http://localhost:3001/user?email=${user.email}`)
-        .then(data => setUserDB(data.data.exist))
+  useEffect(() => {
+    const Token = sessionStorage.getItem("Token")
+    if(Token) {
+      setToken(!token)
     }
-  }, [user]) */
-
-  console.log(userDB)
+  },[])
 
   return (
     <div className="bg-slate-900 h-screen">
-      <Head>
-        <title>Angel Guillermo Montaña</title>
-      </Head>
       {
-
-          <div>
-            <div className="flex justify-around items-center py-4">
-              <Button title={"Tool"} href={"/user/tool"}/>
-            </div>
-            <a href="/api/auth/logout" className="text-white bg-red-600 p-2">LogOut</a>
+        token ? 
+        <div>
+          <div className='flex flex-wrap w-full p-4 justify-around items-center'>
+            <ButtonOption href='/user/tool' title='Tool' />
+            <ButtonOption href='/user/skill' title='Skill' />
           </div>
+          <ButtonLogout />
+        </div> : <div>Not authorized</div>
       }
     </div>
   )
+    
+  
 }
 
 export default Home
