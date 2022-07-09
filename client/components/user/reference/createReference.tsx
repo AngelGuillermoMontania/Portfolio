@@ -7,36 +7,38 @@ class props {
     "token": string | null
   }
 
-function CreateTool (props: props) {
+function CreateReference (props: props) {
 
-    const [dataTool, setDataTool] = useState<Object>({
+    const [dataReference, setDataReference] = useState<Object>({
         name: "",
-        level: "",
+        message: "",
     })
-    const [imageTool, setImageTool] = useState<File>(new File([], "new"))
+    const [imageReference, setImageReference] = useState<File>(new File([], "new"))
 
-    const handleTool = (event: ChangeEvent<HTMLInputElement>): void => {
-        setDataTool({
-            ...dataTool,
+    const handleReference = (event: ChangeEvent<HTMLInputElement>): void => {
+        setDataReference({
+            ...dataReference,
             [event.target.name]: event.target.value
         })
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
-        event.target.files && setImageTool(event.target.files[0])
+        event.target.files && setImageReference(event.target.files[0])
     }
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
             const formDataImage: FormData = new FormData()
-            formDataImage.append("file", imageTool)
-            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3001/tool/image`, formDataImage, {
+            formDataImage.append("file", imageReference)
+            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3001/reference/image`, formDataImage, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             const nameImageS3: string = postImage.data.name
-            const postDataTool: Object = await axios.post("http://localhost:3001/tool", {
-                ...dataTool,
+            console.log(dataReference)
+            console.log(nameImageS3)
+            const postDataReference = await axios.post("http://localhost:3001/reference", {
+                ...dataReference,
                 image: nameImageS3
             }, {
                 headers: {"Authorization": `Bearer ${props.token}`}
@@ -56,14 +58,14 @@ function CreateTool (props: props) {
                         type="text"
                         placeholder="Name"
                         name="name"
-                        onChange={e => handleTool(e)}
+                        onChange={e => handleReference(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input
                         type="text"
-                        placeholder="Level de 0 a 10"
-                        name="level"
-                        onChange={e => handleTool(e)}
+                        placeholder="message"
+                        name="message"
+                        onChange={e => handleReference(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input
@@ -81,4 +83,4 @@ function CreateTool (props: props) {
 
 }
 
-export default CreateTool
+export default CreateReference

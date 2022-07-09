@@ -3,7 +3,7 @@ import Router from 'next/router'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
 
-class tools {
+class skills {
     "id": string
     "name": string
     "image": string
@@ -12,51 +12,51 @@ class tools {
 
 class props {
     "token": string | null
-    "allTools": Array<tools>
+    "allSkills": Array<skills>
   }
 
-function EditTool (props: props) {
+function EditSkill (props: props) {
 
-    const [dataTool, setDataTool] = useState<Object>({
+    const [dataSkill, setDataSkill] = useState<Object>({
         name: "",
         level: "",
     })
-    const [toolSelect, setToolSelect] = useState<string>("")
+    const [skillSelect, setSkillSelect] = useState<string>("")
     
-    const [imageTool, setImageTool] = useState<File>(new File([], "new"))
+    const [imageSkill, setImageSkill] = useState<File>(new File([], "new"))
 
-    const handleTool = (event: ChangeEvent<HTMLInputElement>): void => {
-        setDataTool({
-            ...dataTool,
+    const handleSkill = (event: ChangeEvent<HTMLInputElement>): void => {
+        setDataSkill({
+            ...dataSkill,
             [event.target.name]: event.target.value
         })
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
-        event.target.files && setImageTool(event.target.files[0])
+        event.target.files && setImageSkill(event.target.files[0])
     }
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         let postImage
         try {
-            if(imageTool.size === 0) {
+            if(imageSkill.size === 0) {
                 postImage = {
-                    data: props.allTools.find(elem => elem.id === toolSelect)
+                    data: props.allSkills.find(elem => elem.id === skillSelect)
                 }
             } else {
-                await axios.delete(`http://localhost:3001/tool/image?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
+                await axios.delete(`http://localhost:3001/skill/image?id=${props.allSkills.find(elem => elem.id === skillSelect)?.id}`, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
                 const formDataImage: FormData = new FormData()
-                formDataImage.append("file", imageTool)
-                postImage = await axios.post(`http://localhost:3001/tool/image`, formDataImage, {
+                formDataImage.append("file", imageSkill)
+                postImage = await axios.post(`http://localhost:3001/skill/image`, formDataImage, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
-            const postDataTool = await axios.put(`http://localhost:3001/tool?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
-                ...dataTool,
+            const postDataSkill = await axios.put(`http://localhost:3001/skill?id=${props.allSkills.find(elem => elem.id === skillSelect)?.id}`, {
+                ...dataSkill,
                 image: nameImageS3
             }, {
                 headers: {"Authorization": `Bearer ${props.token}`}
@@ -71,10 +71,10 @@ function EditTool (props: props) {
       
             <div className="h-1/3 flex flex-col items-center justify-center">
                 <p className="text-white text-xl">EDIT TOOL:</p>
-                <select onChange={e => setToolSelect(e.target.value)} className="w-1/3 p-1 m-1">
+                <select onChange={e => setSkillSelect(e.target.value)} className="w-1/3 p-1 m-1">
                     <option hidden>~</option>
                     {
-                        props?.allTools?.map(tool => <option value={tool.id}>{tool.name}</option>)
+                        props?.allSkills?.map(skill => <option value={skill.id}>{skill.name}</option>)
                     }
                 </select>
                 <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
@@ -82,14 +82,14 @@ function EditTool (props: props) {
                         type="text"
                         placeholder="Name"
                         name="name"
-                        onChange={e => handleTool(e)}
+                        onChange={e => handleSkill(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input
                         type="text"
                         placeholder="Level de 0 a 10"
                         name="level"
-                        onChange={e => handleTool(e)}
+                        onChange={e => handleSkill(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input
@@ -107,4 +107,4 @@ function EditTool (props: props) {
 
 }
 
-export default EditTool
+export default EditSkill

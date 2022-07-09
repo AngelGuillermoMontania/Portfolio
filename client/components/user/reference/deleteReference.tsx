@@ -1,34 +1,33 @@
 import Router from 'next/router'
 
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import axios from 'axios'
 
-class tools {
+class reference {
     "id": string
     "name": string
+    "message": string
     "image": string
-    "level": string
   }
 
 class props {
     "token": string | null
-    "allTools": Array<tools>
+    "allReferences": Array<reference>
   }
 
-function DeleteTool (props: props) {
 
-    const [toolSelect, setToolSelect] = useState<string>("")
 
-    console.log(toolSelect)
+function DeleteReference (props: props) {
+
+    const [referenceSelect, setReferenceSelect] = useState<string>("")
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
-         
-            await axios.delete(`http://localhost:3001/tool/image?id=${toolSelect}`, {
+            await axios.delete(`http://localhost:3001/reference/image?id=${referenceSelect}`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
-            const postDataTool = await axios.delete(`http://localhost:3001/tool?id=${toolSelect}`,{
+            const deleteReference = await axios.delete(`http://localhost:3001/reference?id=${referenceSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")
@@ -40,12 +39,12 @@ function DeleteTool (props: props) {
     return (
       
             <div className="h-1/3 flex flex-col items-center justify-center">
-                <p className="text-white text-xl">DELETE TOOL:</p>
+                <p className="text-white text-xl">DELETE SKILL:</p>
                 <div className='flex w-4/5 justify-around'>
-                    <select onChange={e => setToolSelect(e.target.value)} className="w-1/3">
+                    <select onChange={e => setReferenceSelect(e.target.value)} className="w-1/3">
                         <option hidden>~</option>
                         {
-                            props?.allTools?.map(tool => <option value={tool.id}>{tool.name}</option>)
+                            props?.allReferences?.map(reference => <option value={reference.id}>{reference.name}</option>)
                         }
                     </select>
                     <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
@@ -58,4 +57,4 @@ function DeleteTool (props: props) {
 
 }
 
-export default DeleteTool
+export default DeleteReference

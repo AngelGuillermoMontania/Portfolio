@@ -58,7 +58,7 @@ export class ToolController {
 
   @UseGuards(JwtAuthGuard)
   @Delete()
-  deleteSkill(@Query('id') id: string) {
+  deleteTool(@Query('id') id: string) {
     this.toolService.destroyTool(id);
   }
 }

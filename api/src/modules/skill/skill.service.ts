@@ -5,9 +5,9 @@ import { Repository } from 'typeorm';
 import { Skill } from 'src/models/skill.entity';
 import { CreateUpdateSkillDto } from './dto/create-update-skill.dto';
 
-import fs from 'fs';
+import fs, { createReadStream } from 'fs';
 import 'dotenv/config';
-import { S3Client, CreateBucketCommand } from '@aws-sdk/client-s3';
+import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 const client = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
@@ -32,55 +32,70 @@ export class SkillService {
     }
   }
 
-  async createSkill(body: CreateUpdateSkillDto, file: Express.Multer.File) {
-    /* Init load images S3 */
-    let listImage = [];
-    let fileStream = fs.createReadStream(file.path);
-    const bucketParams = {
-      Bucket: process.env.AWS_BUCKET_NAME,
-      Body: file.stream,
-      Key: file.filename,
-    };
-    listImage.push(await client.send(new CreateBucketCommand(bucketParams)));
+  async createImageSkill(file: Express.Multer.File) {
+    const fileStream = createReadStream(file.path)
+    try {   
+      let listImage = [];
+      const bucketParams = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Body: fileStream,
+        Key: file.filename,
+      };
+      listImage.push(await client.send(new PutObjectCommand(bucketParams)));
+      return {
+        name: file.filename
+      }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
+    
+  }
 
-    /* console.log(listImage) */
+  async destroyImageSkill(id: string) {
+    try {
+      const deleteImageSkill = await this.skillRepository.findOneBy({id})
+      let listImage = [];
+        const bucketParams = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: deleteImageSkill?.image,
+        };
+        listImage.push(await client.send(new DeleteObjectCommand(bucketParams)));
+        return {
+          name: deleteImageSkill?.image
+        }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
+  }
 
-    /* Finish load images S3 */
-    /* const newSkill = this.skillRepository.create({
-            ...body,
-            image: listImage[0]
-        }) 
-        this.skillRepository.save(newSkill)
-        */
+
+
+  async createDataSkill(body: CreateUpdateSkillDto) {
+    try {
+      const newSkill = this.skillRepository.create(body)
+      await this.skillRepository.save(body)
+      return newSkill
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+    
   }
 
   async editSkill(
     body: CreateUpdateSkillDto,
-    file: Express.Multer.File,
     id: string,
   ) {
-    if (file) {
-      /* Delete image S3 */
-      /* Init load images S3 */
-      let listImage = [];
-      let fileStream = fs.createReadStream(file.path);
-      const bucketParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Body: file.stream,
-        Key: file.filename,
-      };
-      listImage.push(await client.send(new CreateBucketCommand(bucketParams)));
-
-      /* console.log(listImage) */
-
-      /* Finish load images S3 */
+    try {
+      const newSkillEdit = await this.skillRepository.update({
+        id
+      }, body)
+      const skillEdit = await this.skillRepository.findOne({where: {
+        id
+      }})
+      return skillEdit
+    } catch (error) {
+      return new InternalServerErrorException("Database Error")
     }
-    /* const newSkill = this.skillRepository.create({
-            ...body,
-            image: listImage[0]
-        }) 
-        this.skillRepository.save(newSkill)
-        */
   }
 
   async destroySkill(id: string) {

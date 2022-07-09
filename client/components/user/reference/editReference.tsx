@@ -3,60 +3,60 @@ import Router from 'next/router'
 import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
 
-class tools {
+class reference {
     "id": string
     "name": string
+    "message": string
     "image": string
-    "level": string
   }
 
 class props {
     "token": string | null
-    "allTools": Array<tools>
+    "allReferences": Array<reference>
   }
 
-function EditTool (props: props) {
+function EditReference (props: props) {
 
-    const [dataTool, setDataTool] = useState<Object>({
+    const [dataReference, setDataReference] = useState<Object>({
         name: "",
-        level: "",
+        message: "",
     })
-    const [toolSelect, setToolSelect] = useState<string>("")
+    const [referenceSelect, setReferenceSelect] = useState<string>("")
     
-    const [imageTool, setImageTool] = useState<File>(new File([], "new"))
+    const [imageReference, setImageReference] = useState<File>(new File([], "new"))
 
-    const handleTool = (event: ChangeEvent<HTMLInputElement>): void => {
-        setDataTool({
-            ...dataTool,
+    const handleSkill = (event: ChangeEvent<HTMLInputElement>): void => {
+        setDataReference({
+            ...dataReference,
             [event.target.name]: event.target.value
         })
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
-        event.target.files && setImageTool(event.target.files[0])
+        event.target.files && setImageReference(event.target.files[0])
     }
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         let postImage
         try {
-            if(imageTool.size === 0) {
+            if(imageReference.size === 0) {
                 postImage = {
-                    data: props.allTools.find(elem => elem.id === toolSelect)
+                    data: props.allReferences.find(elem => elem.id === referenceSelect)
                 }
             } else {
-                await axios.delete(`http://localhost:3001/tool/image?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
+                await axios.delete(`http://localhost:3001/reference/image?id=${props.allReferences.find(elem => elem.id === referenceSelect)?.id}`, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
                 const formDataImage: FormData = new FormData()
-                formDataImage.append("file", imageTool)
-                postImage = await axios.post(`http://localhost:3001/tool/image`, formDataImage, {
+                formDataImage.append("file", imageReference)
+                postImage = await axios.post(`http://localhost:3001/reference/image`, formDataImage, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
-            const postDataTool = await axios.put(`http://localhost:3001/tool?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
-                ...dataTool,
+            const postDataReference = await axios.put(`http://localhost:3001/reference?id=${props.allReferences.find(elem => elem.id === referenceSelect)?.id}`, {
+                ...dataReference,
                 image: nameImageS3
             }, {
                 headers: {"Authorization": `Bearer ${props.token}`}
@@ -71,10 +71,10 @@ function EditTool (props: props) {
       
             <div className="h-1/3 flex flex-col items-center justify-center">
                 <p className="text-white text-xl">EDIT TOOL:</p>
-                <select onChange={e => setToolSelect(e.target.value)} className="w-1/3 p-1 m-1">
+                <select onChange={e => setReferenceSelect(e.target.value)} className="w-1/3 p-1 m-1">
                     <option hidden>~</option>
                     {
-                        props?.allTools?.map(tool => <option value={tool.id}>{tool.name}</option>)
+                        props?.allReferences?.map(reference => <option value={reference.id}>{reference.name}</option>)
                     }
                 </select>
                 <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
@@ -82,14 +82,14 @@ function EditTool (props: props) {
                         type="text"
                         placeholder="Name"
                         name="name"
-                        onChange={e => handleTool(e)}
+                        onChange={e => handleSkill(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input
                         type="text"
-                        placeholder="Level de 0 a 10"
-                        name="level"
-                        onChange={e => handleTool(e)}
+                        placeholder="message"
+                        name="message"
+                        onChange={e => handleSkill(e)}
                         className="w-1/4 p-1"
                     ></input>
                     <input
@@ -107,4 +107,4 @@ function EditTool (props: props) {
 
 }
 
-export default EditTool
+export default EditReference

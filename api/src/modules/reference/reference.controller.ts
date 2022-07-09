@@ -7,9 +7,12 @@ import {
   Put,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { storageMulter } from 'src/configMulter';
+import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateReferenceDto } from './dto/create-update-reference.dto';
 import { ReferenceService } from './reference.service';
@@ -23,27 +26,42 @@ export class ReferenceController {
     return this.referenceService.getAllReferences();
   }
 
-  @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  postReference(
-    @Body() body: CreateUpdateReferenceDto,
+  @UseGuards(JwtAuthGuard)
+  @Post('image')
+  @UseInterceptors(FileInterceptor('file', {
+    storage: storageMulter
+  }))
+  postImageReference(
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(file);
-    return this.referenceService.createReference(body, file);
+    return this.referenceService.createImageReference(file);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Delete('image')
+  DeleteImageReference(@Query('id') id: string) {
+    return this.referenceService.destroyImageReference(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  postDataReference(@Body() body: CreateUpdateReferenceDto) {
+    return this.referenceService.createDataReference(body);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Put()
   putReference(
     @Body() body: CreateUpdateReferenceDto,
-    @UploadedFile() file: Express.Multer.File,
-    @Query('id') id: string,
+    @Query('id') id: string
   ) {
-    return this.referenceService.editReference(body, file, id);
+    return this.referenceService.editReference(body, id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete()
   deleteReference(@Query('id') id: string) {
-    return this.referenceService.destroyReference(id);
+    this.referenceService.destroyReference(id);
   }
+
 }

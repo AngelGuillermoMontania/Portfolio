@@ -26,8 +26,8 @@ export class ToolService {
   
   async getAllTool() {
     try {
-      const allSkills = await this.toolRepository.find();
-      return allSkills;
+      const allTools = await this.toolRepository.find();
+      return allTools;
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }

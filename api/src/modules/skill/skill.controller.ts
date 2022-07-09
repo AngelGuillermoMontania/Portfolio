@@ -6,9 +6,13 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { storageMulter } from 'src/configMulter';
+import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateSkillDto } from './dto/create-update-skill.dto';
 import { SkillService } from './skill.service';
@@ -19,27 +23,44 @@ export class SkillController {
 
   @Get()
   getAll() {
-    this.skillService.getAllSkill();
+    return this.skillService.getAllSkill();
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Post('image')
+  @UseInterceptors(FileInterceptor('file', {
+    storage: storageMulter
+  }))
+  postImageSkill(@UploadedFile() file: Express.Multer.File) {
+    return this.skillService.createImageSkill(file);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('image')
+  DeleteImageSkill(@Query('id') id: string) {
+    return this.skillService.destroyImageSkill(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  postSkill(@Body() body: CreateUpdateSkillDto, file: Express.Multer.File) {
-    this.skillService.createSkill(body, file);
+  postDataSkill(@Body() body: CreateUpdateSkillDto) {
+    return this.skillService.createDataSkill(body);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put()
   @UseInterceptors(FileInterceptor('file'))
   putSkill(
     @Body() body: CreateUpdateSkillDto,
-    file: Express.Multer.File,
     @Query('id') id: string,
   ) {
-    this.skillService.editSkill(body, file, id);
+    return this.skillService.editSkill(body, id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete()
   deleteSkill(@Query('id') id: string) {
-    this.skillService.destroySkill(id);
+    return this.skillService.destroySkill(id);
   }
+
 }

@@ -31,6 +31,7 @@ export class SoftService {
   }
 
   async editSoft(body: CreateUpdateSoftDto, id: string) {
+    console.log(body, id)
     try {
       await this.softRepository.update(
         {

@@ -5,8 +5,8 @@ import { Reference } from 'src/models/reference.entity';
 import { Repository } from 'typeorm';
 import { CreateUpdateReferenceDto } from './dto/create-update-reference.dto';
 
-import { S3Client, CreateBucketCommand } from '@aws-sdk/client-s3';
-import fs from 'fs';
+import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import fs, { createReadStream } from 'fs';
 import 'dotenv/config';
 
 const client = new S3Client({
@@ -33,63 +33,76 @@ export class ReferenceService {
     }
   }
 
-  async createReference(
-    body: CreateUpdateReferenceDto,
+  async createImageReference(
     file: Express.Multer.File,
   ) {
-    try {
-      console.log(file.path);
-      const newReference = this.referenceRepository.create(body); //Create the project
-      /* Init load images S3 */
+    const fileStream = createReadStream(file.path)
+    try {   
       let listImage = [];
-      let fileStream = fs.createReadStream(file.path);
       const bucketParams = {
         Bucket: process.env.AWS_BUCKET_NAME,
-        Body: file.stream,
+        Body: fileStream,
         Key: file.filename,
       };
-      listImage.push(await client.send(new CreateBucketCommand(bucketParams)));
-
-      /* console.log(listImage) */
-
-      /* Finish load images S3 */
-
-      /**
-       * Agregar Skills
-       * Agregar Tools
-       */
-      await this.referenceRepository.save(newReference); //Save the project
-      return newReference;
+      listImage.push(await client.send(new PutObjectCommand(bucketParams)));
+      return {
+        name: file.filename
+      }
     } catch (error) {
-      return error.message;
+      return new InternalServerErrorException('Database Error/S3')
     }
+  }
+
+  async destroyImageReference(id: string) {
+    try {
+      const deleteImageReference = await this.referenceRepository.findOneBy({id})
+      let listImage = [];
+        const bucketParams = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: deleteImageReference?.image,
+        };
+        listImage.push(await client.send(new DeleteObjectCommand(bucketParams)));
+        return {
+          name: deleteImageReference?.image
+        }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
+  }
+
+  async createDataReference(body: CreateUpdateReferenceDto) {
+    try {
+      const newReference = this.referenceRepository.create(body)
+      await this.referenceRepository.save(body)
+      return newReference
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+    
   }
 
   async editReference(
     body: CreateUpdateReferenceDto,
-    file: Express.Multer.File,
     id: string,
   ) {
     try {
-      if (file) {
-        /* Logic S3 */
-      }
-      const editReference = await this.referenceRepository.update(
-        {
-          id,
-        },
-        body,
-      );
-      const newReference = await this.referenceRepository.findBy({ id });
-      return newReference;
+      const newReferenceEdit = await this.referenceRepository.update({
+        id
+      }, body)
+      const referenceEdit = await this.referenceRepository.findOne({where: {
+        id
+      }})
+      return referenceEdit
     } catch (error) {
-      return new InternalServerErrorException('Database Error');
+      return new InternalServerErrorException("Database Error")
     }
+    
   }
+
 
   async destroyReference(id: string) {
     try {
-      const destroyReference = await this.referenceRepository.delete({ id });
+      await this.referenceRepository.delete({ id });
       return {
         deleted: true,
       };

@@ -1,13 +1,10 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Router, { NextRouter, useRouter } from 'next/router'
+import Router from 'next/router'
 
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
 
 class props {
     "token": string | null
-    "allSkills": Array<Object>
   }
 
 function CreateTool (props: props) {

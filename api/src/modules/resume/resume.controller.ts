@@ -1,5 +1,7 @@
-import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { Body, Controller, Delete, Get, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { storageMulter } from 'src/configMulter';
+import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateResumeDto } from './dto/create-update-resume.dto';
 import { ResumeService } from './resume.service';
@@ -10,19 +12,36 @@ export class ResumeController {
 
   @Get()
   getResume() {
-    return this.resumeService.getResumes();
+    return this.resumeService.getResume();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  @UseInterceptors(FilesInterceptor('files'))
-  postResume(
-    @Body() body: CreateUpdateResumeDto,
-    files: Array<Express.Multer.File>,
+  @UseInterceptors(FileInterceptor('file', {
+    storage: storageMulter
+  }))
+  postResumeS3(
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.resumeService.createResumes(body, files);
+    return this.resumeService.createResumeS3(file);
   }
 
-  /* @Put(body file)
-        delete select and update/create new
-     */
+  @UseGuards(JwtAuthGuard)
+  @Delete()
+  DeleteResumeS3(@Query('resume') resume: string) {
+    return this.resumeService.destroyResumeS3(resume);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put()
+  PutDataResume(@Body() body: CreateUpdateResumeDto) {
+    return this.resumeService.updateDataResume(body);
+  }
+
+  @Post('dev')
+  PostDevResume(@Body() body: CreateUpdateResumeDto) {
+    return this.resumeService.createResumeDev(body)
+
+  }
+    
 }

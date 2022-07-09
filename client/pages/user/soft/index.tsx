@@ -8,20 +8,18 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import ButtonLogout from '../../../components/user/ButtonLogout'
-import CreateSkill from '../../../components/user/skill/createSkill'
-import EditSkill from '../../../components/user/skill/editSkill'
-import DeleteSkill from '../../../components/user/skill/deleteSkill'
+import CreateSoft from '../../../components/user/soft/createSoft'
+import EditSoft from '../../../components/user/soft/editSoft'
+import DeleteSoft from '../../../components/user/soft/deleteSoft'
 
-class skills {
+class soft {
   "id": string
   "name": string
-  "image": string
-  "level": string
 }
 
 const Skill: NextPage = () => {
 
-  const [allSkills, setAllSkills] = useState<Array<skills>>([])
+  const [allSofts, setAllSofts] = useState<Array<soft>>([])
 
   const [token, setToken] = useState<boolean>(false)
 
@@ -30,10 +28,9 @@ const Skill: NextPage = () => {
     if (Token) {
       setToken(!token)
     }
-    axios("http://localhost:3001/skill", {
+    axios("http://localhost:3001/soft", {
       headers: { "Authorization": `Bearer ${token}` }
-    }).then(data => setAllSkills(data.data))
-        .catch(error => console.log(error))
+    }).then(data => setAllSofts(data.data))
   }, [])
 
   return (
@@ -50,9 +47,12 @@ const Skill: NextPage = () => {
               </p>
             </Link>
             <div className='h-5/6'>
-              <CreateSkill token={sessionStorage.getItem("Token")} />
-              <EditSkill token={sessionStorage.getItem("Token")} allSkills={allSkills} />
-              <DeleteSkill token={sessionStorage.getItem("Token")} allSkills={allSkills} />
+              <CreateSoft token={sessionStorage.getItem("Token")} />
+              <EditSoft token={sessionStorage.getItem("Token")} allSofts={allSofts} />
+              <DeleteSoft token={sessionStorage.getItem("Token")} allSofts={allSofts} />
+            </div>
+            <div className='h-5/6'>
+              
             </div>
             <ButtonLogout />
           </div> : <div>Not authorized</div>

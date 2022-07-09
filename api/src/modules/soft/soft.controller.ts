@@ -21,17 +21,17 @@ export class SoftController {
   }
 
   @Post()
-  postSkill(@Body() body: CreateUpdateSoftDto) {
+  postSoft(@Body() body: CreateUpdateSoftDto) {
     return this.softService.createSoft(body);
   }
 
   @Put()
-  putSkill(@Body() body: CreateUpdateSoftDto, @Query('id') id: string) {
+  putSoft(@Body() body: CreateUpdateSoftDto, @Query('id') id: string) {
     return this.softService.editSoft(body, id);
   }
 
   @Delete()
-  deleteSkill(@Query('id') id: string) {
+  deleteSoft(@Query('id') id: string) {
     return this.softService.destroySoft(id);
   }
 }

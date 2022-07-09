@@ -20,7 +20,6 @@ class tools {
 
 const Tool: NextPage = () => {
 
-  const [userDB, setUserDB] = useState<boolean>(false)
   const [allTools, setAllTools] = useState<Array<tools>>([])
 
   const [token, setToken] = useState<boolean>(false)
@@ -33,6 +32,7 @@ const Tool: NextPage = () => {
     axios("http://localhost:3001/tool", {
       headers: { "Authorization": `Bearer ${token}` }
     }).then(data => setAllTools(data.data))
+      .catch(error => console.log(error))
   }, [])
 
   return (
@@ -49,7 +49,7 @@ const Tool: NextPage = () => {
               </p>
             </Link>
             <div className='h-5/6'>
-              <CreateTool token={sessionStorage.getItem("Token")} allTools={allTools} />
+              <CreateTool token={sessionStorage.getItem("Token")} />
               <EditTool token={sessionStorage.getItem("Token")} allTools={allTools} />
               <DeleteTool token={sessionStorage.getItem("Token")} allTools={allTools} />
             </div>

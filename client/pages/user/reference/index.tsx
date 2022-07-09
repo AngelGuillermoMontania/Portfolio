@@ -1,27 +1,25 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import ButtonLogout from '../../../components/user/ButtonLogout'
-import CreateSkill from '../../../components/user/skill/createSkill'
-import EditSkill from '../../../components/user/skill/editSkill'
-import DeleteSkill from '../../../components/user/skill/deleteSkill'
+import CreateReference from '../../../components/user/reference/createReference'
+import EditReference from '../../../components/user/reference/editReference'
+import DeleteReference from '../../../components/user/reference/deleteReference'
 
-class skills {
+class reference {
   "id": string
   "name": string
   "image": string
-  "level": string
+  "message": string
 }
 
-const Skill: NextPage = () => {
+const Reference: NextPage = () => {
 
-  const [allSkills, setAllSkills] = useState<Array<skills>>([])
+  const [allReferences, setAllReferences] = useState<Array<reference>>([])
 
   const [token, setToken] = useState<boolean>(false)
 
@@ -30,9 +28,9 @@ const Skill: NextPage = () => {
     if (Token) {
       setToken(!token)
     }
-    axios("http://localhost:3001/skill", {
+    axios("http://localhost:3001/reference", {
       headers: { "Authorization": `Bearer ${token}` }
-    }).then(data => setAllSkills(data.data))
+    }).then(data => setAllReferences(data.data))
         .catch(error => console.log(error))
   }, [])
 
@@ -50,9 +48,9 @@ const Skill: NextPage = () => {
               </p>
             </Link>
             <div className='h-5/6'>
-              <CreateSkill token={sessionStorage.getItem("Token")} />
-              <EditSkill token={sessionStorage.getItem("Token")} allSkills={allSkills} />
-              <DeleteSkill token={sessionStorage.getItem("Token")} allSkills={allSkills} />
+              <CreateReference token={sessionStorage.getItem("Token")} />
+              <EditReference token={sessionStorage.getItem("Token")} allReferences={allReferences} />
+              <DeleteReference token={sessionStorage.getItem("Token")} allReferences={allReferences} />
             </div>
             <ButtonLogout />
           </div> : <div>Not authorized</div>
@@ -63,4 +61,4 @@ const Skill: NextPage = () => {
   )
 }
 
-export default Skill
+export default Reference

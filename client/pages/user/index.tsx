@@ -1,12 +1,7 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import CreateTool from '../../components/user/tool/createTool'
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import ButtonOption from '../../components/user/ButtonOption'
 import ButtonLogout from '../../components/user/ButtonLogout'
 
@@ -30,6 +25,11 @@ const Home: NextPage = () => {
           <div className='flex flex-wrap w-full p-4 justify-around items-center'>
             <ButtonOption href='/user/tool' title='Tool' />
             <ButtonOption href='/user/skill' title='Skill' />
+            <ButtonOption href='/user/soft' title='Soft' />
+          </div>
+          <div className='flex flex-wrap w-full p-4 justify-around items-center'>
+            <ButtonOption href='/user/resume' title='Resume' />
+            <ButtonOption href='/user/reference' title='Reference' />
           </div>
           <ButtonLogout />
         </div> : <div>Not authorized</div>

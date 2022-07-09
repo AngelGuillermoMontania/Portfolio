@@ -1,34 +1,28 @@
 import Router from 'next/router'
 
-import { ChangeEvent, FormEvent, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import axios from 'axios'
 
-class tools {
+class softs {
     "id": string
     "name": string
-    "image": string
-    "level": string
   }
 
 class props {
     "token": string | null
-    "allTools": Array<tools>
+    "allSofts": Array<softs>
   }
 
-function DeleteTool (props: props) {
 
-    const [toolSelect, setToolSelect] = useState<string>("")
 
-    console.log(toolSelect)
+function DeleteSoft (props: props) {
+
+    const [softSelect, setSoftSelect] = useState<string>("")
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
-         
-            await axios.delete(`http://localhost:3001/tool/image?id=${toolSelect}`, {
-                headers: {"Authorization": `Bearer ${props.token}`}
-            })
-            const postDataTool = await axios.delete(`http://localhost:3001/tool?id=${toolSelect}`,{
+            const deleteSoft = await axios.delete(`http://localhost:3001/soft?id=${softSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")
@@ -38,14 +32,13 @@ function DeleteTool (props: props) {
     }
 
     return (
-      
             <div className="h-1/3 flex flex-col items-center justify-center">
-                <p className="text-white text-xl">DELETE TOOL:</p>
+                <p className="text-white text-xl">DELETE SKILL:</p>
                 <div className='flex w-4/5 justify-around'>
-                    <select onChange={e => setToolSelect(e.target.value)} className="w-1/3">
+                    <select onChange={e => setSoftSelect(e.target.value)} className="w-1/3">
                         <option hidden>~</option>
                         {
-                            props?.allTools?.map(tool => <option value={tool.id}>{tool.name}</option>)
+                            props?.allSofts?.map(soft => <option value={soft.id}>{soft.name}</option>)
                         }
                     </select>
                     <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
@@ -58,4 +51,4 @@ function DeleteTool (props: props) {
 
 }
 
-export default DeleteTool
+export default DeleteSoft

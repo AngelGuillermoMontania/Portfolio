@@ -7,5 +7,6 @@ export class CreateUpdateReferenceDto {
   @IsString()
   readonly message: string;
 
+  @IsString()
   readonly image: string;
 }
