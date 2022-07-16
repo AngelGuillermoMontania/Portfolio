@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { storageMulter } from 'src/configMulter';
+import { storageMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
@@ -29,7 +29,7 @@ export class ToolController {
   @UseGuards(JwtAuthGuard)
   @Post('image')
   @UseInterceptors(FileInterceptor('file', {
-    storage: storageMulter
+    storage: storageMulterFile
   }))
   postImageTool(@UploadedFile() file: Express.Multer.File) {
     return this.toolService.createImageTool(file);

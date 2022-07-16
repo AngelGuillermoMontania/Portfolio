@@ -21,7 +21,7 @@ const Home: NextPage = () => {
     <div className="bg-slate-900 h-screen">
       {
         token ? 
-        <div>
+        <div className='h-full'>
           <div className='flex flex-wrap w-full p-4 justify-around items-center'>
             <ButtonOption href='/user/tool' title='Tool' />
             <ButtonOption href='/user/skill' title='Skill' />
@@ -30,6 +30,9 @@ const Home: NextPage = () => {
           <div className='flex flex-wrap w-full p-4 justify-around items-center'>
             <ButtonOption href='/user/resume' title='Resume' />
             <ButtonOption href='/user/reference' title='Reference' />
+          </div>
+          <div className='flex flex-wrap w-full p-4 justify-around items-center'>
+            <ButtonOption href='/user/project' title='Project' />
           </div>
           <ButtonLogout />
         </div> : <div>Not authorized</div>

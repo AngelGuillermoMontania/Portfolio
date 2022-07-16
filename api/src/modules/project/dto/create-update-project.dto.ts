@@ -19,7 +19,8 @@ export class CreateUpdateProjectDto {
   readonly description: string;
 
   @IsArray()
-  readonly image: string[];
+  @IsOptional()
+  readonly images: string[];
 
   @IsDateString()
   @IsOptional()
@@ -37,12 +38,18 @@ export class CreateUpdateProjectDto {
   readonly deployLink: string;
 
   @IsNumber()
-  @IsIn([Relevance.low, Relevance.medium, Relevance.higth])
-  readonly relevance: Relevance;
+  readonly relevance: number;
 
   @IsString()
+  @IsOptional()
   readonly company: string;
 
   @IsBoolean()
   readonly isActive: boolean;
+
+  @IsArray()
+  readonly tools: string[];
+
+  @IsArray()
+  readonly skills: string[];
 }

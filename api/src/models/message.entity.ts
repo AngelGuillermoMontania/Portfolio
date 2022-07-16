@@ -9,6 +9,9 @@ export class Message {
   title: string;
 
   @Column()
+  company: string
+
+  @Column()
   body: string;
 
   @Column()

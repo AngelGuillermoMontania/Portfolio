@@ -7,12 +7,16 @@ import {
   Post,
   Put,
   Query,
+  UploadedFile,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { storageMulterFile, storageMulterFiles } from '../../configMulter';
 
 import { Project } from 'src/models/project.entity';
+import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
 import { ProjectService } from './project.service';
 
@@ -25,27 +29,44 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Get()
-  getProjects(/* @Query() query: Order */): Promise<
+  getProjects(): Promise<
     Project[] | InternalServerErrorException
   > {
-    //Si quito
     return this.projectService.getAllProjects();
   }
 
-  @Get()
+  @Get('one')
   getOneProject(@Query('id') id: string) {
     return this.projectService.getOneProject(id);
   }
 
-  @Post() //o tambien Put
-  @UseInterceptors(FilesInterceptor('files'))
-  postProject(
-    @Body() body: CreateUpdateProjectDto,
+
+  @UseGuards(JwtAuthGuard)
+  @Post('image')
+  @UseInterceptors(FilesInterceptor('files', 10, {
+    storage: storageMulterFiles
+  }))
+  postImageProject(
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
-    return this.projectService.createProject(body, files);
+    return this.projectService.createImagesProject(files);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Delete('image')
+  DeleteImagesProject(@Query('id') id: string) {
+    return this.projectService.destroyImagesProject(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  postDataProject(
+    @Body() body: CreateUpdateProjectDto
+  ) {
+    return this.projectService.createDataProject(body);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Put()
   putProject(@Query('id') id: string, @Body() body: CreateUpdateProjectDto) {
     return this.projectService.editProject(id, body);
@@ -54,7 +75,7 @@ export class ProjectController {
   @Delete()
   destroyProject(
     @Query('id') id: string,
-  ): Promise<'SE ELIMINO CORRECTAMENTE' | InternalServerErrorException> {
+  ) {
     return this.projectService.deleteProject(id);
   }
 }

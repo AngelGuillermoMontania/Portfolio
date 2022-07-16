@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { storageMulter } from 'src/configMulter';
+import { storageMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateResumeDto } from './dto/create-update-resume.dto';
@@ -18,7 +18,7 @@ export class ResumeController {
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('file', {
-    storage: storageMulter
+    storage: storageMulterFile
   }))
   postResumeS3(
     @UploadedFile() file: Express.Multer.File,

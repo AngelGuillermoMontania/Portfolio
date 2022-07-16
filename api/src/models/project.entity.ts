@@ -26,7 +26,7 @@ export class Project {
   description: string;
 
   @Column('simple-array')
-  image: string[];
+  images: string[];
 
   @Column({ nullable: true })
   init: Date;
@@ -40,12 +40,8 @@ export class Project {
   @Column({ nullable: true })
   deployLink: string;
 
-  @Column({
-    type: 'enum',
-    enum: Relevance,
-    default: Relevance.low,
-  })
-  relevance: Relevance;
+  @Column()
+  relevance: number;
 
   @Column({ nullable: true })
   company: string;
