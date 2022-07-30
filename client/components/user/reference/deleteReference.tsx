@@ -24,10 +24,10 @@ function DeleteReference (props: props) {
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
-            await axios.delete(`http://localhost:3001/reference/image?id=${referenceSelect}`, {
+            await axios.delete(`http://localhost:3002/reference/image?id=${referenceSelect}`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
-            const deleteReference = await axios.delete(`http://localhost:3001/reference?id=${referenceSelect}`,{
+            const deleteReference = await axios.delete(`http://localhost:3002/reference?id=${referenceSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")

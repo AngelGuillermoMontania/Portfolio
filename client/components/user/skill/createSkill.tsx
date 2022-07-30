@@ -31,11 +31,11 @@ function CreateTool (props: props) {
         try {
             const formDataImage: FormData = new FormData()
             formDataImage.append("file", imageSkill)
-            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3001/skill/image`, formDataImage, {
+            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3002/skill/image`, formDataImage, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             const nameImageS3: string = postImage.data.name
-            const postDataSkill: Object = await axios.post("http://localhost:3001/skill", {
+            const postDataSkill: Object = await axios.post("http://localhost:3002/skill", {
                 ...dataSkill,
                 image: nameImageS3
             }, {

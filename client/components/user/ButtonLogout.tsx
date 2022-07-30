@@ -13,7 +13,7 @@ const ButtonLogout: NextPage = () => {
   return (
       <button 
       onClick={e => logOut(e)}
-        className="bg-blue-900 p-4 rounded-xl text-white shadow-md shadow-white hover:bg-blue-600 hover:text-black"
+        className="bg-yellow-900 p-4 m-8 rounded-xl text-white shadow-md shadow-white transition-all hover:bg-yellow-600 hover:text-black"
         >
         LogOut
       </button>

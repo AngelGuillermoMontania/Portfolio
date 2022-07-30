@@ -22,11 +22,9 @@ export class MessageService {
 
   async createMessage(body: CreateMessageDto) {
     try {
-      const newMessage = await this.messageRepository.save(body);
-      return {
-        ...newMessage,
-        create: true,
-      };
+      const newMessage = this.messageRepository.create(body);
+      await this.messageRepository.save(newMessage);
+      return newMessage;
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
@@ -34,11 +32,8 @@ export class MessageService {
 
   async destroyMessage(id: string) {
     try {
-      const deleteMessage = await this.messageRepository.delete({
-        id,
-      });
+      await this.messageRepository.delete({ id });
       return {
-        ...deleteMessage,
         deleted: true,
       };
     } catch (error) {

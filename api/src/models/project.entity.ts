@@ -25,14 +25,14 @@ export class Project {
   @Column({ nullable: true })
   description: string;
 
-  @Column('simple-array')
-  images: string[];
+  @Column()
+  image: string;
 
   @Column({ nullable: true })
-  init: Date;
+  dateInit: Date;
 
   @Column({ nullable: true })
-  durationDays: number;
+  dateEnd: Date;
 
   @Column()
   repositoryLink: string;

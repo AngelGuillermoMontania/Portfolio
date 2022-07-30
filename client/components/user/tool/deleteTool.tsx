@@ -25,10 +25,10 @@ function DeleteTool (props: props) {
         event.preventDefault()
         try {
          
-            await axios.delete(`http://localhost:3001/tool/image?id=${toolSelect}`, {
+            await axios.delete(`http://localhost:3002/tool/image?id=${toolSelect}`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
-            const postDataTool = await axios.delete(`http://localhost:3001/tool?id=${toolSelect}`,{
+            const postDataTool = await axios.delete(`http://localhost:3002/tool?id=${toolSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")
@@ -45,7 +45,7 @@ function DeleteTool (props: props) {
                     <select onChange={e => setToolSelect(e.target.value)} className="w-1/3">
                         <option hidden>~</option>
                         {
-                            props?.allTools?.map(tool => <option value={tool.id}>{tool.name}</option>)
+                            props?.allTools?.map(tool => <option value={tool.id} key={tool.id}>{tool.name}</option>)
                         }
                     </select>
                     <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">

@@ -14,9 +14,10 @@ import { Repository } from 'typeorm';
 //DTO
 import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
 
-import fs, { createReadStream } from 'fs';
+import fs, { createReadStream, existsSync, unlinkSync } from 'fs';
 import 'dotenv/config';
 import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { join } from 'path';
 
 const client = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
@@ -40,7 +41,7 @@ export class ProjectService {
     try {
       let allProject: Project[] = await this.projectRepository.find();
       if (allProject.length < 1) {
-        return new NotFoundException('Empty List');
+        return new InternalServerErrorException('Database Error');;
       }
       return allProject;
     } catch (error) {
@@ -66,26 +67,11 @@ export class ProjectService {
   }
 
   async createImagesProject(
-    files: Array<Express.Multer.File>,
+    file: Express.Multer.File,
   ) {
     try {
-      /* Init load images S3 */
-      let listResponse = [];
-      let listNames: Array<string> = []
-      files.forEach(async (file) => {
-        const fileStream = createReadStream(file.path);
-        const bucketParams = {
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Body: fileStream,
-          Key: file.filename,
-        };
-        listNames.push(file.filename)
-        listResponse.push(
-          await client.send(new PutObjectCommand(bucketParams)),
-        );
-      });
       return {
-        names: listNames
+        name: file.filename
       }
     } catch (error) {
       return new InternalServerErrorException('Database Error');
@@ -95,16 +81,13 @@ export class ProjectService {
   async destroyImagesProject(id: string) {
     try {
       const deleteImagesProject = await this.projectRepository.findOneBy({id})
-      let listImage = [];
-      deleteImagesProject?.images.forEach(async file => {
-        const bucketParams = {
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: file,
-        };
-        listImage.push(await client.send(new DeleteObjectCommand(bucketParams)));
-      })
+      if(deleteImagesProject) {
+        if(existsSync(join(process.cwd(), '/assets/', deleteImagesProject.image))) {
+          unlinkSync(join(process.cwd(), '/assets/', deleteImagesProject.image))
+        }
+      }
       return {
-        name: deleteImagesProject?.images
+        names: deleteImagesProject?.image
       }
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3')
@@ -116,9 +99,9 @@ export class ProjectService {
       const newProject = this.projectRepository.create({
         name: body.name,
         description: body.description,
-        images: body.images,
-        init: body.init,
-        durationDays: Number(body.durationDays),
+        image: body.image,
+        dateInit: body.dateInit,
+        dateEnd: body.dateEnd,
         repositoryLink: body.repositoryLink,
         deployLink: body.deployLink,
         relevance: Number(body.relevance),
@@ -140,9 +123,7 @@ export class ProjectService {
       body.skills.forEach(async skill => {
         try {
           const skillSearch = await this.skillRepository.findOneBy({id: skill})
-          console.log(skill, skillSearch)
           if(skillSearch !== null) {
-            console.log("SI SKILL SOY DISTINTO DE NULL")
             skills.push(skillSearch)
           }
         } catch (error) {
@@ -182,29 +163,33 @@ export class ProjectService {
             skills.push(skillSearch)
           }
         } catch (error) {
-          return new InternalServerErrorException('Tool no exist');
+          return new InternalServerErrorException('Skill no exist');
         }
-      })
-
-      const newProjectEdit = await this.projectRepository.update({
-        id
-      }, {
-        name: body.name,
-        description: body.description,
-        images: body.images,
-        init: body.init,
-        durationDays: body.durationDays,
-        repositoryLink: body.repositoryLink,
-        deployLink: body.deployLink,
-        relevance: body.relevance,
-        company: body.company,
-        isActive: body.isActive,
-        tools: tools,
-        skills: skills
       })
       const projectEdit = await this.projectRepository.findOne({where: {
         id
       }})
+      setTimeout(async () => {
+        if(projectEdit) {
+          this.projectRepository.merge(projectEdit, {
+            id
+          }, {
+            name: body.name,
+            description: body.description,
+            image: body.image,
+            dateInit: body.dateInit,
+            dateEnd: body.dateEnd,
+            repositoryLink: body.repositoryLink,
+            deployLink: body.deployLink,
+            relevance: body.relevance,
+            company: body.company,
+            isActive: body.isActive,
+            tools: tools,
+            skills: skills
+          })
+          this.projectRepository.save(projectEdit)
+        }
+      },1000)
       return projectEdit
     } catch (error) {
       return new InternalServerErrorException("Database Error")

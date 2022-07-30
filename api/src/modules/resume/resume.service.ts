@@ -6,8 +6,9 @@ import { Repository } from 'typeorm';
 
 import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { CreateUpdateResumeDto } from './dto/create-update-resume.dto';
-import fs, { createReadStream } from 'fs';
+import fs, { createReadStream, existsSync, unlinkSync } from 'fs';
 import 'dotenv/config';
+import { join } from 'path';
 
 const client = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
@@ -37,13 +38,6 @@ export class ResumeService {
   ) {
     const fileStream = createReadStream(file.path)
     try {   
-      let listImage = [];
-      const bucketParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Body: fileStream,
-        Key: file.filename,
-      };
-      listImage.push(await client.send(new PutObjectCommand(bucketParams)));
       return {
         name: file.filename
       }
@@ -55,12 +49,9 @@ export class ResumeService {
   async destroyResumeS3(resume: string) {
     try {
       const resumeDB = await this.resumeRepository.find();
-      let listImage = [];
-        const bucketParams = {
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: resume === "Spanish" ? resumeDB[0].spanish : resumeDB[0].english,
-        };
-        listImage.push(await client.send(new DeleteObjectCommand(bucketParams)));
+      resume === "Spanish" ?
+          unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.spanish))
+      : unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.english))  
         return {
           name: resume === "Spanish" ? resumeDB[0].spanish : resumeDB[0].english,
         }

@@ -31,13 +31,13 @@ function CreateReference (props: props) {
         try {
             const formDataImage: FormData = new FormData()
             formDataImage.append("file", imageReference)
-            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3001/reference/image`, formDataImage, {
+            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3002/reference/image`, formDataImage, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             const nameImageS3: string = postImage.data.name
             console.log(dataReference)
             console.log(nameImageS3)
-            const postDataReference = await axios.post("http://localhost:3001/reference", {
+            const postDataReference = await axios.post("http://localhost:3002/reference", {
                 ...dataReference,
                 image: nameImageS3
             }, {

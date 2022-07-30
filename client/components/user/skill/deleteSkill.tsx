@@ -25,10 +25,10 @@ function DeleteSkill (props: props) {
         event.preventDefault()
         try {
          
-            await axios.delete(`http://localhost:3001/skill/image?id=${skillSelect}`, {
+            await axios.delete(`http://localhost:3002/skill/image?id=${skillSelect}`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
-            const deleteSkill = await axios.delete(`http://localhost:3001/skill?id=${skillSelect}`,{
+            const deleteSkill = await axios.delete(`http://localhost:3002/skill?id=${skillSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")
@@ -45,7 +45,7 @@ function DeleteSkill (props: props) {
                     <select onChange={e => setSkillSelect(e.target.value)} className="w-1/3">
                         <option hidden>~</option>
                         {
-                            props?.allSkills?.map(skill => <option value={skill.id}>{skill.name}</option>)
+                            props?.allSkills?.map(skill => <option value={skill.id} key={skill.id}>{skill.name}</option>)
                         }
                     </select>
                     <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">

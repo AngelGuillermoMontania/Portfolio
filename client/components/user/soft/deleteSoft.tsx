@@ -6,6 +6,7 @@ import axios from 'axios'
 class softs {
     "id": string
     "name": string
+    "image": string
   }
 
 class props {
@@ -22,7 +23,11 @@ function DeleteSoft (props: props) {
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
-            const deleteSoft = await axios.delete(`http://localhost:3001/soft?id=${softSelect}`,{
+         
+            await axios.delete(`http://localhost:3002/soft/image?id=${softSelect}`, {
+                headers: {"Authorization": `Bearer ${props.token}`}
+            })
+            const postDataSoft = await axios.delete(`http://localhost:3002/soft?id=${softSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")
@@ -32,13 +37,14 @@ function DeleteSoft (props: props) {
     }
 
     return (
+      
             <div className="h-1/3 flex flex-col items-center justify-center">
-                <p className="text-white text-xl">DELETE SKILL:</p>
+                <p className="text-white text-xl">DELETE TOOL:</p>
                 <div className='flex w-4/5 justify-around'>
                     <select onChange={e => setSoftSelect(e.target.value)} className="w-1/3">
                         <option hidden>~</option>
                         {
-                            props?.allSofts?.map(soft => <option value={soft.id}>{soft.name}</option>)
+                            props?.allSofts?.map(soft => <option value={soft.id} key={soft.id}>{soft.name}</option>)
                         }
                     </select>
                     <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
@@ -47,6 +53,7 @@ function DeleteSoft (props: props) {
                 </div>
             </div>
     )
+
 
 
 }

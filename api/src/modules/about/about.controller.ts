@@ -3,7 +3,7 @@ import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 import { AboutService } from './about.service';
 import { CreateUpdateAboutDto } from './dto/create-update-about.dto';
 
-@Controller()
+@Controller('about')
 export class AboutController {
   constructor(private readonly aboutService: AboutService) {}
 

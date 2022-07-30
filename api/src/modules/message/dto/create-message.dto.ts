@@ -5,6 +5,9 @@ export class CreateMessageDto {
   readonly title: string;
 
   @IsString()
+  readonly company: string;
+
+  @IsString()
   readonly body: string;
 
   @IsString()

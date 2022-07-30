@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  StreamableFile,
   UploadedFile,
   UploadedFiles,
   UseGuards,
@@ -19,6 +20,8 @@ import { Project } from 'src/models/project.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
 import { ProjectService } from './project.service';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 
 interface Order {
   order: string;
@@ -40,16 +43,21 @@ export class ProjectController {
     return this.projectService.getOneProject(id);
   }
 
+  @Get('image')
+  getImages(@Query('name') name: string): StreamableFile {
+    const file = createReadStream(join(process.cwd(), `/assets/${name}`));
+    return new StreamableFile(file);
+  }
 
   @UseGuards(JwtAuthGuard)
   @Post('image')
-  @UseInterceptors(FilesInterceptor('files', 10, {
-    storage: storageMulterFiles
+  @UseInterceptors(FilesInterceptor('file', 10, {
+    storage: storageMulterFile
   }))
   postImageProject(
-    @UploadedFiles() files: Array<Express.Multer.File>,
+    @UploadedFiles() file: Express.Multer.File,
   ) {
-    return this.projectService.createImagesProject(files);
+    return this.projectService.createImagesProject(file);
   }
 
   @UseGuards(JwtAuthGuard)

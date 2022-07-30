@@ -6,11 +6,14 @@ import {
   Post,
   Put,
   Query,
+  StreamableFile,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 import { storageMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
@@ -24,6 +27,12 @@ export class ReferenceController {
   @Get()
   getReferences() {
     return this.referenceService.getAllReferences();
+  }
+
+  @Get('image')
+  getImages(@Query('name') name: string): StreamableFile {
+    const file = createReadStream(join(process.cwd(), `/assets/${name}`));
+    return new StreamableFile(file);
   }
 
   @UseGuards(JwtAuthGuard)

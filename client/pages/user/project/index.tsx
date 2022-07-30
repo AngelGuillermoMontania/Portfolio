@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 
 import { MouseEvent, useEffect, useState } from 'react'
 import axios from 'axios'
@@ -10,12 +10,7 @@ import axios from 'axios'
 import ButtonLogout from '../../../components/user/ButtonLogout'
 
 
-class projects {
-    "id": string
-    "name": string
-    "image": string
-    "level": string
-}
+
 class skills {
     "id": string
     "name": string
@@ -38,22 +33,31 @@ const Project: NextPage = () => {
     const [token, setToken] = useState<boolean>(false)
 
     useEffect(() => {
-        const Token = sessionStorage.getItem("Token")
-        if (Token) {
-            setToken(!token)
-        }
-        axios("http://localhost:3001/project", {
-            headers: { "Authorization": `Bearer ${token}` }
-        }).then(data => setAllProjects(data.data))
+        axios("http://localhost:3002/auth/verify", {
+            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
+        }).then(data => setToken(true))
+            .catch(error => setToken(false))
+        axios("http://localhost:3002/project", {
+            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
+        }).then(data => {
+            if(data.data.status !== 200) {
+                setAllProjects(data.data)
+            }
+        })
             .catch(error => console.log(error))
     }, [])
 
-    const onDelete = async (event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
-        event.preventDefault()
+    const onDelete = async () => {
         try {
-            
+            await axios.delete(`http://localhost:3002/project/image?id=${projectToDelete}`, {
+                headers: {"Authorization": `Bearer ${sessionStorage.getItem("Token")}`}
+            })
+            const deleteSkill = await axios.delete(`http://localhost:3002/project?id=${projectToDelete}`,{
+                headers: {"Authorization": `Bearer ${sessionStorage.getItem("Token")}`}
+            })
+            Router.push("/user")
         } catch (error) {
-            
+            console.log(error)
         }
     }
 
@@ -79,7 +83,9 @@ const Project: NextPage = () => {
                                 >
                                     <option hidden>~</option>
                                     {
-                                        allProjects.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
+                                        allProjects[0] ?
+                                        allProjects?.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
+                                        : ""
                                     }
                                 </select>
                                 <Link href={`project/edit/${projectToEdit}`}>
@@ -94,10 +100,12 @@ const Project: NextPage = () => {
                                 >
                                     <option hidden>~</option>
                                     {
-                                        allProjects.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
+                                        allProjects[0] ?
+                                        allProjects?.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
+                                        : ""
                                     }
                                 </select>
-                                <button className='bg-blue-600 p-4 rounded-xl' onClick={e => onDelete(e)}>
+                                <button className='bg-blue-600 p-4 rounded-xl' onClick={e => onDelete()}>
                                     Delete
                                 </button>
                             </div>

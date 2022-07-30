@@ -25,15 +25,18 @@ const Tool: NextPage = () => {
   const [token, setToken] = useState<boolean>(false)
 
   useEffect(() => {
-    const Token = sessionStorage.getItem("Token")
-    if (Token) {
-      setToken(!token)
-    }
-    axios("http://localhost:3001/tool", {
-      headers: { "Authorization": `Bearer ${token}` }
-    }).then(data => setAllTools(data.data))
+    axios("http://localhost:3002/tool", {
+      headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
+    }).then(data => 
+      setAllTools(data.data)
+    )
       .catch(error => console.log(error))
+    axios("http://localhost:3002/auth/verify", {
+      headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
+    }).then(data => setToken(true))
+      .catch(error => setToken(false))
   }, [])
+
 
   return (
     <div className="bg-slate-900 h-screen">

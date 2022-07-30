@@ -1,5 +1,7 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { createReadStream, existsSync, unlinkSync } from 'fs';
+import { join } from 'path';
 
 import { SoftSkill } from 'src/models/softSkill.entity';
 import { Repository } from 'typeorm';
@@ -20,6 +22,30 @@ export class SoftService {
     }
   }
 
+  async createImageSoft(file: Express.Multer.File) {
+    try {   
+      return {
+        name: file.filename
+      }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
+    
+  }
+
+  async destroyImageSoft(id: string) {
+    try {
+      const deleteImageSoft = await this.softRepository.findOneBy({id})
+      if(deleteImageSoft) {
+        if(existsSync(join(process.cwd(), '/assets/', deleteImageSoft?.image))) {
+          unlinkSync(join(process.cwd(), '/assets/', deleteImageSoft?.image))
+        }
+      }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
+  }
+
   async createSoft(body: CreateUpdateSoftDto) {
     try {
       const newSoft = this.softRepository.create(body);
@@ -31,7 +57,6 @@ export class SoftService {
   }
 
   async editSoft(body: CreateUpdateSoftDto, id: string) {
-    console.log(body, id)
     try {
       await this.softRepository.update(
         {

@@ -45,17 +45,17 @@ function EditTool (props: props) {
                     data: props.allTools.find(elem => elem.id === toolSelect)
                 }
             } else {
-                await axios.delete(`http://localhost:3001/tool/image?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
+                await axios.delete(`http://localhost:3002/tool/image?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
                 const formDataImage: FormData = new FormData()
                 formDataImage.append("file", imageTool)
-                postImage = await axios.post(`http://localhost:3001/tool/image`, formDataImage, {
+                postImage = await axios.post(`http://localhost:3002/tool/image`, formDataImage, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
-            const postDataTool = await axios.put(`http://localhost:3001/tool?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
+            const postDataTool = await axios.put(`http://localhost:3002/tool?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
                 ...dataTool,
                 image: nameImageS3
             }, {
@@ -74,7 +74,7 @@ function EditTool (props: props) {
                 <select onChange={e => setToolSelect(e.target.value)} className="w-1/3 p-1 m-1">
                     <option hidden>~</option>
                     {
-                        props?.allTools?.map(tool => <option value={tool.id}>{tool.name}</option>)
+                        props?.allTools?.map(tool => <option value={tool.id} key={tool.id}>{tool.name}</option>)
                     }
                 </select>
                 <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">

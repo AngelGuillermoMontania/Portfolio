@@ -30,7 +30,8 @@ function EditProject() {
     const [dataProject, setDataProject] = useState({
         name: "",
         description: "",
-        init: new Date(),
+        dateInit: new Date(),
+        dateEnd: new Date(),
         durationDays: 0,
         repositoryLink: "",
         deployLink: "",
@@ -41,7 +42,7 @@ function EditProject() {
 
     const [allSkills, setAllSkills] = useState<Array<skills>>([])
     const [allTools, setAllTools] = useState<Array<tools>>([])
-    const [imagesProject, setImagesProject] = useState<FileList>()
+    const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
 
@@ -52,17 +53,21 @@ function EditProject() {
         if (Token) {
             setToken(!token)
         }
-        axios(`http://localhost:3001/project/one?id=${router.query.id}`, {
-            headers: { "Authorization": `Bearer ${Token}` }
-        }).then(data => setDataProject(data.data))
-        axios("http://localhost:3001/tool", {
+        axios("http://localhost:3002/tool", {
             headers: { "Authorization": `Bearer ${Token}` }
         }).then(data => setAllTools(data.data))
             .catch(error => console.log(error))
-        axios("http://localhost:3001/skill", {
+        axios("http://localhost:3002/skill", {
             headers: { "Authorization": `Bearer ${Token}` }
         }).then(data => setAllSkills(data.data))
             .catch(error => console.log(error))
+        axios(`http://localhost:3002/project/one?id=${router.query.id}`, {
+            headers: { "Authorization": `Bearer ${Token}` }
+        }).then(data => {
+            setDataProject(data.data)
+            setSkillSelect(data.data.skills.map((elem: {id: string}) => elem.id))
+            setToolSelect(data.data.tools.map((elem: {id: string}) => elem.id))
+        })
     }, [])
 
     const handleProject = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>): void => {
@@ -73,7 +78,7 @@ function EditProject() {
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
-        event.target.files && setImagesProject(event.target.files)
+        event.target.files && setImageProject(event.target.files[0])
     }
 
     const handleSkill = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -92,28 +97,41 @@ function EditProject() {
 
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
+        let postImage
         try {
-            const formDataImage: FormData = new FormData()
-            if (imagesProject) {
-                for (let i = 0; i < imagesProject.length; i++) {
-                    formDataImage.append("files", imagesProject[0])
+            if(!imageProject) {
+                const projectCreated = await axios(`http://localhost:3002/project/one?id=${router.query.id}`, {
+                    headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
+                })
+                postImage = {
+                    data: {
+                        names: projectCreated.data.images
+                    }
                 }
+            } else {
+                await axios.delete(`http://localhost:3002/project/image?id=${router.query.id}`, {
+                    headers: {"Authorization": `Bearer ${sessionStorage.getItem("Token")}`}
+                })
+                const formDataImage: FormData = new FormData()
+                
+                    formDataImage.append("file", imageProject)
+                
+                postImage = await axios.post(`http://localhost:3002/project/image`, formDataImage, {
+                    headers: {"Authorization": `Bearer ${sessionStorage.getItem("Token")}`}
+                })
             }
-            const postImage: { "data": { "names": string[] } } = await axios.post(`http://localhost:3001/project/image`, formDataImage, {
-                headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
-            })
-            const namesImageS3 = postImage.data.names
-            const postDataSkill = await axios.post("http://localhost:3001/project", {
+            const namesImageS3: string = postImage.data.name
+            const postDataSkill = await axios.put(`http://localhost:3002/project?id=${router.query.id}`, {
                 name: dataProject.name,
                 description: dataProject.description,
-                init: dataProject.init,
-                durationDays: Number(dataProject.durationDays),
+                dateInit: dataProject.dateInit,
+                dateEnd: dataProject.dateEnd,
                 repositoryLink: dataProject.repositoryLink,
                 deployLink: dataProject.deployLink,
                 relevance: Number(dataProject.relevance),
                 company: dataProject.company,
                 isActive: Boolean(dataProject.isActive),
-                images: namesImageS3,
+                image: namesImageS3,
                 tools: toolSelect,
                 skills: skillSelect
             }, {
@@ -123,6 +141,8 @@ function EditProject() {
         } catch (error) {
             console.log(error)
         }
+           
+
     }
 
     return (
@@ -138,21 +158,25 @@ function EditProject() {
                     className="w-1/4 p-1 m-1"
                     value={dataProject.name}
                 ></input>
+                <label htmlFor='dateInit'>Init Date</label>
                 <input
                     type="date"
-                    placeholder="Init"
-                    name="init"
+                    placeholder="dateInit"
+                    name="dateInit"
+                    id='dateInit'
                     onChange={e => handleProject(e)}
                     className="w-1/4 p-1 m-1"
-                    value={String(dataProject.init).slice(0,10)}
+                    value={String(dataProject.dateInit).slice(0,10)}
                 ></input>
+                <label htmlFor='dateEnd'>End Date</label>
                 <input
-                    type="number"
-                    placeholder="durationDays"
-                    name="durationDays"
+                    type="date"
+                    placeholder="dateEnd"
+                    name="dateEnd"
+                    id='dateEnd'
                     onChange={e => handleProject(e)}
                     className="w-1/4 p-1 m-1"
-                    value={dataProject.durationDays}
+                    value={String(dataProject.dateEnd).slice(0,10)}
                 ></input>
                 <input
                     type="url"
@@ -186,45 +210,72 @@ function EditProject() {
                     className="w-1/4 p-1 m-1"
                     value={dataProject.company}
                 ></input>
-                <select onChange={e => handleProject(e)} className="w-1/3 p-1 m-1" name='isActive'>
-                    <option hidden>~</option>
-                    <option value={"true"}>true</option>
-                    <option value={"false"}>false</option>
-                </select>
-                <select
-                    onChange={e => handleSkill(e)}
-                    className="w-1/3 p-1 m-1"
-                    name='skills'
-                >
-                    <option hidden>~</option>
+                <div>
+                    <label>Active?</label>
+                    <select onChange={e => handleProject(e)} className="w-1/3 p-1 m-1" name='isActive'>
+                        <option hidden>~</option>
+                        <option value={"true"}>true</option>
+                        <option value={"false"}>false</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Skills</label>
+                    <select
+                        onChange={e => handleSkill(e)}
+                        className="p-1 m-1"
+                        name='skills'
+                    >
+                        <option hidden>~</option>
+                        {
+                            allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
+                        }
+                        
+                    </select>
                     {
-                        allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
+                        allSkills.map(skill => {
+                            if(skillSelect.includes(skill.id)) {
+                                return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setSkillSelect(skillSelect.filter(elem => elem !== skill.id))}>Eliminar {skill.name}</button>
+                            }
+                        })
                     }
-                </select>
-                <select
-                    onChange={e => handleTool(e)}
-                    className="w-1/3 p-1 m-1"
-                    name='tools'
-                >
-                    <option hidden>~</option>
+                </div>
+                <div>
+                    <label>Tools</label>
+                    <select
+                        onChange={e => handleTool(e)}
+                        className="p-1 m-1"
+                        name='tools'
+                    >
+                        <option hidden>~</option>
+                        {
+                            allTools?.map(tool => <option key={tool.id} value={tool.id}>{tool.name}</option>)
+                        }
+                    </select>
                     {
-                        allTools?.map(tool => <option key={tool.id} value={tool.id}>{tool.name}</option>)
+                        allTools.map(tool => {
+                            if(toolSelect.includes(tool.id)) {
+                                return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setToolSelect(toolSelect.filter(elem => elem !== tool.id))}>Eliminar {tool.name}</button>
+                            }
+                        })
                     }
-                </select>
+                </div>
                 <textarea
                     placeholder="Description"
                     name="description"
                     onChange={e => handleProject(e)}
                     className="w-3/4 p-1 m-2 h-1/2"
+                    value={dataProject.description}
                 ></textarea>
-                <input
-                    type="file"
-                    name="file"
-                    autoComplete="img"
-                    onChange={e => handleImage(e)}
-                    multiple
-                    className="w-1/4 p-1 m-1"
-                ></input>
+                <div>
+                    <label>Eliminara todas las imagenes ya cargadas en este proyecto</label>
+                    <input
+                        type="file"
+                        name="file"
+                        autoComplete="img"
+                        onChange={e => handleImage(e)}
+                        className="p-1 m-1"
+                    ></input>
+                </div>
                 <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
             </form>
         </div>

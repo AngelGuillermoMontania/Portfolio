@@ -21,7 +21,8 @@ function CreateProject() {
     const [dataProject, setDataProject] = useState({
         name: "",
         description: "",
-        init: new Date(),
+        dateInit: new Date(),
+        dateEnd: new Date(),
         durationDays: 0,
         repositoryLink: "",
         deployLink: "",
@@ -32,23 +33,23 @@ function CreateProject() {
 
     const [allSkills, setAllSkills] = useState<Array<skills>>([])
     const [allTools, setAllTools] = useState<Array<tools>>([])
-    const [imagesProject, setImagesProject] = useState<FileList>()
+    const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
 
     const [token, setToken] = useState<boolean>(false)
 
     useEffect(() => {
-        const Token = sessionStorage.getItem("Token")
-        if (Token) {
-            setToken(!token)
-        }
-        axios("http://localhost:3001/tool", {
-            headers: { "Authorization": `Bearer ${token}` }
+        axios("http://localhost:3002/auth/verify", {
+            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
+        }).then(data => setToken(true))
+            .catch(error => setToken(false))
+        axios("http://localhost:3002/tool", {
+            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
         }).then(data => setAllTools(data.data))
             .catch(error => console.log(error))
-        axios("http://localhost:3001/skill", {
-            headers: { "Authorization": `Bearer ${token}` }
+        axios("http://localhost:3002/skill", {
+            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
         }).then(data => setAllSkills(data.data))
             .catch(error => console.log(error))
     }, [])
@@ -61,7 +62,7 @@ function CreateProject() {
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
-        event.target.files && setImagesProject(event.target.files)
+        event.target.files && setImageProject(event.target.files[0])
     }
 
     const handleSkill = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -82,32 +83,31 @@ function CreateProject() {
         event.preventDefault()
         try {
             const formDataImage: FormData = new FormData()
-            if (imagesProject) {
-                for (let i = 0; i < imagesProject.length; i++) {
-                    formDataImage.append("files", imagesProject[0])
-                }
+            if (imageProject) {
+                
+                formDataImage.append("file", imageProject)
+                
             }
-            const postImage: { "data": { "names": string[] } } = await axios.post(`http://localhost:3001/project/image`, formDataImage, {
+            const postImage: { "data": { "name": string[] } } = await axios.post(`http://localhost:3002/project/image`, formDataImage, {
                 headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
             })
-            const namesImageS3 = postImage.data.names
-            const postDataSkill = await axios.post("http://localhost:3001/project", {
+            const namesImageS3 = postImage.data.name
+            const postDataSkill = await axios.post("http://localhost:3002/project", {
                 name: dataProject.name,
                 description: dataProject.description,
-                init: dataProject.init,
-                durationDays: Number(dataProject.durationDays),
+                dateInit: dataProject.dateInit,
+                dateEnd: dataProject.dateEnd,
                 repositoryLink: dataProject.repositoryLink,
                 deployLink: dataProject.deployLink,
                 relevance: Number(dataProject.relevance),
                 company: dataProject.company,
                 isActive: Boolean(dataProject.isActive),
-                images: namesImageS3,
+                image: namesImageS3,
                 tools: toolSelect,
                 skills: skillSelect
             }, {
                 headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
             })
-            console.log(postDataSkill)
             Router.push("/user")
         } catch (error) {
             console.log(error)
@@ -115,115 +115,129 @@ function CreateProject() {
     }
 
     return (
-
-        <div className="h-screen bg-blue-600  flex flex-col items-center justify-center">
-            <p className="text-white text-xl">CREATE SKILL:</p>
-            <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center">
-                <input
-                    type="text"
-                    placeholder="Name"
-                    name="name"
-                    onChange={e => handleProject(e)}
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <input
-                    type="date"
-                    placeholder="Init"
-                    name="init"
-                    onChange={e => handleProject(e)}
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <input
-                    type="number"
-                    placeholder="durationDays"
-                    name="durationDays"
-                    onChange={e => handleProject(e)}
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <input
-                    type="url"
-                    placeholder="repositoryLink"
-                    name="repositoryLink"
-                    onChange={e => handleProject(e)}
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <input
-                    type="url"
-                    placeholder="deployLink"
-                    name="deployLink"
-                    onChange={e => handleProject(e)}
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <input
-                    type="number"
-                    placeholder="relevance, 0 to 3"
-                    name="relevance"
-                    onChange={e => handleProject(e)}
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <input
-                    type="text"
-                    placeholder="Company"
-                    name="company"
-                    onChange={e => handleProject(e)}
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <select onChange={e => handleProject(e)} className="w-1/3 p-1 m-1" name='isActive'>
-                    <option hidden>~</option>
-                    <option value={"true"}>true</option>
-                    <option value={"false"}>false</option>
-                </select>
-                <select
-                    onChange={e => handleSkill(e)}
-                    className="w-1/3 p-1 m-1"
-                    name='skills'
-                >
-                    <option>~</option>
-                    {
-                        allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
-                    }
-                </select>
-                {
-                    allSkills.map(skill => {
-                        if(skillSelect.includes(skill.id)) {
-                            return <button onClick={e => setSkillSelect(skillSelect.filter(elem => elem !== skill.id))}>Eliminar {skill.name}</button>
+        <div>
+            {
+                token ? <div className="h-screen bg-blue-600  flex flex-col items-center justify-center">
+                <p className="text-white text-xl">CREATE SKILL:</p>
+                <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center">
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        name="name"
+                        onChange={e => handleProject(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <label htmlFor='dateInit'>Init Date</label>
+                    <input
+                        type="date"
+                        placeholder="dateInit"
+                        name="dateInit"
+                        id='dateInit'
+                        onChange={e => handleProject(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <label htmlFor='dateEnd'>End Date</label>
+                    <input
+                        type="date"
+                        placeholder="dateEnd"
+                        id='dateEnd'
+                        name="dateEnd"
+                        onChange={e => handleProject(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <input
+                        type="url"
+                        placeholder="repositoryLink"
+                        name="repositoryLink"
+                        onChange={e => handleProject(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <input
+                        type="url"
+                        placeholder="deployLink"
+                        name="deployLink"
+                        onChange={e => handleProject(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <input
+                        type="number"
+                        placeholder="relevance, 0 to 3"
+                        name="relevance"
+                        onChange={e => handleProject(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <input
+                        type="text"
+                        placeholder="Company"
+                        name="company"
+                        onChange={e => handleProject(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <label>Active</label>
+                    <select onChange={e => handleProject(e)} className="w-1/3 p-1 m-1" name='isActive'>
+                        <option hidden>~</option>
+                        <option value={"true"}>true</option>
+                        <option value={"false"}>false</option>
+                    </select>
+                    <div>
+                        <label>Skills</label>
+                        <select
+                            onChange={e => handleSkill(e)}
+                            className="p-1 m-1"
+                            name='skills'
+                        >
+                            <option>~</option>
+                            {
+                                allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
+                            }
+                        </select>
+                        {
+                            allSkills?.map(skill => {
+                                if(skillSelect.includes(skill.id)) {
+                                    return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setSkillSelect(skillSelect.filter(elem => elem !== skill.id))}>Eliminar {skill.name}</button>
+                                }
+                            })
                         }
-                    })
-                }
-                <select
-                    onChange={e => handleTool(e)}
-                    className="w-1/3 p-1 m-1"
-                    name='tools'
-                >
-                    <option>~</option>
-                    {
-                        allTools?.map(tool => <option key={tool.id} value={tool.id}>{tool.name}</option>)
-                    }
-                </select>
-                {
-                    allTools.map(tool => {
-                        if(toolSelect.includes(tool.id)) {
-                            return <button onClick={e => setToolSelect(toolSelect.filter(elem => elem !== tool.id))}>Eliminar {tool.name}</button>
+                    </div>
+                    <div>
+                        <label>Tools</label>
+                        <select
+                            onChange={e => handleTool(e)}
+                            className="p-1 m-1"
+                            name='tools'
+                        >
+                            <option>~</option>
+                            {
+                                allTools?.map(tool => <option key={tool.id} value={tool.id}>{tool.name}</option>)
+                            }
+                        </select>
+                        {
+                            allTools?.map(tool => {
+                                if(toolSelect.includes(tool.id)) {
+                                    return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setToolSelect(toolSelect.filter(elem => elem !== tool.id))}>Eliminar {tool.name}</button>
+                                }
+                            })
                         }
-                    })
-                }
-                <textarea
-                    placeholder="Description"
-                    name="description"
-                    onChange={e => handleProject(e)}
-                    className="w-3/4 p-1 m-2"
-                ></textarea>
-                <input
-                    type="file"
-                    name="file"
-                    autoComplete="img"
-                    onChange={e => handleImage(e)}
-                    multiple
-                    className="w-1/4 p-1 m-1"
-                ></input>
-                <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
-            </form>
+                    </div>
+                    <textarea
+                        placeholder="Description"
+                        name="description"
+                        onChange={e => handleProject(e)}
+                        className="w-3/4 p-1 m-2"
+                    ></textarea>
+                    <input
+                        type="file"
+                        name="file"
+                        autoComplete="img"
+                        onChange={e => handleImage(e)}
+                        className="w-1/4 p-1 m-1"
+                    ></input>
+                    <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
+                </form>
+            </div> : <div>Not Authorized</div>
+            }
         </div>
+        
     )
 }
 

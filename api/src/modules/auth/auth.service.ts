@@ -28,4 +28,11 @@ export class AuthService {
     };
   }
 
+  async verify(user: any) {
+    console.log("VERIFY")
+    return {
+      access_token: this.jwtService.verify(user.token),
+    };
+  }
+
 }

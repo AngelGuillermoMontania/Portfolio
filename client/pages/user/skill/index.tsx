@@ -30,7 +30,7 @@ const Skill: NextPage = () => {
     if (Token) {
       setToken(!token)
     }
-    axios("http://localhost:3001/skill", {
+    axios("http://localhost:3002/skill", {
       headers: { "Authorization": `Bearer ${token}` }
     }).then(data => setAllSkills(data.data))
         .catch(error => console.log(error))

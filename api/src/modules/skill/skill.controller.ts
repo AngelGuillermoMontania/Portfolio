@@ -3,14 +3,21 @@ import {
   Controller,
   Delete,
   Get,
+  Header,
+  InternalServerErrorException,
   Post,
   Put,
   Query,
+  Response,
+  StreamableFile,
   UploadedFile,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Response as Res } from 'express';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 import { storageMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
@@ -26,6 +33,12 @@ export class SkillController {
     return this.skillService.getAllSkill();
   }
 
+  @Get('image')
+  getImages(@Query('name') name: string): StreamableFile {
+    const file = createReadStream(join(process.cwd(), `/assets/${name}`));
+    return new StreamableFile(file);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Post('image')
   @UseInterceptors(FileInterceptor('file', {
@@ -38,6 +51,7 @@ export class SkillController {
   @UseGuards(JwtAuthGuard)
   @Delete('image')
   DeleteImageSkill(@Query('id') id: string) {
+    console.log(id)
     return this.skillService.destroyImageSkill(id);
   }
 

@@ -1,13 +1,15 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { Skill } from 'src/models/skill.entity';
 import { CreateUpdateSkillDto } from './dto/create-update-skill.dto';
 
-import fs, { createReadStream } from 'fs';
+import fs, { createReadStream, createWriteStream, existsSync, unlinkSync } from 'fs';
 import 'dotenv/config';
-import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand, GetObjectCommand, GetObjectOutput, GetObjectCommandOutput, S3 } from '@aws-sdk/client-s3';
+import { Readable } from 'stream';
+import { join } from 'path';
 
 const client = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
@@ -33,15 +35,7 @@ export class SkillService {
   }
 
   async createImageSkill(file: Express.Multer.File) {
-    const fileStream = createReadStream(file.path)
     try {   
-      let listImage = [];
-      const bucketParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Body: fileStream,
-        Key: file.filename,
-      };
-      listImage.push(await client.send(new PutObjectCommand(bucketParams)));
       return {
         name: file.filename
       }
@@ -54,15 +48,11 @@ export class SkillService {
   async destroyImageSkill(id: string) {
     try {
       const deleteImageSkill = await this.skillRepository.findOneBy({id})
-      let listImage = [];
-        const bucketParams = {
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: deleteImageSkill?.image,
-        };
-        listImage.push(await client.send(new DeleteObjectCommand(bucketParams)));
-        return {
-          name: deleteImageSkill?.image
+      if(deleteImageSkill) {
+        if(existsSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))) {
+          unlinkSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))
         }
+      }
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3')
     }

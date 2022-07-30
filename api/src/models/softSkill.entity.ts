@@ -7,4 +7,7 @@ export class SoftSkill {
 
   @Column()
   name: string;
+
+  @Column()
+  image: string;
 }

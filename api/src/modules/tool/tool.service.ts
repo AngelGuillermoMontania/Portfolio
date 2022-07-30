@@ -6,8 +6,9 @@ import { Tool } from 'src/models/tool.entity';
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
 
 import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteBucketCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import fs, { createReadStream } from 'fs';
+import fs, { createReadStream, existsSync, unlinkSync } from 'fs';
 import 'dotenv/config';
+import { join } from 'path';
 
 const client = new S3Client({
   region: process.env.AWS_BUCKET_REGION,
@@ -36,13 +37,6 @@ export class ToolService {
   async createImageTool(file: Express.Multer.File) {
     const fileStream = createReadStream(file.path)
     try {   
-      let listImage = [];
-      const bucketParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Body: fileStream,
-        Key: file.filename,
-      };
-      listImage.push(await client.send(new PutObjectCommand(bucketParams)));
       return {
         name: file.filename
       }
@@ -54,16 +48,12 @@ export class ToolService {
 
   async destroyImageTool(id: string) {
     try {
-      const deleteImageTool = await this.toolRepository.findOneBy({id})
-      let listImage = [];
-        const bucketParams = {
-          Bucket: process.env.AWS_BUCKET_NAME,
-          Key: deleteImageTool?.image,
-        };
-        listImage.push(await client.send(new DeleteObjectCommand(bucketParams)));
-        return {
-          name: deleteImageTool?.image
+      const deleteImageSkill = await this.toolRepository.findOneBy({id})
+      if(deleteImageSkill) {
+        if(existsSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))) {
+          unlinkSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))
         }
+      }
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3')
     }

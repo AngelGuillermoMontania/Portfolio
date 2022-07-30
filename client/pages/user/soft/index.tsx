@@ -17,18 +17,18 @@ class soft {
   "name": string
 }
 
-const Skill: NextPage = () => {
+const Soft: NextPage = () => {
 
   const [allSofts, setAllSofts] = useState<Array<soft>>([])
 
   const [token, setToken] = useState<boolean>(false)
 
   useEffect(() => {
-    const Token = sessionStorage.getItem("Token")
-    if (Token) {
-      setToken(!token)
-    }
-    axios("http://localhost:3001/soft", {
+    axios("http://localhost:3002/auth/verify", {
+            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
+        }).then(data => setToken(true))
+            .catch(error => setToken(false))
+    axios("http://localhost:3002/soft", {
       headers: { "Authorization": `Bearer ${token}` }
     }).then(data => setAllSofts(data.data))
   }, [])
@@ -63,4 +63,4 @@ const Skill: NextPage = () => {
   )
 }
 
-export default Skill
+export default Soft

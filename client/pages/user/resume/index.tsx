@@ -25,7 +25,7 @@ const Resume: NextPage = () => {
     if (Token) {
       setToken(!token)
     }
-    axios("http://localhost:3001/resume", {
+    axios("http://localhost:3002/resume", {
       headers: { "Authorization": `Bearer ${token}` }
     }).then(data => setResumeDB(data.data[0]))
         .catch(error => console.log(error))

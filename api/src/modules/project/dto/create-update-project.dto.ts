@@ -18,17 +18,16 @@ export class CreateUpdateProjectDto {
   @IsOptional()
   readonly description: string;
 
-  @IsArray()
-  @IsOptional()
-  readonly images: string[];
+  @IsString()
+  readonly image: string;
 
   @IsDateString()
   @IsOptional()
-  readonly init: Date;
+  readonly dateInit: Date;
 
-  @IsNumber()
+  @IsDateString()
   @IsOptional()
-  readonly durationDays: number;
+  readonly dateEnd: Date;
 
   @IsUrl()
   readonly repositoryLink: string;

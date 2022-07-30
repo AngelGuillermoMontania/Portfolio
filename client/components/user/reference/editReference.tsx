@@ -45,17 +45,17 @@ function EditReference (props: props) {
                     data: props.allReferences.find(elem => elem.id === referenceSelect)
                 }
             } else {
-                await axios.delete(`http://localhost:3001/reference/image?id=${props.allReferences.find(elem => elem.id === referenceSelect)?.id}`, {
+                await axios.delete(`http://localhost:3002/reference/image?id=${props.allReferences.find(elem => elem.id === referenceSelect)?.id}`, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
                 const formDataImage: FormData = new FormData()
                 formDataImage.append("file", imageReference)
-                postImage = await axios.post(`http://localhost:3001/reference/image`, formDataImage, {
+                postImage = await axios.post(`http://localhost:3002/reference/image`, formDataImage, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
-            const postDataReference = await axios.put(`http://localhost:3001/reference?id=${props.allReferences.find(elem => elem.id === referenceSelect)?.id}`, {
+            const postDataReference = await axios.put(`http://localhost:3002/reference?id=${props.allReferences.find(elem => elem.id === referenceSelect)?.id}`, {
                 ...dataReference,
                 image: nameImageS3
             }, {
