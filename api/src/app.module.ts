@@ -7,7 +7,6 @@ import { Tool } from './models/tool.entity';
 import { SoftSkill } from './models/softSkill.entity';
 import { Resume } from './models/resume.entity';
 import { About } from './models/about.entity';
-import { Reference } from './models/reference.entity';
 import { Contact } from './models/contact.entity';
 import { Message } from './models/message.entity';
 
@@ -19,7 +18,6 @@ import { User } from './models/user.entity';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ContactModule } from './modules/contact/contact.module';
 import { MessageModule } from './modules/message/message.module';
-import { ReferenceModule } from './modules/reference/reference.module';
 import { ResumeModule } from './modules/resume/resume.module';
 import { SkillModule } from './modules/skill/skill.module';
 import { SoftModule } from './modules/soft/soft.module';
@@ -47,7 +45,6 @@ import { AppController } from './app.controller';
         SoftSkill,
         Resume,
         About,
-        Reference,
         Contact,
         Message,
         User,
@@ -57,7 +54,6 @@ import { AppController } from './app.controller';
     AboutModule,
     ContactModule,
     MessageModule,
-    ReferenceModule,
     ResumeModule,
     SkillModule,
     SoftModule,

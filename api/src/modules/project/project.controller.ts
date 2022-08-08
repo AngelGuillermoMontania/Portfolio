@@ -51,13 +51,13 @@ export class ProjectController {
 
   @UseGuards(JwtAuthGuard)
   @Post('image')
-  @UseInterceptors(FilesInterceptor('file', 10, {
+  @UseInterceptors(FileInterceptor('file', {
     storage: storageMulterFile
   }))
   postImageProject(
-    @UploadedFiles() file: Express.Multer.File,
+    @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.projectService.createImagesProject(file);
+    return this.projectService.createImageProject(file);
   }
 
   @UseGuards(JwtAuthGuard)

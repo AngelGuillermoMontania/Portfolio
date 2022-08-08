@@ -73,11 +73,11 @@ const Project: NextPage = () => {
                         </Link>
                         <div className='flex flex-col justify-around items-center'>
                             <Link href={`project/create`}>
-                                <button className='bg-blue-600 p-4 rounded-xl'>
+                                <button className='bg-blue-600 p-4 rounded-xl hover:bg-blue-200'>
                                     Create
                                 </button>
                             </Link>
-                            <div className='h-24 flex items-center justify-around w-1/2'>
+                            <div className='h-24 flex items-center justify-around w-1/2 text-black'>
                                 <select
                                     onChange={e => setProjectToEdit(e.target.value)}
                                 >
@@ -89,12 +89,12 @@ const Project: NextPage = () => {
                                     }
                                 </select>
                                 <Link href={`project/edit/${projectToEdit}`}>
-                                    <button className='bg-blue-600 p-4 rounded-xl'>
+                                    <button className='bg-blue-600 p-4 rounded-xl hover:bg-blue-200'>
                                         Edit
                                     </button>
                                 </Link>
                             </div>
-                            <div>
+                            <div className='text-black'>
                                 <select
                                     onChange={e => setProjectToDelete(e.target.value)}
                                 >
@@ -105,7 +105,7 @@ const Project: NextPage = () => {
                                         : ""
                                     }
                                 </select>
-                                <button className='bg-blue-600 p-4 rounded-xl' onClick={e => onDelete()}>
+                                <button className='bg-blue-600 p-4 rounded-xl hover:bg-blue-200' onClick={e => onDelete()}>
                                     Delete
                                 </button>
                             </div>

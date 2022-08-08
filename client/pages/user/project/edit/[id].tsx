@@ -32,7 +32,6 @@ function EditProject() {
         description: "",
         dateInit: new Date(),
         dateEnd: new Date(),
-        durationDays: 0,
         repositoryLink: "",
         deployLink: "",
         relevance: 0,
@@ -149,7 +148,7 @@ function EditProject() {
 
         <div className="bg-blue-800 flex flex-col items-center justify-center h-screen">
             <p className="text-white text-xl">EDIT SKILL:</p>
-            <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center">
+            <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center text-black">
                 <input
                     type="text"
                     placeholder="Name"

@@ -1,4 +1,4 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Resume } from 'src/models/resume.entity';
@@ -24,14 +24,51 @@ export class ResumeService {
     @InjectRepository(Resume) private resumeRepository: Repository<Resume>,
   ) {}
 
-  async getResume() {
+  /* async getResume() {
     try {
       const Resume = await this.resumeRepository.find();
       return Resume;
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
+  } */
+
+  async viewResumeSpanish() {
+    try {
+      const Resume = await this.resumeRepository.find();
+      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].spanish}`));
+      return new StreamableFile(file);
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
   }
+  async viewResumeEnglish() {
+    try {
+      const Resume = await this.resumeRepository.find();
+      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].english}`));
+      return new StreamableFile(file);
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+  }
+ /*  async downloadResumeSpanish() {
+    try {
+      const Resume = await this.resumeRepository.find();
+      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].spanish}`));
+      return new StreamableFile(file);
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+  }
+  async downloadResumeEnglish() {
+    try {
+      const Resume = await this.resumeRepository.find();
+      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].english}`));
+      return new StreamableFile(file);
+    } catch (error) {
+      return new InternalServerErrorException('Database Error');
+    }
+  } */
 
   async createResumeS3(
     file: Express.Multer.File,

@@ -91,18 +91,19 @@ function CreateProject() {
             const postImage: { "data": { "name": string[] } } = await axios.post(`http://localhost:3002/project/image`, formDataImage, {
                 headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
             })
-            const namesImageS3 = postImage.data.name
+            const nameImageS3 = postImage.data.name
+            console.log(nameImageS3)
             const postDataSkill = await axios.post("http://localhost:3002/project", {
                 name: dataProject.name,
                 description: dataProject.description,
                 dateInit: dataProject.dateInit,
                 dateEnd: dataProject.dateEnd,
                 repositoryLink: dataProject.repositoryLink,
-                deployLink: dataProject.deployLink,
+                deployLink: dataProject.deployLink ? dataProject.deployLink : null,
                 relevance: Number(dataProject.relevance),
                 company: dataProject.company,
                 isActive: Boolean(dataProject.isActive),
-                image: namesImageS3,
+                image: nameImageS3,
                 tools: toolSelect,
                 skills: skillSelect
             }, {
@@ -125,7 +126,7 @@ function CreateProject() {
                         placeholder="Name"
                         name="name"
                         onChange={e => handleProject(e)}
-                        className="w-1/4 p-1 m-1"
+                        className="w-1/4 p-1 m-1 text-black"
                     ></input>
                     <label htmlFor='dateInit'>Init Date</label>
                     <input
@@ -134,7 +135,7 @@ function CreateProject() {
                         name="dateInit"
                         id='dateInit'
                         onChange={e => handleProject(e)}
-                        className="w-1/4 p-1 m-1"
+                        className="w-1/4 p-1 m-1 text-black"
                     ></input>
                     <label htmlFor='dateEnd'>End Date</label>
                     <input
@@ -143,35 +144,35 @@ function CreateProject() {
                         id='dateEnd'
                         name="dateEnd"
                         onChange={e => handleProject(e)}
-                        className="w-1/4 p-1 m-1"
+                        className="w-1/4 p-1 m-1 text-black"
                     ></input>
                     <input
                         type="url"
                         placeholder="repositoryLink"
                         name="repositoryLink"
                         onChange={e => handleProject(e)}
-                        className="w-1/4 p-1 m-1"
+                        className="w-1/4 p-1 m-1 text-black"
                     ></input>
                     <input
                         type="url"
                         placeholder="deployLink"
                         name="deployLink"
                         onChange={e => handleProject(e)}
-                        className="w-1/4 p-1 m-1"
+                        className="w-1/4 p-1 m-1 text-black"
                     ></input>
                     <input
                         type="number"
                         placeholder="relevance, 0 to 3"
                         name="relevance"
                         onChange={e => handleProject(e)}
-                        className="w-1/4 p-1 m-1"
+                        className="w-1/4 p-1 m-1 text-black"
                     ></input>
                     <input
                         type="text"
                         placeholder="Company"
                         name="company"
                         onChange={e => handleProject(e)}
-                        className="w-1/4 p-1 m-1"
+                        className="w-1/4 p-1 m-1 text-black"
                     ></input>
                     <label>Active</label>
                     <select onChange={e => handleProject(e)} className="w-1/3 p-1 m-1" name='isActive'>
@@ -183,7 +184,7 @@ function CreateProject() {
                         <label>Skills</label>
                         <select
                             onChange={e => handleSkill(e)}
-                            className="p-1 m-1"
+                            className="p-1 m-1 text-black"
                             name='skills'
                         >
                             <option>~</option>
@@ -203,7 +204,7 @@ function CreateProject() {
                         <label>Tools</label>
                         <select
                             onChange={e => handleTool(e)}
-                            className="p-1 m-1"
+                            className="p-1 m-1 text-black"
                             name='tools'
                         >
                             <option>~</option>
@@ -223,7 +224,7 @@ function CreateProject() {
                         placeholder="Description"
                         name="description"
                         onChange={e => handleProject(e)}
-                        className="w-3/4 p-1 m-2"
+                        className="w-3/4 p-1 m-2 text-black"
                     ></textarea>
                     <input
                         type="file"

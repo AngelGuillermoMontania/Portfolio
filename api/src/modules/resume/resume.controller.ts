@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Post, Put, Query, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Header, InternalServerErrorException, Post, Put, Query, StreamableFile, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storageMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
@@ -10,10 +10,35 @@ import { ResumeService } from './resume.service';
 export class ResumeController {
   constructor(private readonly resumeService: ResumeService) {}
 
-  @Get()
+  /* @Get()
   getResume() {
     return this.resumeService.getResume();
+  } */
+
+  @Get('view/spanish')
+  @Header('Content-Type', 'application/pdf')
+  @Header('Content-Disposition', 'inline; filename="AngelMontaña_SpanishCV.pdf"')
+  viewSpanish(): Promise<StreamableFile | InternalServerErrorException> {
+    return this.resumeService.viewResumeSpanish()
   }
+  @Get('view/english')
+  @Header('Content-Type', 'application/pdf')
+  @Header('Content-Disposition', 'inline')
+  viewEnglish(): Promise<StreamableFile | InternalServerErrorException> {
+    return this.resumeService.viewResumeEnglish()
+  }
+  /* @Get('download/spanish')
+  @Header('Content-Type', 'application/pdf')
+  @Header('Content-Disposition', 'attachment; filename="AngelMontaña_SpanishCV.pdf"')
+  downloadSpanish(): Promise<StreamableFile | InternalServerErrorException> {
+    return this.resumeService.downloadResumeSpanish()
+  }
+  @Get('download/english')
+  @Header('Content-Type', 'application/pdf')
+  @Header('Content-Disposition', 'attachment; filename="AngelMontaña_EnglishCV.pdf"')
+  downloadEnglish(): Promise<StreamableFile | InternalServerErrorException> {
+    return this.resumeService.downloadResumeEnglish()
+  } */
 
   @UseGuards(JwtAuthGuard)
   @Post()

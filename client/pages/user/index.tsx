@@ -38,7 +38,6 @@ const Home: NextPage = () => {
           </div>
           <div className='flex flex-wrap w-full p-4 justify-around items-center'>
             <ButtonOption href='/user/resume' title='Resume' />
-            <ButtonOption href='/user/reference' title='Reference' />
           </div>
           <div className='flex flex-wrap w-full p-4 justify-around items-center'>
             <ButtonOption href='/user/project' title='Project' />

@@ -39,7 +39,9 @@ export class ProjectService {
     Project[] | NotFoundException | InternalServerErrorException
   > {
     try {
-      let allProject: Project[] = await this.projectRepository.find();
+      let allProject: Project[] = await this.projectRepository.find({
+        relations: ['skills', 'tools']
+      });
       if (allProject.length < 1) {
         return new InternalServerErrorException('Database Error');;
       }
@@ -66,15 +68,15 @@ export class ProjectService {
     }
   }
 
-  async createImagesProject(
+  async createImageProject(
     file: Express.Multer.File,
   ) {
-    try {
+    try {   
       return {
         name: file.filename
       }
     } catch (error) {
-      return new InternalServerErrorException('Database Error');
+      return new InternalServerErrorException('Database Error/S3')
     }
   }
 
