@@ -12,8 +12,10 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+
 import { createReadStream } from 'fs';
 import { join } from 'path';
+
 import { storageMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
@@ -47,7 +49,6 @@ export class SoftController {
   @UseGuards(JwtAuthGuard)
   @Delete('image')
   DeleteImageSoft(@Query('id') id: string) {
-    console.log(id)
     return this.softService.destroyImageSoft(id);
   }
 

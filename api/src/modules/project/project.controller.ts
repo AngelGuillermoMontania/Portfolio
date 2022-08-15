@@ -9,12 +9,11 @@ import {
   Query,
   StreamableFile,
   UploadedFile,
-  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { storageMulterFile, storageMulterFiles } from '../../configMulter';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { storageMulterFile } from '../../configMulter';
 
 import { Project } from 'src/models/project.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
@@ -87,17 +86,3 @@ export class ProjectController {
     return this.projectService.deleteProject(id);
   }
 }
-
-/* 
-    @HttpCode es para pasarle un codigo de estado (200,400, etc)
-        Ejemplo de uso: 
-        @Post()
-        @HttpCode(HttpStatus.ACCEPTED)
-        createProject(@Body() body: bodyCreate): bodyCreate {
-            return body
-        }
-*/
-/* 
-    Un DTO es para formatear en un objeto lo que entra en el body del req o armar un validador
-
-*/

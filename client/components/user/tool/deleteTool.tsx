@@ -25,10 +25,10 @@ function DeleteTool (props: props) {
         event.preventDefault()
         try {
          
-            await axios.delete(`http://localhost:3002/tool/image?id=${toolSelect}`, {
+            await axios.delete(`/tool/image?id=${toolSelect}`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
-            const postDataTool = await axios.delete(`http://localhost:3002/tool?id=${toolSelect}`,{
+            const postDataTool = await axios.delete(`/tool?id=${toolSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")

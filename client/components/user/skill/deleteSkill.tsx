@@ -25,10 +25,10 @@ function DeleteSkill (props: props) {
         event.preventDefault()
         try {
          
-            await axios.delete(`http://localhost:3002/skill/image?id=${skillSelect}`, {
+            await axios.delete(`/skill/image?id=${skillSelect}`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
-            const deleteSkill = await axios.delete(`http://localhost:3002/skill?id=${skillSelect}`,{
+            const deleteSkill = await axios.delete(`/skill?id=${skillSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")

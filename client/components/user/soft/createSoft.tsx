@@ -30,11 +30,11 @@ function CreateSoft (props: props) {
         try {
             const formDataImage: FormData = new FormData()
             formDataImage.append("file", imageSoft)
-            const postImage: { "data": { "name": string } } = await axios.post(`http://localhost:3002/soft/image`, formDataImage, {
+            const postImage: { "data": { "name": string } } = await axios.post(`/soft/image`, formDataImage, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             const nameImageS3: string = postImage.data.name
-            const postDataSoft: Object = await axios.post("http://localhost:3002/soft", {
+            const postDataSoft: Object = await axios.post("/soft", {
                 ...dataSoft,
                 image: nameImageS3
             }, {

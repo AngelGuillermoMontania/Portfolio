@@ -9,23 +9,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from 'src/models/project.entity';
 import { Skill } from 'src/models/skill.entity';
 import { Tool } from 'src/models/tool.entity';
+
 import { Repository } from 'typeorm';
 
 //DTO
 import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
 
-import fs, { createReadStream, existsSync, unlinkSync } from 'fs';
-import 'dotenv/config';
-import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
+import { existsSync, unlinkSync } from 'fs';
 import { join } from 'path';
-
-const client = new S3Client({
-  region: process.env.AWS_BUCKET_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCES_KEY || '',
-    secretAccessKey: process.env.AWS_PRIVATE_KEY || '',
-  },
-});
+import 'dotenv/config';
 
 @Injectable()
 export class ProjectService {
@@ -141,7 +133,6 @@ export class ProjectService {
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
-    
   }
 
   async editProject(id: string, body: CreateUpdateProjectDto) {
@@ -198,9 +189,6 @@ export class ProjectService {
     }
   }
 
- 
-  
-
   async deleteProject(
     id: string,
   ) {
@@ -213,5 +201,4 @@ export class ProjectService {
       return new InternalServerErrorException('Database Error');
     }
   }
-
 }

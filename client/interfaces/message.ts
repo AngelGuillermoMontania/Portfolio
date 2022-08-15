@@ -1,6 +1,8 @@
 export interface Message {
-    title:    string;
-    company:  string;
-    body: string;
-    email: string;
+    "id": string;
+    "title":    string;
+    "company":  string;
+    "body": string;
+    "create": string;
+    "email": string;
 }

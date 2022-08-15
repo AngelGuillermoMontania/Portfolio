@@ -1,30 +1,20 @@
-import { Injectable, InternalServerErrorException, StreamableFile } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { Skill } from 'src/models/skill.entity';
 import { CreateUpdateSkillDto } from './dto/create-update-skill.dto';
 
-import fs, { createReadStream, createWriteStream, existsSync, unlinkSync } from 'fs';
-import 'dotenv/config';
-import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand, GetObjectCommand, GetObjectOutput, GetObjectCommandOutput, S3 } from '@aws-sdk/client-s3';
-import { Readable } from 'stream';
-import { join } from 'path';
+import { existsSync, unlinkSync } from 'fs';
 
-const client = new S3Client({
-  region: process.env.AWS_BUCKET_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCES_KEY || '',
-    secretAccessKey: process.env.AWS_PRIVATE_KEY || '',
-  },
-});
+import { join } from 'path';
+import 'dotenv/config';
 
 @Injectable()
 export class SkillService {
   constructor(
     @InjectRepository(Skill) private skillRepository: Repository<Skill>,
   ) {}
-
   async getAllSkill() {
     try {
       const allSkills = await this.skillRepository.find();
@@ -42,7 +32,6 @@ export class SkillService {
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3')
     }
-    
   }
 
   async destroyImageSkill(id: string) {

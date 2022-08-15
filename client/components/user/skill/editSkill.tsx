@@ -45,17 +45,17 @@ function EditSkill (props: props) {
                     data: props.allSkills.find(elem => elem.id === skillSelect)
                 }
             } else {
-                await axios.delete(`http://localhost:3002/skill/image?id=${props.allSkills.find(elem => elem.id === skillSelect)?.id}`, {
+                await axios.delete(`/skill/image?id=${props.allSkills.find(elem => elem.id === skillSelect)?.id}`, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
                 const formDataImage: FormData = new FormData()
                 formDataImage.append("file", imageSkill)
-                postImage = await axios.post(`http://localhost:3002/skill/image`, formDataImage, {
+                postImage = await axios.post(`/skill/image`, formDataImage, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
-            const postDataSkill = await axios.put(`http://localhost:3002/skill?id=${props.allSkills.find(elem => elem.id === skillSelect)?.id}`, {
+            const postDataSkill = await axios.put(`/skill?id=${props.allSkills.find(elem => elem.id === skillSelect)?.id}`, {
                 ...dataSkill,
                 image: nameImageS3
             }, {
@@ -70,7 +70,7 @@ function EditSkill (props: props) {
     return (
       
             <div className="h-1/3 flex flex-col items-center justify-center">
-                <p className="text-white text-xl">EDIT TOOL:</p>
+                <p className="text-white text-xl">EDIT SKILL:</p>
                 <select onChange={e => setSkillSelect(e.target.value)} className="w-1/3 p-1 m-1">
                     <option hidden>~</option>
                     {

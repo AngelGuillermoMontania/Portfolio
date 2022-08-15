@@ -5,18 +5,10 @@ import { Repository } from 'typeorm';
 import { Tool } from 'src/models/tool.entity';
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
 
-import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteBucketCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import fs, { createReadStream, existsSync, unlinkSync } from 'fs';
-import 'dotenv/config';
-import { join } from 'path';
+import { createReadStream, existsSync, unlinkSync } from 'fs';
 
-const client = new S3Client({
-  region: process.env.AWS_BUCKET_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCES_KEY || '',
-    secretAccessKey: process.env.AWS_PRIVATE_KEY || '',
-  },
-});
+import { join } from 'path';
+import 'dotenv/config';
 
 @Injectable()
 export class ToolService {

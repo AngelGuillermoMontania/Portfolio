@@ -43,17 +43,17 @@ function EditSoft (props: props) {
                     data: props.allSofts.find(elem => elem.id === softSelect)
                 }
             } else {
-                await axios.delete(`http://localhost:3002/soft/image?id=${props.allSofts.find(elem => elem.id === softSelect)?.id}`, {
+                await axios.delete(`/soft/image?id=${props.allSofts.find(elem => elem.id === softSelect)?.id}`, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
                 const formDataImage: FormData = new FormData()
                 formDataImage.append("file", imageSoft)
-                postImage = await axios.post(`http://localhost:3002/soft/image`, formDataImage, {
+                postImage = await axios.post(`/soft/image`, formDataImage, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
-            const postDataSoft = await axios.put(`http://localhost:3002/soft?id=${props.allSofts.find(elem => elem.id === softSelect)?.id}`, {
+            const postDataSoft = await axios.put(`/soft?id=${props.allSofts.find(elem => elem.id === softSelect)?.id}`, {
                 ...dataSoft,
                 image: nameImageS3
             }, {

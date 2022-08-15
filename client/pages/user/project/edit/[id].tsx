@@ -2,25 +2,12 @@ import Router, { useRouter } from 'next/router'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import axios from 'axios'
-import Error from 'next/error'
-
-class skills {
-    "id": string
-    "name": string
-    "image": string
-    "level": string
-}
-class tools {
-    "id": string
-    "name": string
-    "image": string
-    "level": string
-}
+import { Skill, Tool } from '../../../../interfaces'
 
 class props {
     "token": string | null
-    "allTools": Array<tools>
-    "allSkills": Array<skills>
+    "allTools": Array<Tool>
+    "allSkills": Array<Skill>
 }
 
 function EditProject() {
@@ -39,8 +26,8 @@ function EditProject() {
         isActive: true,
     })
 
-    const [allSkills, setAllSkills] = useState<Array<skills>>([])
-    const [allTools, setAllTools] = useState<Array<tools>>([])
+    const [allSkills, setAllSkills] = useState<Array<Skill>>([])
+    const [allTools, setAllTools] = useState<Array<Tool>>([])
     const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
@@ -52,21 +39,24 @@ function EditProject() {
         if (Token) {
             setToken(!token)
         }
-        axios("http://localhost:3002/tool", {
+        axios("/tool", {
             headers: { "Authorization": `Bearer ${Token}` }
-        }).then(data => setAllTools(data.data))
-            .catch(error => console.log(error))
-        axios("http://localhost:3002/skill", {
-            headers: { "Authorization": `Bearer ${Token}` }
-        }).then(data => setAllSkills(data.data))
-            .catch(error => console.log(error))
-        axios(`http://localhost:3002/project/one?id=${router.query.id}`, {
-            headers: { "Authorization": `Bearer ${Token}` }
-        }).then(data => {
-            setDataProject(data.data)
-            setSkillSelect(data.data.skills.map((elem: {id: string}) => elem.id))
-            setToolSelect(data.data.tools.map((elem: {id: string}) => elem.id))
         })
+            .then(data => setAllTools(data.data))
+            .catch(error => console.log(error))
+        axios("/skill", {
+            headers: { "Authorization": `Bearer ${Token}` }
+        })
+            .then(data => setAllSkills(data.data))
+            .catch(error => console.log(error))
+        axios(`/project/one?id=${router.query.id}`, {
+            headers: { "Authorization": `Bearer ${Token}` }
+        })
+            .then(data => {
+                setDataProject(data.data)
+                setSkillSelect(data.data.skills.map((elem: { id: string }) => elem.id))
+                setToolSelect(data.data.tools.map((elem: { id: string }) => elem.id))
+            })
     }, [])
 
     const handleProject = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>): void => {
@@ -98,8 +88,8 @@ function EditProject() {
         event.preventDefault()
         let postImage
         try {
-            if(!imageProject) {
-                const projectCreated = await axios(`http://localhost:3002/project/one?id=${router.query.id}`, {
+            if (!imageProject) {
+                const projectCreated = await axios(`/project/one?id=${router.query.id}`, {
                     headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
                 })
                 postImage = {
@@ -108,19 +98,19 @@ function EditProject() {
                     }
                 }
             } else {
-                await axios.delete(`http://localhost:3002/project/image?id=${router.query.id}`, {
-                    headers: {"Authorization": `Bearer ${sessionStorage.getItem("Token")}`}
+                await axios.delete(`/project/image?id=${router.query.id}`, {
+                    headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
                 })
                 const formDataImage: FormData = new FormData()
-                
-                    formDataImage.append("file", imageProject)
-                
-                postImage = await axios.post(`http://localhost:3002/project/image`, formDataImage, {
-                    headers: {"Authorization": `Bearer ${sessionStorage.getItem("Token")}`}
+
+                formDataImage.append("file", imageProject)
+
+                postImage = await axios.post(`/project/image`, formDataImage, {
+                    headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
                 })
             }
             const namesImageS3: string = postImage.data.name
-            const postDataSkill = await axios.put(`http://localhost:3002/project?id=${router.query.id}`, {
+            const postDataSkill = await axios.put(`/project?id=${router.query.id}`, {
                 name: dataProject.name,
                 description: dataProject.description,
                 dateInit: dataProject.dateInit,
@@ -140,12 +130,9 @@ function EditProject() {
         } catch (error) {
             console.log(error)
         }
-           
-
     }
 
     return (
-
         <div className="bg-blue-800 flex flex-col items-center justify-center h-screen">
             <p className="text-white text-xl">EDIT SKILL:</p>
             <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center text-black">
@@ -165,7 +152,7 @@ function EditProject() {
                     id='dateInit'
                     onChange={e => handleProject(e)}
                     className="w-1/4 p-1 m-1"
-                    value={String(dataProject.dateInit).slice(0,10)}
+                    value={String(dataProject.dateInit).slice(0, 10)}
                 ></input>
                 <label htmlFor='dateEnd'>End Date</label>
                 <input
@@ -175,7 +162,7 @@ function EditProject() {
                     id='dateEnd'
                     onChange={e => handleProject(e)}
                     className="w-1/4 p-1 m-1"
-                    value={String(dataProject.dateEnd).slice(0,10)}
+                    value={String(dataProject.dateEnd).slice(0, 10)}
                 ></input>
                 <input
                     type="url"
@@ -228,11 +215,11 @@ function EditProject() {
                         {
                             allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
                         }
-                        
+
                     </select>
                     {
                         allSkills.map(skill => {
-                            if(skillSelect.includes(skill.id)) {
+                            if (skillSelect.includes(skill.id)) {
                                 return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setSkillSelect(skillSelect.filter(elem => elem !== skill.id))}>Eliminar {skill.name}</button>
                             }
                         })
@@ -252,7 +239,7 @@ function EditProject() {
                     </select>
                     {
                         allTools.map(tool => {
-                            if(toolSelect.includes(tool.id)) {
+                            if (toolSelect.includes(tool.id)) {
                                 return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setToolSelect(toolSelect.filter(elem => elem !== tool.id))}>Eliminar {tool.name}</button>
                             }
                         })

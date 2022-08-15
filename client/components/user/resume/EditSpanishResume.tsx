@@ -24,16 +24,16 @@ function EditSpanishResume (props: props) {
     const onSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault()
         try {
-            await axios.delete(`http://localhost:3002/resume?resume=Spanish`, {
+            await axios.delete(`/resume?resume=Spanish`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             const formDataResume: FormData = new FormData()
             formDataResume.append("file", resumeSpanish)
-            let postS3Resume = await axios.post(`http://localhost:3002/resume`, formDataResume, {
+            let postS3Resume = await axios.post(`/resume`, formDataResume, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             const nameResumeS3: string = postS3Resume.data.image || postS3Resume.data.name
-            const putResume = await axios.put(`http://localhost:3002/resume`, {
+            const putResume = await axios.put(`/resume`, {
                 "spanish": nameResumeS3,
                 "english": ""
             }, {

@@ -45,17 +45,17 @@ function EditTool (props: props) {
                     data: props.allTools.find(elem => elem.id === toolSelect)
                 }
             } else {
-                await axios.delete(`http://localhost:3002/tool/image?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
+                await axios.delete(`/tool/image?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
                 const formDataImage: FormData = new FormData()
                 formDataImage.append("file", imageTool)
-                postImage = await axios.post(`http://localhost:3002/tool/image`, formDataImage, {
+                postImage = await axios.post(`/tool/image`, formDataImage, {
                     headers: {"Authorization": `Bearer ${props.token}`}
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
-            const postDataTool = await axios.put(`http://localhost:3002/tool?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
+            const postDataTool = await axios.put(`/tool?id=${props.allTools.find(elem => elem.id === toolSelect)?.id}`, {
                 ...dataTool,
                 image: nameImageS3
             }, {

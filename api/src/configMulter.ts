@@ -1,5 +1,5 @@
 import multer, { diskStorage } from "multer";
-import path, { extname, join } from "path";
+import { extname } from "path";
 
 export const storageMulterFile: multer.StorageEngine = diskStorage({
     filename: (req, file, cb) => {

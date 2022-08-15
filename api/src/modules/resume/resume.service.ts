@@ -4,34 +4,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Resume } from 'src/models/resume.entity';
 import { Repository } from 'typeorm';
 
-import { S3Client, CreateBucketCommand, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 import { CreateUpdateResumeDto } from './dto/create-update-resume.dto';
-import fs, { createReadStream, existsSync, unlinkSync } from 'fs';
-import 'dotenv/config';
-import { join } from 'path';
+import { createReadStream, unlinkSync } from 'fs';
 
-const client = new S3Client({
-  region: process.env.AWS_BUCKET_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCES_KEY || '',
-    secretAccessKey: process.env.AWS_PRIVATE_KEY || '',
-  },
-});
+import { join } from 'path';
+import 'dotenv/config';
 
 @Injectable()
 export class ResumeService {
   constructor(
     @InjectRepository(Resume) private resumeRepository: Repository<Resume>,
   ) {}
-
-  /* async getResume() {
-    try {
-      const Resume = await this.resumeRepository.find();
-      return Resume;
-    } catch (error) {
-      return new InternalServerErrorException('Database Error');
-    }
-  } */
 
   async viewResumeSpanish() {
     try {
@@ -42,6 +25,7 @@ export class ResumeService {
       return new InternalServerErrorException('Database Error');
     }
   }
+  
   async viewResumeEnglish() {
     try {
       const Resume = await this.resumeRepository.find();
@@ -51,7 +35,8 @@ export class ResumeService {
       return new InternalServerErrorException('Database Error');
     }
   }
- /*  async downloadResumeSpanish() {
+
+  async downloadResumeSpanish() {
     try {
       const Resume = await this.resumeRepository.find();
       const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].spanish}`));
@@ -60,6 +45,7 @@ export class ResumeService {
       return new InternalServerErrorException('Database Error');
     }
   }
+
   async downloadResumeEnglish() {
     try {
       const Resume = await this.resumeRepository.find();
@@ -68,7 +54,7 @@ export class ResumeService {
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
-  } */
+  }
 
   async createResumeS3(
     file: Express.Multer.File,

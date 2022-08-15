@@ -1,10 +1,11 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { createReadStream, existsSync, unlinkSync } from 'fs';
+
+import { existsSync, unlinkSync } from 'fs';
 import { join } from 'path';
 
-import { SoftSkill } from 'src/models/softSkill.entity';
 import { Repository } from 'typeorm';
+import { SoftSkill } from 'src/models/softSkill.entity';
 import { CreateUpdateSoftDto } from './dto/create-update-soft.dto';
 
 @Injectable()

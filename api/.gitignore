@@ -2,7 +2,9 @@
 /dist
 /node_modules
 .env
+deb.env
 /.env
+/deb.env
 package-lock.json
 /package-lock.json
 

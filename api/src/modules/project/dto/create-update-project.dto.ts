@@ -2,13 +2,11 @@ import {
   IsArray,
   IsBoolean,
   IsDateString,
-  IsIn,
   IsNumber,
   IsOptional,
   IsString,
   IsUrl,
 } from 'class-validator';
-import { Relevance } from 'src/models/project.entity';
 
 export class CreateUpdateProjectDto {
   @IsString()

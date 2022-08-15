@@ -21,6 +21,4 @@ export class AboutController {
   putAbout(@Body() body: CreateUpdateAboutDto) {
     return this.aboutService.editAbout(body);
   }
-
-  
 }

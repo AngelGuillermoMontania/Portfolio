@@ -2,8 +2,8 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Message } from 'src/models/message.entity';
-import { Repository } from 'typeorm';
 import { CreateMessageDto } from './dto/create-message.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class MessageService {

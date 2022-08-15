@@ -24,10 +24,10 @@ function DeleteSoft (props: props) {
         event.preventDefault()
         try {
          
-            await axios.delete(`http://localhost:3002/soft/image?id=${softSelect}`, {
+            await axios.delete(`/soft/image?id=${softSelect}`, {
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
-            const postDataSoft = await axios.delete(`http://localhost:3002/soft?id=${softSelect}`,{
+            const postDataSoft = await axios.delete(`/soft?id=${softSelect}`,{
                 headers: {"Authorization": `Bearer ${props.token}`}
             })
             Router.push("/user")

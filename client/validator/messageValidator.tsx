@@ -5,7 +5,9 @@ export function validate(input: Message) {
         title: "",
         company: "",
         body: "",
-        email: ""
+        email: "",
+        create: "",
+        id: ""
     };
     if (!input.title) {
         Object.defineProperty(errors, 'title', {value: 'Title is required'})

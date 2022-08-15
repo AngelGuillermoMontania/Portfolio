@@ -1,9 +1,9 @@
 import { Body, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { Repository } from 'typeorm';
 import { About } from 'src/models/about.entity';
 import { CreateUpdateAboutDto } from './dto/create-update-about.dto';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AboutService {

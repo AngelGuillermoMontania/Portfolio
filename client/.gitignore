@@ -4,8 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
+.env.local
 package-lock.json
 /package-lock.json
+/.env.local
 
 
 # testing

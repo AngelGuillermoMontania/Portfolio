@@ -12,7 +12,6 @@ export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
-
   async findUser(email: string) {
     try {
       const user = await this.userRepository.findOne({
