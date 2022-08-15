@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Html, Head, Main, NextScript } from 'next/document'
 
-axios.defaults.baseURL = process.env.PORTFOLIO_API
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
 export default function Document() {
     return (

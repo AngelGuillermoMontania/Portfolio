@@ -10,6 +10,8 @@ interface Props {
 
 const SectionContact: React.FC<Props> = ({ contact }) => {
 
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
+
     const [message, setMessage] = useState({
         title: "",
         company: "",
@@ -42,7 +44,7 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
         console.log("HELLO")
         try {
             if ((errors.title === "" && errors.company === "" && errors.body === "" && errors.email === "") && (message.title !== "" && message.company !== "" && message.body !== "" && message.email !== "")) {
-                const responsePostMessage = await axios.post("http://localhost:3001/message", {
+                const responsePostMessage = await axios.post("/message", {
                     title: message.title,
                     company: message.company,
                     body: message.body,
@@ -63,7 +65,7 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
                 Router.push("/")
             }, 2000)
         } catch (error) {
-
+            
         }
     }
 

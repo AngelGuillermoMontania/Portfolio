@@ -5,17 +5,23 @@ import Router from 'next/router'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import axios from 'axios'
 
+
+
 const Home: NextPage = () => {
+
+    const baseUrl = process.env.NEXT_PUBLIC_API
 
     const [userForm, setUserForm] = useState<Object>({
         email: "",
         password: ""
     })
 
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
+
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            const tokenApi = await axios.post("/auth/login", userForm)
+            const tokenApi = await axios.post(`/auth/login`, userForm)
             sessionStorage.setItem('Token', tokenApi.data.access_token)
             Router.push("/user")
         } catch (error) {

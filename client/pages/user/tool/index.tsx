@@ -14,8 +14,8 @@ import { Tool } from '../../../interfaces'
 const Tool: NextPage = () => {
 
     const [allTools, setAllTools] = useState<Array<Tool>>([])
-
     const [token, setToken] = useState<boolean>(false)
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     useEffect(() => {
         axios("/tool", {

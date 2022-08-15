@@ -9,6 +9,8 @@ interface Props {
 
 const SectionProject: React.FC<Props> = ({ allProjects }) => {
 
+    const baseUrl = process.env.NEXT_PUBLIC_PORTFOLIO_API
+
     useEffect(() => {
         let animeDivProject = anime({
             targets: '.animDivProject',
@@ -34,7 +36,7 @@ const SectionProject: React.FC<Props> = ({ allProjects }) => {
                                 <div className='w-full flex h-2/6 justify-around'>
                                     <div className='relative flex w-5/12 h-full contentProject opacity-0'>
                                         <Image
-                                            src={`http://localhost:3001/project/image?name=${project.image}`}
+                                            src={`${baseUrl}/project/image?name=${project.image}`}
                                             layout='fill'
                                             className="rounded-2xl"
                                         />

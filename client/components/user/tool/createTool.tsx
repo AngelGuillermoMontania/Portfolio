@@ -5,7 +5,7 @@ import axios from 'axios'
 
 class props {
     "token": string | null
-  }
+}
 
 function CreateTool (props: props) {
 
@@ -14,6 +14,7 @@ function CreateTool (props: props) {
         level: "",
     })
     const [imageTool, setImageTool] = useState<File>(new File([], "new"))
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const handleTool = (event: ChangeEvent<HTMLInputElement>): void => {
         setDataTool({

@@ -18,6 +18,7 @@ const Contact: NextPage = () => {
         github: "",
         email: ""
     })
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     useEffect(() => {
         axios("/auth/verify", {

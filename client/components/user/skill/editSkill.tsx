@@ -2,18 +2,12 @@ import Router from 'next/router'
 
 import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
-
-class skills {
-    "id": string
-    "name": string
-    "image": string
-    "level": string
-  }
+import { Skill } from '../../../interfaces'
 
 class props {
     "token": string | null
-    "allSkills": Array<skills>
-  }
+    "allSkills": Array<Skill>
+}
 
 function EditSkill (props: props) {
 
@@ -22,8 +16,8 @@ function EditSkill (props: props) {
         level: "",
     })
     const [skillSelect, setSkillSelect] = useState<string>("")
-    
     const [imageSkill, setImageSkill] = useState<File>(new File([], "new"))
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const handleSkill = (event: ChangeEvent<HTMLInputElement>): void => {
         setDataSkill({
@@ -68,43 +62,40 @@ function EditSkill (props: props) {
     }
 
     return (
-      
-            <div className="h-1/3 flex flex-col items-center justify-center">
-                <p className="text-white text-xl">EDIT SKILL:</p>
-                <select onChange={e => setSkillSelect(e.target.value)} className="w-1/3 p-1 m-1">
-                    <option hidden>~</option>
-                    {
-                        props?.allSkills?.map(skill => <option value={skill.id} key={skill.id}>{skill.name}</option>)
-                    }
-                </select>
-                <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        name="name"
-                        onChange={e => handleSkill(e)}
-                        className="w-1/4 p-1"
-                    ></input>
-                    <input
-                        type="text"
-                        placeholder="Level de 0 a 10"
-                        name="level"
-                        onChange={e => handleSkill(e)}
-                        className="w-1/4 p-1"
-                    ></input>
-                    <input
-                        type="file"
-                        name="file"
-                        autoComplete="img"
-                        onChange={e => handleImage(e)}
-                        className="w-1/4 p-1"
-                    ></input>
-                    <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
-                </form>
-            </div>
+        <div className="h-1/3 flex flex-col items-center justify-center">
+            <p className="text-white text-xl">EDIT SKILL:</p>
+            <select onChange={e => setSkillSelect(e.target.value)} className="w-1/3 p-1 m-1">
+                <option hidden>~</option>
+                {
+                    props?.allSkills?.map(skill => <option value={skill.id} key={skill.id}>{skill.name}</option>)
+                }
+            </select>
+            <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
+                <input
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    onChange={e => handleSkill(e)}
+                    className="w-1/4 p-1"
+                ></input>
+                <input
+                    type="text"
+                    placeholder="Level de 0 a 10"
+                    name="level"
+                    onChange={e => handleSkill(e)}
+                    className="w-1/4 p-1"
+                ></input>
+                <input
+                    type="file"
+                    name="file"
+                    autoComplete="img"
+                    onChange={e => handleImage(e)}
+                    className="w-1/4 p-1"
+                ></input>
+                <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
+            </form>
+        </div>
     )
-
-
 }
 
 export default EditSkill
