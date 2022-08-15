@@ -35,6 +35,7 @@ import 'dotenv/config';
       database: process.env.DB_NAME || 'portfolio',
       synchronize: true,
       nativeDriver: false,
+      ssl: true,
       autoLoadEntities: true, //Automatic Load Models Database
       logging: false,
       entities: [
