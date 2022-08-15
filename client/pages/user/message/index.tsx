@@ -53,7 +53,7 @@ const Message: NextPage = () => {
                     </Link>
                     <div className='h-5/6'>
                         {
-                            allMessages.map(message => <div className='my-4 bg-black rounded-3xl text-slate-300 p-4 flex flex-col items-center'>
+                            allMessages.map(message => <div key={message.id} className='my-4 bg-black rounded-3xl text-slate-300 p-4 flex flex-col items-center'>
                                 <div className='flex flex-wrap'>
                                     <p className='mx-4 my-4'>TITLE: {message.title}</p>
                                     <p className='mx-4 my-4'>EMAIL: {message.email}</p>
