@@ -4,17 +4,19 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(
-    AppModule /* , {
-    logger: false
-  } */,
+    AppModule,
+  );
+  
+  app.enableCors()
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true, //Transform all requests into dto
+      whitelist: true, //Detect unnecessary past data
+      forbidNonWhitelisted: true, //Returns a error with information about the data passed that is not necessary
+    }),
   );
 
-  app.useGlobalPipes(new ValidationPipe({
-    transform: true,   //Transform all requests into dto
-    whitelist: true,   //Detect unnecessary past data
-    forbidNonWhitelisted: true    //Returns a error with information about the data passed that is not necessary
-  }))
-
-  await app.listen(3001);
+  await app.listen(process.env.PORT || 3001);
 }
 bootstrap();

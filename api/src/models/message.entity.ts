@@ -1,18 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
 @Entity()
 export class Message {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string;
+  @Column()
+  title: string;
 
-    @Column()
-    title: string
+  @Column()
+  company: string
 
-    @Column()
-    body: string
+  @Column()
+  body: string;
 
-    @Column()
-    email: string
+  @Column()
+  email: string;
 
+  @CreateDateColumn()
+  create: string
 }

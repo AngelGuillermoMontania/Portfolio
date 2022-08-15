@@ -3,20 +3,18 @@ import { Project } from './project.entity';
 
 @Entity()
 export class Skill {
-
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string
-
-  @Column("simple-array")
-  image: string[]
+  name: string;
 
   @Column()
-  nivel: string
+  image: string;
+
+  @Column()
+  level: string;
 
   @ManyToMany(() => Project, (project) => project.skills)
-  projects: Project[]
-  
+  projects: Project[];
 }

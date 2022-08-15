@@ -3,77 +3,200 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-/* import { InjectModel } from '@nestjs/sequelize'; */
 import { InjectRepository } from '@nestjs/typeorm';
 
 //Used Models
 import { Project } from 'src/models/project.entity';
 import { Skill } from 'src/models/skill.entity';
 import { Tool } from 'src/models/tool.entity';
+
 import { Repository } from 'typeorm';
 
 //DTO
-import { CreateProjectDto, UpdateProjectDto } from './dto';
+import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
+
+import { existsSync, unlinkSync } from 'fs';
+import { join } from 'path';
+import 'dotenv/config';
 
 @Injectable()
 export class ProjectService {
-  constructor(@InjectRepository(Project) private projectRepository: Repository<Project>) {}
+  constructor(
+    @InjectRepository(Project) private projectRepository: Repository<Project>,
+    @InjectRepository(Tool) private toolRepository: Repository<Tool>,
+    @InjectRepository(Skill) private skillRepository: Repository<Skill>
+  ) {}
 
-  async getAll(): Promise<Project[] | NotFoundException | InternalServerErrorException> {
+  async getAllProjects(): Promise<
+    Project[] | NotFoundException | InternalServerErrorException
+  > {
     try {
-      let allProject: Project[] = await this.projectRepository.find();
+      let allProject: Project[] = await this.projectRepository.find({
+        relations: ['skills', 'tools']
+      });
       if (allProject.length < 1) {
-        return new NotFoundException('Empty List');
+        return new InternalServerErrorException('Database Error');;
       }
       return allProject;
     } catch (error) {
-      return new InternalServerErrorException('Database Error');  //Error nest with error server
+      return new InternalServerErrorException('Database Error'); //Error nest with error server
     }
   }
-
-  async getOne(id: string): Promise<Project[] | NotFoundException | InternalServerErrorException> {
+  
+  async getOneProject(id: string) {
     try {
-      let oneProject: Project[] = await this.projectRepository.find();
-      if (oneProject.length < 1) {
-        return new NotFoundException('Empty List');
-      }
+      let oneProject = await this.projectRepository.findOne({
+        where: {
+          id,
+        },
+        relations: {
+          tools: true,
+          skills: true
+        }
+      });
       return oneProject;
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
   }
 
-  async createProject(body: CreateProjectDto) {
+  async createImageProject(
+    file: Express.Multer.File,
+  ) {
+    try {   
+      return {
+        name: file.filename
+      }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
+  }
+
+  async destroyImagesProject(id: string) {
     try {
-      const newProject = await this.projectRepository.create(body)
-      await this.projectRepository.save(newProject)
-      
-      /**
-       * Agregar imagenes
-       * Agregar Skills
-       * Agregar Tools
-       */
+      const deleteImagesProject = await this.projectRepository.findOneBy({id})
+      if(deleteImagesProject) {
+        if(existsSync(join(process.cwd(), '/assets/', deleteImagesProject.image))) {
+          unlinkSync(join(process.cwd(), '/assets/', deleteImagesProject.image))
+        }
+      }
+      return {
+        names: deleteImagesProject?.image
+      }
+    } catch (error) {
+      return new InternalServerErrorException('Database Error/S3')
+    }
+  }
+
+  async createDataProject(body: CreateUpdateProjectDto) {
+    try {
+      const newProject = this.projectRepository.create({
+        name: body.name,
+        description: body.description,
+        image: body.image,
+        dateInit: body.dateInit,
+        dateEnd: body.dateEnd,
+        repositoryLink: body.repositoryLink,
+        deployLink: body.deployLink,
+        relevance: Number(body.relevance),
+        company: body.company,
+        isActive: Boolean(body.isActive)
+      })
+      const tools: Array<Tool> = []
+      body.tools.forEach(async tool => {
+        try {
+          const toolSearch = await this.toolRepository.findOneBy({id: tool})
+          if(toolSearch !== null) {
+            tools.push(toolSearch)
+          }
+        } catch (error) {
+          return new InternalServerErrorException('Tool no exist');
+        }
+      })
+      const skills: Array<Skill> = []
+      body.skills.forEach(async skill => {
+        try {
+          const skillSearch = await this.skillRepository.findOneBy({id: skill})
+          if(skillSearch !== null) {
+            skills.push(skillSearch)
+          }
+        } catch (error) {
+          return new InternalServerErrorException('Tool no exist');
+        }
+      })
+      newProject.tools = tools
+      newProject.skills = skills
+      setTimeout(async () => {
+        await this.projectRepository.save(newProject)
+      }, 3000)
       return newProject
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
   }
 
-  async updateProject(id: string, body: UpdateProjectDto) {
+  async editProject(id: string, body: CreateUpdateProjectDto) {
     try {
-      //PRELOAD   busca y actualiza, hace un merge
-      const modifiedProyect = this.projectRepository.find()
-      let proyect = await this.projectRepository.find()
-      return proyect
+      const tools: Array<Tool> = []
+      body.tools.forEach(async tool => {
+        try {
+          const toolSearch = await this.toolRepository.findOneBy({id: tool})
+          if(toolSearch != null) {
+            tools.push(toolSearch)
+          }
+        } catch (error) {
+          return new InternalServerErrorException('Tool no exist');
+        }
+      })
+      const skills: Array<Skill> = []
+      body.skills.forEach(async skill => {
+        try {
+          const skillSearch = await this.skillRepository.findOneBy({id: skill})
+          if(skillSearch != null) {
+            skills.push(skillSearch)
+          }
+        } catch (error) {
+          return new InternalServerErrorException('Skill no exist');
+        }
+      })
+      const projectEdit = await this.projectRepository.findOne({where: {
+        id
+      }})
+      setTimeout(async () => {
+        if(projectEdit) {
+          this.projectRepository.merge(projectEdit, {
+            id
+          }, {
+            name: body.name,
+            description: body.description,
+            image: body.image,
+            dateInit: body.dateInit,
+            dateEnd: body.dateEnd,
+            repositoryLink: body.repositoryLink,
+            deployLink: body.deployLink,
+            relevance: body.relevance,
+            company: body.company,
+            isActive: body.isActive,
+            tools: tools,
+            skills: skills
+          })
+          this.projectRepository.save(projectEdit)
+        }
+      },1000)
+      return projectEdit
     } catch (error) {
-      return new InternalServerErrorException('Database Error');
+      return new InternalServerErrorException("Database Error")
     }
   }
 
-  async deleteProject(id: string): Promise<"SE ELIMINO CORRECTAMENTE" | InternalServerErrorException> {
+  async deleteProject(
+    id: string,
+  ) {
     try {
-      const deleteProject = await this.projectRepository.delete(id)
-      return "SE ELIMINO CORRECTAMENTE"
+      await this.projectRepository.delete({ id });
+      return {
+        deleted: true,
+      };
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
