@@ -12,8 +12,8 @@ import { Resume } from '../../../interfaces'
 const Resume: NextPage = () => {
 
     const [resumeDB, setResumeDB] = useState<Resume>()
-
     const [token, setToken] = useState<boolean>(false)
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     useEffect(() => {
         const Token = sessionStorage.getItem("Token")

@@ -1,4 +1,7 @@
 const SectionResume: React.FC = () => {
+
+    const baseUrl = process.env.NEXT_PUBLIC_PORTFOLIO_API
+
     return (
         <div id='resume' className='w-full h-screen flex flex-col items-center text-white dark:text-black'>
             <p className='text-5xl my-8 underline-offset-8 underline'>Resume</p>
@@ -7,7 +10,7 @@ const SectionResume: React.FC = () => {
                     <p className='text-3xl w-full text-center animeTextCV'>Spanish</p>
                     <div className='h-[100%] w-full relative'>
                         <div className='absolute w-full h-full flex justify-center items-center animeCV'>
-                            <embed src='http://localhost:3001/resume/view/spanish' height={'98%'} width={'90%'} className='rounded-xl shadow-2xl shadow-black'></embed>
+                            <embed src={`${baseUrl}/resume/view/spanish`} height={'98%'} width={'90%'} className='rounded-xl shadow-2xl shadow-black'></embed>
                         </div>
                     </div>
                 </div>
@@ -15,7 +18,7 @@ const SectionResume: React.FC = () => {
                     <p className='text-3xl w-full text-center animeTextCV'>English</p>
                     <div className='h-[100%] w-full relative'>
                         <div className='absolute w-full h-full flex justify-center items-center animeCV'>
-                            <embed src='http://localhost:3001/resume/view/english' height={'98%'} width={'90%'} className='rounded-xl'></embed>
+                            <embed src={`${baseUrl}/resume/view/english`} height={'98%'} width={'90%'} className='rounded-xl'></embed>
                         </div>
                     </div>
                 </div>

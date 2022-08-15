@@ -11,6 +11,7 @@ const Home: NextPage = () => {
 
     const router = useRouter()
     const [token, setToken] = useState<boolean>(false)
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const onMouseMove = (elem: Element | null, e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
         if (elem) {

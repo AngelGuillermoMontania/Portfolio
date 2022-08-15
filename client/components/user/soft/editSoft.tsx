@@ -2,17 +2,12 @@ import Router from 'next/router'
 
 import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
-
-class softs {
-    "id": string
-    "name": string
-    "image": string
-  }
+import { Soft } from '../../../interfaces'
 
 class props {
     "token": string | null
-    "allSofts": Array<softs>
-  }
+    "allSofts": Array<Soft>
+}
 
 function EditSoft (props: props) {
 
@@ -20,8 +15,8 @@ function EditSoft (props: props) {
         name: "",
     })
     const [softSelect, setSoftSelect] = useState<string>("")
-    
     const [imageSoft, setImageSoft] = useState<File>(new File([], "new"))
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const handleSoft = (event: ChangeEvent<HTMLInputElement>): void => {
         setDataSoft({
@@ -93,8 +88,7 @@ function EditSoft (props: props) {
                 <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
             </form>
         </div>
-)
-
+    )
 }
 
 export default EditSoft

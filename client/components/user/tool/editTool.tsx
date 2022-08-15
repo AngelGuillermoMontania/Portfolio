@@ -2,18 +2,12 @@ import Router from 'next/router'
 
 import { ChangeEvent, FormEvent, useState } from 'react'
 import axios from 'axios'
-
-class tools {
-    "id": string
-    "name": string
-    "image": string
-    "level": string
-  }
+import { Tool } from '../../../interfaces'
 
 class props {
     "token": string | null
-    "allTools": Array<tools>
-  }
+    "allTools": Array<Tool>
+}
 
 function EditTool (props: props) {
 
@@ -22,8 +16,8 @@ function EditTool (props: props) {
         level: "",
     })
     const [toolSelect, setToolSelect] = useState<string>("")
-    
     const [imageTool, setImageTool] = useState<File>(new File([], "new"))
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const handleTool = (event: ChangeEvent<HTMLInputElement>): void => {
         setDataTool({

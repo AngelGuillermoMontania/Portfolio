@@ -5,7 +5,7 @@ import axios from 'axios'
 
 class props {
     "token": string | null
-  }
+}
 
 function CreateSoft (props: props) {
 
@@ -13,6 +13,7 @@ function CreateSoft (props: props) {
         name: ""
     })
     const [imageSoft, setImageSoft] = useState<File>(new File([], "new"))
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const handleSoft = (event: ChangeEvent<HTMLInputElement>): void => {
         setDataSoft({
@@ -47,7 +48,6 @@ function CreateSoft (props: props) {
     }
 
     return (
-      
         <div className="h-1/3 flex flex-col items-center justify-center">
             <p className="text-white text-xl">CREATE SOFT:</p>
             <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
@@ -68,9 +68,7 @@ function CreateSoft (props: props) {
                 <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
             </form>
         </div>
-)
-
-
+    )
 }
 
 export default CreateSoft

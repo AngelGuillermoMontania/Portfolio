@@ -5,7 +5,7 @@ import axios from 'axios'
 
 class props {
     "token": string | null
-  }
+}
 
 function CreateTool (props: props) {
 
@@ -14,6 +14,7 @@ function CreateTool (props: props) {
         level: "",
     })
     const [imageSkill, setImageSkill] = useState<File>(new File([], "new"))
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const handleSkill = (event: ChangeEvent<HTMLInputElement>): void => {
         setDataSkill({
@@ -48,37 +49,34 @@ function CreateTool (props: props) {
     }
 
     return (
-      
-            <div className="h-1/3 flex flex-col items-center justify-center">
-                <p className="text-white text-xl">CREATE SKILL:</p>
-                <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
-                    <input
-                        type="text"
-                        placeholder="Name"
-                        name="name"
-                        onChange={e => handleSkill(e)}
-                        className="w-1/4 p-1"
-                    ></input>
-                    <input
-                        type="text"
-                        placeholder="Level de 0 a 10"
-                        name="level"
-                        onChange={e => handleSkill(e)}
-                        className="w-1/4 p-1"
-                    ></input>
-                    <input
-                        type="file"
-                        name="file"
-                        autoComplete="img"
-                        onChange={e => handleImage(e)}
-                        className="w-1/4 p-1"
-                    ></input>
-                    <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
-                </form>
-            </div>
+        <div className="h-1/3 flex flex-col items-center justify-center">
+            <p className="text-white text-xl">CREATE SKILL:</p>
+            <form onSubmit={e => onSubmit(e)} className="flex justify-around flex-wrap items-center">
+                <input
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    onChange={e => handleSkill(e)}
+                    className="w-1/4 p-1"
+                ></input>
+                <input
+                    type="text"
+                    placeholder="Level de 0 a 10"
+                    name="level"
+                    onChange={e => handleSkill(e)}
+                    className="w-1/4 p-1"
+                ></input>
+                <input
+                    type="file"
+                    name="file"
+                    autoComplete="img"
+                    onChange={e => handleImage(e)}
+                    className="w-1/4 p-1"
+                ></input>
+                <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
+            </form>
+        </div>
     )
-
-
 }
 
 export default CreateTool

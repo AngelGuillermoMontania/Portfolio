@@ -14,8 +14,8 @@ import { Skill } from '../../../interfaces'
 const Skill: NextPage = () => {
 
     const [allSkills, setAllSkills] = useState<Array<Skill>>([])
-
     const [token, setToken] = useState<boolean>(false)
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     useEffect(() => {
         const Token = sessionStorage.getItem("Token")

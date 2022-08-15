@@ -10,14 +10,14 @@ const ButtonLogout: NextPage = () => {
         Router.push("/user/login")
     }
 
-  return (
-      <button 
-      onClick={e => logOut(e)}
-        className="bg-yellow-900 p-4 m-8 rounded-xl text-white shadow-md shadow-white transition-all hover:bg-yellow-600 hover:text-black"
+    return (
+        <button
+            onClick={e => logOut(e)}
+            className="bg-yellow-900 p-4 m-8 rounded-xl text-white shadow-md shadow-white transition-all hover:bg-yellow-600 hover:text-black"
         >
-        LogOut
-      </button>
-  )
+            LogOut
+        </button>
+    )
 }
 
 export default ButtonLogout

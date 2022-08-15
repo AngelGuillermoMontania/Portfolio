@@ -13,6 +13,7 @@ const Project: NextPage = () => {
     const [allProjects, setAllProjects] = useState<Array<Tool>>([])
     const [projectToEdit, setProjectToEdit] = useState<string>("")
     const [projectToDelete, setProjectToDelete] = useState<string>("")
+    axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const [token, setToken] = useState<boolean>(false)
 
