@@ -21,7 +21,6 @@ import { join } from 'path';
 import { storageMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
-
 @Controller('tool')
 export class ToolController {
   constructor(private readonly toolService: ToolService) {}
@@ -39,9 +38,11 @@ export class ToolController {
 
   @UseGuards(JwtAuthGuard)
   @Post('image')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: storageMulterFile
-  }))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: storageMulterFile,
+    }),
+  )
   postImageTool(@UploadedFile() file: Express.Multer.File) {
     return this.toolService.createImageTool(file);
   }
@@ -60,10 +61,7 @@ export class ToolController {
 
   @UseGuards(JwtAuthGuard)
   @Put()
-  putSkill(
-    @Body() body: CreateUpdateToolDto,
-    @Query('id') id: string
-  ) {
+  putSkill(@Body() body: CreateUpdateToolDto, @Query('id') id: string) {
     return this.toolService.editTool(body, id);
   }
 

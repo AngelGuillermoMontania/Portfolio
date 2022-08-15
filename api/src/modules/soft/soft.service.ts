@@ -24,26 +24,27 @@ export class SoftService {
   }
 
   async createImageSoft(file: Express.Multer.File) {
-    try {   
+    try {
       return {
-        name: file.filename
-      }
+        name: file.filename,
+      };
     } catch (error) {
-      return new InternalServerErrorException('Database Error/S3')
+      return new InternalServerErrorException('Database Error/S3');
     }
-    
   }
 
   async destroyImageSoft(id: string) {
     try {
-      const deleteImageSoft = await this.softRepository.findOneBy({id})
-      if(deleteImageSoft) {
-        if(existsSync(join(process.cwd(), '/assets/', deleteImageSoft?.image))) {
-          unlinkSync(join(process.cwd(), '/assets/', deleteImageSoft?.image))
+      const deleteImageSoft = await this.softRepository.findOneBy({ id });
+      if (deleteImageSoft) {
+        if (
+          existsSync(join(process.cwd(), '/assets/', deleteImageSoft?.image))
+        ) {
+          unlinkSync(join(process.cwd(), '/assets/', deleteImageSoft?.image));
         }
       }
     } catch (error) {
-      return new InternalServerErrorException('Database Error/S3')
+      return new InternalServerErrorException('Database Error/S3');
     }
   }
 

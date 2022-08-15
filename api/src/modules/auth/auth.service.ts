@@ -6,13 +6,16 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private jwtService: JwtService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.userService.findUser(email);
-    let isMatch
-    if(user?.password) {
-        isMatch = await bcrypt.compare(pass, user.password);
+    let isMatch;
+    if (user?.password) {
+      isMatch = await bcrypt.compare(pass, user.password);
     }
     if (user && isMatch) {
       const { password, ...result } = user;
@@ -33,5 +36,4 @@ export class AuthService {
       access_token: this.jwtService.verify(user.token),
     };
   }
-
 }

@@ -1,4 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Message {
@@ -9,7 +14,7 @@ export class Message {
   title: string;
 
   @Column()
-  company: string
+  company: string;
 
   @Column()
   body: string;
@@ -18,5 +23,5 @@ export class Message {
   email: string;
 
   @CreateDateColumn()
-  create: string
+  create: string;
 }

@@ -39,9 +39,11 @@ export class SoftController {
 
   @UseGuards(JwtAuthGuard)
   @Post('image')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: storageMulterFile
-  }))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: storageMulterFile,
+    }),
+  )
   postImageSoft(@UploadedFile() file: Express.Multer.File) {
     return this.softService.createImageSoft(file);
   }
