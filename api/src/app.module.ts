@@ -34,6 +34,7 @@ import 'dotenv/config';
       password: process.env.DB_PASSWORD || 'postgres',
       database: process.env.DB_NAME || 'portfolio',
       synchronize: true,
+      logging: false,
       ssl: {
         rejectUnauthorized: false,
       },
