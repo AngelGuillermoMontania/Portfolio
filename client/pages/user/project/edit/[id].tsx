@@ -58,7 +58,7 @@ function EditProject() {
                 setSkillSelect(data.data.skills.map((elem: { id: string }) => elem.id))
                 setToolSelect(data.data.tools.map((elem: { id: string }) => elem.id))
             })
-    }, [])
+    }, [router.query.id, token])
 
     const handleProject = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>): void => {
         setDataProject({

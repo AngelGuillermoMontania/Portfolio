@@ -38,6 +38,7 @@ const SectionProject: React.FC<Props> = ({ allProjects }) => {
                                         <Image
                                             src={`${baseUrl}/project/image?name=${project.image}`}
                                             layout='fill'
+                                            alt="not found"
                                             className="rounded-2xl"
                                         />
                                     </div>
