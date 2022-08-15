@@ -67,6 +67,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -77,6 +78,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -87,6 +89,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -97,6 +100,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -107,6 +111,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -117,6 +122,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -127,6 +133,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -137,6 +144,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -147,6 +155,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -157,6 +166,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.a9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -167,6 +177,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -177,6 +188,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -187,6 +199,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -197,6 +210,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -207,6 +221,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -217,6 +232,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -227,6 +243,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -237,6 +254,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -247,6 +265,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -257,6 +276,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.b9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -267,6 +287,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -277,6 +298,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -287,6 +309,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -297,6 +320,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -307,6 +331,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -317,6 +342,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -327,6 +353,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -337,6 +364,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -347,6 +375,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -357,6 +386,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.c9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -367,6 +397,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -377,6 +408,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -387,6 +419,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -397,6 +430,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -407,6 +441,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -417,6 +452,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -427,6 +463,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -437,6 +474,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -447,6 +485,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -457,6 +496,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.d9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -467,6 +507,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -477,6 +518,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -487,6 +529,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -497,6 +540,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -507,6 +551,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -517,6 +562,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -527,6 +573,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -537,6 +584,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -547,6 +595,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -557,6 +606,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.f9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -567,6 +617,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -577,6 +628,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -587,6 +639,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -597,6 +650,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -607,6 +661,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -617,6 +672,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -627,6 +683,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -637,6 +694,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -647,6 +705,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -657,6 +716,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.g9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -667,6 +727,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -677,6 +738,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -687,6 +749,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -697,6 +760,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -707,6 +771,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -717,6 +782,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -727,6 +793,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -737,6 +804,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -747,6 +815,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -757,6 +826,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.h9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -767,6 +837,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -777,6 +848,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -787,6 +859,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -797,6 +870,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -807,6 +881,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -817,6 +892,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -827,6 +903,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -837,6 +914,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -847,6 +925,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -857,6 +936,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.i9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -867,6 +947,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -877,6 +958,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -887,6 +969,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -897,6 +980,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -907,6 +991,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -917,6 +1002,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -927,6 +1013,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -937,6 +1024,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -947,6 +1035,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -957,6 +1046,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.j9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -967,6 +1057,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k0}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -977,6 +1068,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k1}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -987,6 +1079,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k2}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -997,6 +1090,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k3}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -1007,6 +1101,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k4}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -1017,6 +1112,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k5}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -1027,6 +1123,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k6}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -1037,6 +1134,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k7}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
@@ -1047,6 +1145,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k8}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -1057,6 +1156,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         src={photo.k9}
                         height={100}
                         width={100}
+                        alt="not found"
                         layout="responsive"
                         className="el absolute"
                     />
@@ -1143,7 +1243,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         </path>
                         <path className='fill-green-700' d="M4.868,43.803c-0.132,0-0.26-0.052-0.355-0.148c-0.125-0.127-0.174-0.312-0.127-0.483l2.639-9.636c-1.636-2.906-2.499-6.206-2.497-9.556C4.532,13.238,13.273,4.5,24.014,4.5c5.21,0.002,10.105,2.031,13.784,5.713c3.679,3.683,5.704,8.577,5.702,13.781c-0.004,10.741-8.746,19.48-19.486,19.48c-3.189-0.001-6.344-0.788-9.144-2.277l-9.875,2.589C4.953,43.798,4.911,43.803,4.868,43.803z">
                         </path>
-                        <path fill="black" d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z" stroke="white" stroke-width="2" >
+                        <path className='stroke-2' fill="black" d="M24.014,5c5.079,0.002,9.845,1.979,13.43,5.566c3.584,3.588,5.558,8.356,5.556,13.428c-0.004,10.465-8.522,18.98-18.986,18.98h-0.008c-3.177-0.001-6.3-0.798-9.073-2.311L4.868,43.303l2.694-9.835C5.9,30.59,5.026,27.324,5.027,23.979C5.032,13.514,13.548,5,24.014,5 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974C24.014,42.974,24.014,42.974,24.014,42.974 M24.014,4C24.014,4,24.014,4,24.014,4C12.998,4,4.032,12.962,4.027,23.979c-0.001,3.367,0.849,6.685,2.461,9.622l-2.585,9.439c-0.094,0.345,0.002,0.713,0.254,0.967c0.19,0.192,0.447,0.297,0.711,0.297c0.085,0,0.17-0.011,0.254-0.033l9.687-2.54c2.828,1.468,5.998,2.243,9.197,2.244c11.024,0,19.99-8.963,19.995-19.98c0.002-5.339-2.075-10.359-5.848-14.135C34.378,6.083,29.357,4.002,24.014,4L24.014,4z" stroke="white" >
                         </path>
                         <path className="fill-green-700" d="M35.176,12.832c-2.98-2.982-6.941-4.625-11.157-4.626c-8.704,0-15.783,7.076-15.787,15.774c-0.001,2.981,0.833,5.883,2.413,8.396l0.376,0.597l-1.595,5.821l5.973-1.566l0.577,0.342c2.422,1.438,5.2,2.198,8.032,2.199h0.006c8.698,0,15.777-7.077,15.78-15.776C39.795,19.778,38.156,15.814,35.176,12.832z">
                         </path>

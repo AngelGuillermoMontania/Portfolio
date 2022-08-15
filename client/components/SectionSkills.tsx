@@ -24,6 +24,7 @@ const SectionSkills: React.FC<Props> = ({ allSkills, allTools, allSofts }) => {
                                 src={`${baseUrl}/skill/image?name=${skill.image}`}
                                 height={50}
                                 width={50}
+                                alt="not found"
                                 className="imageSkills relative rounded-full"
                             />
                             <p className='text-lg text-center'>{skill.name}</p>
@@ -41,6 +42,7 @@ const SectionSkills: React.FC<Props> = ({ allSkills, allTools, allSofts }) => {
                                     src={`${baseUrl}/skill/image?name=${tool.image}`}
                                     height={50}
                                     width={50}
+                                    alt="not found"
                                     className="imageSkills relative rounded-full"
                                 />
                                 <p className='text-lg'>{tool.name}</p>
@@ -58,6 +60,7 @@ const SectionSkills: React.FC<Props> = ({ allSkills, allTools, allSofts }) => {
                                 src={`${baseUrl}/soft/image?name=${soft.image}`}
                                 height={50}
                                 width={50}
+                                alt="not found"
                                 className="imageSkills relative rounded-full"
                             />
                             <p className='text-lg'>{soft.name}</p>
