@@ -27,7 +27,7 @@ const Soft: NextPage = () => {
             headers: { "Authorization": `Bearer ${token}` }
         })
             .then(data => setAllSofts(data.data))
-    }, [])
+    }, [token])
 
     return (
         <div className="bg-slate-900 h-screen">

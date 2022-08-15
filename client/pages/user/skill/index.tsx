@@ -27,7 +27,7 @@ const Skill: NextPage = () => {
         })
             .then(data => setAllSkills(data.data))
             .catch(error => console.log(error))
-    }, [])
+    }, [token])
 
     return (
         <div className="bg-slate-900 h-screen">
