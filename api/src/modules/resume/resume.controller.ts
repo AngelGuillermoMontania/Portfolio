@@ -1,4 +1,18 @@
-import { Body, Controller, Delete, Get, Header, InternalServerErrorException, Post, Put, Query, StreamableFile, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Header,
+  InternalServerErrorException,
+  Post,
+  Put,
+  Query,
+  StreamableFile,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { storageMulterFile } from 'src/configMulter';
@@ -13,37 +27,49 @@ export class ResumeController {
 
   @Get('view/spanish')
   @Header('Content-Type', 'application/pdf')
-  @Header('Content-Disposition', 'inline; filename="AngelMontaña_SpanishCV.pdf"')
+  @Header(
+    'Content-Disposition',
+    'inline; filename="AngelMontaña_SpanishCV.pdf"',
+  )
   viewSpanish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.viewResumeSpanish()
+    return this.resumeService.viewResumeSpanish();
   }
   @Get('view/english')
   @Header('Content-Type', 'application/pdf')
-  @Header('Content-Disposition', 'inline; filename="AngelMontaña_EnglishCV.pdf"')
+  @Header(
+    'Content-Disposition',
+    'inline; filename="AngelMontaña_EnglishCV.pdf"',
+  )
   viewEnglish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.viewResumeEnglish()
+    return this.resumeService.viewResumeEnglish();
   }
   @Get('download/spanish')
   @Header('Content-Type', 'application/pdf')
-  @Header('Content-Disposition', 'attachment; filename="AngelMontaña_SpanishCV.pdf"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="AngelMontaña_SpanishCV.pdf"',
+  )
   downloadSpanish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.downloadResumeSpanish()
+    return this.resumeService.downloadResumeSpanish();
   }
   @Get('download/english')
   @Header('Content-Type', 'application/pdf')
-  @Header('Content-Disposition', 'attachment; filename="AngelMontaña_EnglishCV.pdf"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="AngelMontaña_EnglishCV.pdf"',
+  )
   downloadEnglish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.downloadResumeEnglish()
+    return this.resumeService.downloadResumeEnglish();
   }
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  @UseInterceptors(FileInterceptor('file', {
-    storage: storageMulterFile
-  }))
-  postResumeS3(
-    @UploadedFile() file: Express.Multer.File,
-  ) {
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: storageMulterFile,
+    }),
+  )
+  postResumeS3(@UploadedFile() file: Express.Multer.File) {
     return this.resumeService.createResumeS3(file);
   }
 
@@ -61,7 +87,6 @@ export class ResumeController {
 
   @Post('dev')
   PostDevResume(@Body() body: CreateUpdateResumeDto) {
-    return this.resumeService.createResumeDev(body)
+    return this.resumeService.createResumeDev(body);
   }
-    
 }

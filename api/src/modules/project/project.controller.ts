@@ -31,9 +31,7 @@ export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
 
   @Get()
-  getProjects(): Promise<
-    Project[] | InternalServerErrorException
-  > {
+  getProjects(): Promise<Project[] | InternalServerErrorException> {
     return this.projectService.getAllProjects();
   }
 
@@ -50,12 +48,12 @@ export class ProjectController {
 
   @UseGuards(JwtAuthGuard)
   @Post('image')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: storageMulterFile
-  }))
-  postImageProject(
-    @UploadedFile() file: Express.Multer.File,
-  ) {
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: storageMulterFile,
+    }),
+  )
+  postImageProject(@UploadedFile() file: Express.Multer.File) {
     return this.projectService.createImageProject(file);
   }
 
@@ -67,9 +65,7 @@ export class ProjectController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  postDataProject(
-    @Body() body: CreateUpdateProjectDto
-  ) {
+  postDataProject(@Body() body: CreateUpdateProjectDto) {
     return this.projectService.createDataProject(body);
   }
 
@@ -80,9 +76,7 @@ export class ProjectController {
   }
 
   @Delete()
-  destroyProject(
-    @Query('id') id: string,
-  ) {
+  destroyProject(@Query('id') id: string) {
     return this.projectService.deleteProject(id);
   }
 }

@@ -17,7 +17,7 @@ export class UserService {
       const user = await this.userRepository.findOne({
         where: { email },
       });
-      return user
+      return user;
     } catch (error) {
       return;
     }
@@ -27,7 +27,7 @@ export class UserService {
     try {
       const newUser = this.userRepository.create({
         email: body.email,
-        password: await bcrypt.hash(body.password, 10)
+        password: await bcrypt.hash(body.password, 10),
       });
       await this.userRepository.save(newUser);
       return newUser;

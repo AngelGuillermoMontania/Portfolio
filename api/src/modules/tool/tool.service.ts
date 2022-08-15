@@ -16,7 +16,6 @@ export class ToolService {
     @InjectRepository(Tool) private toolRepository: Repository<Tool>,
   ) {}
 
-  
   async getAllTool() {
     try {
       const allTools = await this.toolRepository.find();
@@ -27,57 +26,58 @@ export class ToolService {
   }
 
   async createImageTool(file: Express.Multer.File) {
-    const fileStream = createReadStream(file.path)
-    try {   
+    const fileStream = createReadStream(file.path);
+    try {
       return {
-        name: file.filename
-      }
+        name: file.filename,
+      };
     } catch (error) {
-      return new InternalServerErrorException('Database Error/S3')
+      return new InternalServerErrorException('Database Error/S3');
     }
-    
   }
 
   async destroyImageTool(id: string) {
     try {
-      const deleteImageSkill = await this.toolRepository.findOneBy({id})
-      if(deleteImageSkill) {
-        if(existsSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))) {
-          unlinkSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))
+      const deleteImageSkill = await this.toolRepository.findOneBy({ id });
+      if (deleteImageSkill) {
+        if (
+          existsSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))
+        ) {
+          unlinkSync(join(process.cwd(), '/assets/', deleteImageSkill?.image));
         }
       }
     } catch (error) {
-      return new InternalServerErrorException('Database Error/S3')
+      return new InternalServerErrorException('Database Error/S3');
     }
   }
 
   async createDataTool(body: CreateUpdateToolDto) {
     try {
-      const newTool = this.toolRepository.create(body)
-      await this.toolRepository.save(body)
-      return newTool
+      const newTool = this.toolRepository.create(body);
+      await this.toolRepository.save(body);
+      return newTool;
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
-    
   }
 
-  async editTool(
-    body: CreateUpdateToolDto,
-    id: string,
-  ) {
+  async editTool(body: CreateUpdateToolDto, id: string) {
     try {
-      const newToolEdit = await this.toolRepository.update({
-        id
-      }, body)
-      const toolEdit = await this.toolRepository.findOne({where: {
-        id
-      }})
-      return toolEdit
+      const newToolEdit = await this.toolRepository.update(
+        {
+          id,
+        },
+        body,
+      );
+      const toolEdit = await this.toolRepository.findOne({
+        where: {
+          id,
+        },
+      });
+      return toolEdit;
     } catch (error) {
-      return new InternalServerErrorException("Database Error")
+      return new InternalServerErrorException('Database Error');
     }
-    
   }
 
   async destroyTool(id: string) {

@@ -39,9 +39,11 @@ export class SkillController {
 
   @UseGuards(JwtAuthGuard)
   @Post('image')
-  @UseInterceptors(FileInterceptor('file', {
-    storage: storageMulterFile
-  }))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: storageMulterFile,
+    }),
+  )
   postImageSkill(@UploadedFile() file: Express.Multer.File) {
     return this.skillService.createImageSkill(file);
   }
@@ -61,10 +63,7 @@ export class SkillController {
   @UseGuards(JwtAuthGuard)
   @Put()
   @UseInterceptors(FileInterceptor('file'))
-  putSkill(
-    @Body() body: CreateUpdateSkillDto,
-    @Query('id') id: string,
-  ) {
+  putSkill(@Body() body: CreateUpdateSkillDto, @Query('id') id: string) {
     return this.skillService.editSkill(body, id);
   }
 
@@ -73,5 +72,4 @@ export class SkillController {
   deleteSkill(@Query('id') id: string) {
     return this.skillService.destroySkill(id);
   }
-
 }

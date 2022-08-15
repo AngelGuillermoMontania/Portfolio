@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException, StreamableFile } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  StreamableFile,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Resume } from 'src/models/resume.entity';
@@ -19,17 +23,21 @@ export class ResumeService {
   async viewResumeSpanish() {
     try {
       const Resume = await this.resumeRepository.find();
-      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].spanish}`));
+      const file = createReadStream(
+        join(process.cwd(), `/assets/${Resume[0].spanish}`),
+      );
       return new StreamableFile(file);
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
   }
-  
+
   async viewResumeEnglish() {
     try {
       const Resume = await this.resumeRepository.find();
-      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].english}`));
+      const file = createReadStream(
+        join(process.cwd(), `/assets/${Resume[0].english}`),
+      );
       return new StreamableFile(file);
     } catch (error) {
       return new InternalServerErrorException('Database Error');
@@ -39,7 +47,9 @@ export class ResumeService {
   async downloadResumeSpanish() {
     try {
       const Resume = await this.resumeRepository.find();
-      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].spanish}`));
+      const file = createReadStream(
+        join(process.cwd(), `/assets/${Resume[0].spanish}`),
+      );
       return new StreamableFile(file);
     } catch (error) {
       return new InternalServerErrorException('Database Error');
@@ -49,73 +59,81 @@ export class ResumeService {
   async downloadResumeEnglish() {
     try {
       const Resume = await this.resumeRepository.find();
-      const file = createReadStream(join(process.cwd(), `/assets/${Resume[0].english}`));
+      const file = createReadStream(
+        join(process.cwd(), `/assets/${Resume[0].english}`),
+      );
       return new StreamableFile(file);
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
   }
 
-  async createResumeS3(
-    file: Express.Multer.File,
-  ) {
-    const fileStream = createReadStream(file.path)
-    try {   
+  async createResumeS3(file: Express.Multer.File) {
+    const fileStream = createReadStream(file.path);
+    try {
       return {
-        name: file.filename
-      }
+        name: file.filename,
+      };
     } catch (error) {
-      return new InternalServerErrorException('Database Error/S3')
+      return new InternalServerErrorException('Database Error/S3');
     }
   }
 
   async destroyResumeS3(resume: string) {
     try {
       const resumeDB = await this.resumeRepository.find();
-      resume === "Spanish" ?
-          unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.spanish))
-      : unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.english))  
-        return {
-          name: resume === "Spanish" ? resumeDB[0].spanish : resumeDB[0].english,
-        }
+      resume === 'Spanish'
+        ? unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.spanish))
+        : unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.english));
+      return {
+        name: resume === 'Spanish' ? resumeDB[0].spanish : resumeDB[0].english,
+      };
     } catch (error) {
-      return new InternalServerErrorException('Database Error/S3')
+      return new InternalServerErrorException('Database Error/S3');
     }
   }
 
   async updateDataResume(body: CreateUpdateResumeDto) {
     try {
       const resumeDB = await this.resumeRepository.find();
-      if(body.spanish === "") {
-        const newResumeEdit = await this.resumeRepository.update({
-          id: resumeDB[0].id
-        }, {
-          spanish: resumeDB[0].spanish,
-          english: body.english
-        })
+      if (body.spanish === '') {
+        const newResumeEdit = await this.resumeRepository.update(
+          {
+            id: resumeDB[0].id,
+          },
+          {
+            spanish: resumeDB[0].spanish,
+            english: body.english,
+          },
+        );
       } else {
-        const newResumeEdit = await this.resumeRepository.update({
-          id: resumeDB[0].id
-        }, {
-          english: resumeDB[0].english,
-          spanish: body.spanish
-        })
+        const newResumeEdit = await this.resumeRepository.update(
+          {
+            id: resumeDB[0].id,
+          },
+          {
+            english: resumeDB[0].english,
+            spanish: body.spanish,
+          },
+        );
       }
-      const resumeEdit = await this.resumeRepository.findOne({where: {
-        id: resumeDB[0].id
-      }})
-      return resumeEdit
+      const resumeEdit = await this.resumeRepository.findOne({
+        where: {
+          id: resumeDB[0].id,
+        },
+      });
+      return resumeEdit;
     } catch (error) {
-      return new InternalServerErrorException('Database Error')
+      return new InternalServerErrorException('Database Error');
     }
   }
 
   async createResumeDev(body: CreateUpdateResumeDto) {
     try {
-      const newResumeDev = await this.resumeRepository.create(body)
-      await this.resumeRepository.save(newResumeDev)
+      const newResumeDev = await this.resumeRepository.create(body);
+      await this.resumeRepository.save(newResumeDev);
     } catch (error) {
-      return new InternalServerErrorException('Database Error')
+      return new InternalServerErrorException('Database Error');
     }
   }
 }
