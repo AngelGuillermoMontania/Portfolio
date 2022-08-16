@@ -28,7 +28,7 @@ function EditProject() {
 
     const [allSkills, setAllSkills] = useState<Array<Skill>>([])
     const [allTools, setAllTools] = useState<Array<Tool>>([])
-    const [imageProject, setImageProject] = useState<FileList>(new FileList)
+    const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
@@ -68,7 +68,7 @@ function EditProject() {
     }
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
-        event.target.files && setImageProject(event.target.files)
+        event.target.files && setImageProject(event.target.files[0])
     }
 
     const handleSkill = (event: ChangeEvent<HTMLSelectElement>): void => {
@@ -104,7 +104,7 @@ function EditProject() {
                 })
                 const formDataImage: FormData = new FormData()
 
-                formDataImage.append("file", imageProject[0])
+                formDataImage.append("file", imageProject)
 
                 postImage = await axios.post(`/project/image`, formDataImage, {
                     headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
