@@ -22,16 +22,6 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
         return 0
     }
 
-    const allProjectsInOrder = allProjects.sort(function (a: Project, b: Project) {
-        if (a.dateEnd < b.dateEnd) {
-            return 1;
-        }
-        if (a.dateEnd > b.dateEnd) {
-            return -1;
-        }
-        return 0;
-    });
-
     const scrollPercent = () => {
         const bodyST = document.body.scrollTop;
         const docST = document.documentElement.scrollTop;
@@ -375,7 +365,7 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
 
             <SectionSkills allSkills={allSkills} allTools={allTools} allSofts={allSofts} />
 
-            <SectionProject allProjects={allProjectsInOrder} />
+            <SectionProject allProjects={allProjects} />
 
             <SectionResume />
 
