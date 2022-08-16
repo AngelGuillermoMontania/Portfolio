@@ -3,8 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: [
-      'localhost',
-      'https://api-portfolio-angel.herokuapp.com/'
+      'api-portfolio-angel.herokuapp.com'
     ]
   },
 }
