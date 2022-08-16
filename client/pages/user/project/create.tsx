@@ -1,11 +1,12 @@
 import Router from 'next/router'
+import { NextPage } from 'next'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { Skill, Tool } from '../../../interfaces'
 
-function CreateProject() {
+const CreateProject: NextPage = () => {
 
     const [dataProject, setDataProject] = useState({
         name: "",
