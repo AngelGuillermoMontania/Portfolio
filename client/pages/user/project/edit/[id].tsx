@@ -1,4 +1,5 @@
 import Router, { useRouter } from 'next/router'
+import { NextPage } from 'next'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import axios from 'axios'
@@ -10,7 +11,7 @@ class props {
     "allSkills": Array<Skill>
 }
 
-function EditProject() {
+const EditProject: NextPage = () => {
 
     const router = useRouter()
 
