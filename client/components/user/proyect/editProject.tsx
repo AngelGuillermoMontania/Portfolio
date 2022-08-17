@@ -3,15 +3,14 @@ import { NextPage } from 'next'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import axios from 'axios'
-import { Skill, Tool } from '../../../../interfaces'
+import { Project, Skill, Tool } from '../../../interfaces'
 
 class props {
     "token": string | null
-    "allTools": Array<Tool>
-    "allSkills": Array<Skill>
+    "allProjects": Array<Project>
 }
 
-const EditProject: NextPage = () => {
+function EditProject (props: props) {
 
     const router = useRouter()
 
@@ -29,9 +28,10 @@ const EditProject: NextPage = () => {
 
     const [allSkills, setAllSkills] = useState<Array<Skill>>([])
     const [allTools, setAllTools] = useState<Array<Tool>>([])
-    /* const [imageProject, setImageProject] = useState<File>(new File([], "new")) */
+    const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
+    const [projectToEdit, setProjectToEdit] = useState<string>("")
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const [token, setToken] = useState<boolean>(false)
@@ -68,9 +68,9 @@ const EditProject: NextPage = () => {
         })
     }
 
-    /* const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
+    const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
         event.target.files && setImageProject(event.target.files[0])
-    } */
+    }
 
     const handleSkill = (event: ChangeEvent<HTMLSelectElement>): void => {
         setSkillSelect([
@@ -90,7 +90,7 @@ const EditProject: NextPage = () => {
         event.preventDefault()
         let postImage
         try {
-            if (true) {
+            if (!imageProject) {
                 const projectCreated = await axios(`/project/one?id=${router.query.id}`, {
                     headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
                 })
@@ -105,13 +105,13 @@ const EditProject: NextPage = () => {
                 })
                 const formDataImage: FormData = new FormData()
 
-                /* formDataImage.append("file", imageProject)
+                formDataImage.append("file", imageProject)
 
                 postImage = await axios.post(`/project/image`, formDataImage, {
                     headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
-                }) */
+                })
             }
-            /* const namesImageS3: string = postImage.data.name */
+            const namesImageS3: string = postImage.data.name
             const postDataSkill = await axios.put(`/project?id=${router.query.id}`, {
                 name: dataProject.name,
                 description: dataProject.description,
@@ -122,7 +122,7 @@ const EditProject: NextPage = () => {
                 relevance: Number(dataProject.relevance),
                 company: dataProject.company,
                 isActive: Boolean(dataProject.isActive),
-                /* image: namesImageS3, */
+                image: namesImageS3,
                 tools: toolSelect,
                 skills: skillSelect
             }, {
@@ -137,6 +137,16 @@ const EditProject: NextPage = () => {
     return (
         <div className="bg-blue-800 flex flex-col items-center justify-center h-screen">
             <p className="text-white text-xl">EDIT SKILL:</p>
+            <select
+                onChange={e => setProjectToEdit(e.target.value)}
+            >
+                <option hidden>~</option>
+                {
+                    props.allProjects[0] ?
+                        props.allProjects?.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
+                        : ""
+                }
+            </select>
             <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center text-black">
                 <input
                     type="text"
@@ -254,7 +264,7 @@ const EditProject: NextPage = () => {
                     className="w-3/4 p-1 m-2 h-1/2"
                     value={dataProject.description}
                 ></textarea>
-                {/* <div>
+                <div>
                     <label>Eliminara todas las imagenes ya cargadas en este proyecto</label>
                     <input
                         type="file"
@@ -263,7 +273,7 @@ const EditProject: NextPage = () => {
                         onChange={e => handleImage(e)}
                         className="p-1 m-1"
                     ></input>
-                </div> */}
+                </div>
                 <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
             </form>
         </div>

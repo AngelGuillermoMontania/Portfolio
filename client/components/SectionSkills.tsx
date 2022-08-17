@@ -12,6 +12,7 @@ interface Props {
 const SectionSkills: React.FC<Props> = ({ allSkills, allTools, allSofts }) => {
 
     const baseUrl = process.env.NEXT_PUBLIC_PORTFOLIO_API
+    console.log(baseUrl)
 
     return (
         <div id='sectionSkills' className='text-white w-full h-screen flex flex-col justify-around text-4xl text-center relative z-20 dark:text-black'>
@@ -21,7 +22,7 @@ const SectionSkills: React.FC<Props> = ({ allSkills, allTools, allSofts }) => {
                     {
                         allSkills ? allSkills.map((skill: Skill) => <div key={skill.id} className='mx-4 my-2 w-auto'>
                             <Image
-                                src={`${baseUrl}/skill/image?name=${skill.image}`}
+                                src={`https://api-portfolio-angel.herokuapp.com/skill/image?name=${skill.image}`}
                                 height={50}
                                 width={50}
                                 alt="not found"
@@ -39,7 +40,7 @@ const SectionSkills: React.FC<Props> = ({ allSkills, allTools, allSofts }) => {
                         {
                             allTools.map((tool: Tool) => <div key={tool.id} className='mx-12 my-2 w-auto'>
                                 <Image
-                                    src={`${baseUrl}/skill/image?name=${tool.image}`}
+                                    src={`https://api-portfolio-angel.herokuapp.com/skill/image?name=${tool.image}`}
                                     height={50}
                                     width={50}
                                     alt="not found"
@@ -57,7 +58,7 @@ const SectionSkills: React.FC<Props> = ({ allSkills, allTools, allSofts }) => {
                     {
                         allSofts.map((soft: Soft) => <div key={soft.id} className='mx-12 my-2 w-auto'>
                             <Image
-                                src={`${baseUrl}/soft/image?name=${soft.image}`}
+                                src={`https://api-portfolio-angel.herokuapp.com/soft/image?name=${soft.image}`}
                                 height={50}
                                 width={50}
                                 alt="not found"

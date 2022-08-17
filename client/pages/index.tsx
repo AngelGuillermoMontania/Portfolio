@@ -1,4 +1,4 @@
-import type { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
+import type { GetServerSideProps, InferGetServerSidePropsType, NextPage } from 'next'
 import Head from 'next/head'
 import anime from 'animejs';
 import { MouseEvent, useEffect } from 'react';
@@ -12,7 +12,7 @@ import SectionProject from '../components/SectionProject';
 import SectionResume from '../components/SectionResume';
 import SectionContact from '../components/SectionContact';
 
-const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, contact }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, contact }: InferGetServerSidePropsType<typeof getStaticProps>) => {
 
     const animateOnScroll = (element: Element | null, speed = 100, offset = 0) => {
         if (element) {
@@ -377,7 +377,7 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
 
 export default Home
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetServerSideProps = async () => {
     // Call an external API endpoint to get posts.
     // You can use any data fetching library
     const responseSkill = await axios('/skill')

@@ -6,7 +6,11 @@ import axios from 'axios'
 
 import { Skill, Tool } from '../../../interfaces'
 
-const CreateProject: NextPage = () => {
+class props {
+    "token": string | null
+}
+
+function CreateProject (props: props) {
 
     const [dataProject, setDataProject] = useState({
         name: "",
@@ -23,7 +27,7 @@ const CreateProject: NextPage = () => {
 
     const [allSkills, setAllSkills] = useState<Array<Skill>>([])
     const [allTools, setAllTools] = useState<Array<Tool>>([])
-    /* const [imageProject, setImageProject] = useState<File>(new File([], "new")) */
+    const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
@@ -55,9 +59,9 @@ const CreateProject: NextPage = () => {
         })
     }
 
-    /* const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
+    const handleImage = (event: ChangeEvent<HTMLInputElement>): void => {
         event.target.files && setImageProject(event.target.files[0])
-    } */
+    }
 
     const handleSkill = (event: ChangeEvent<HTMLSelectElement>): void => {
         setSkillSelect([
@@ -77,9 +81,9 @@ const CreateProject: NextPage = () => {
         event.preventDefault()
         try {
             const formDataImage: FormData = new FormData()
-            /* if (imageProject) {
+            if (imageProject) {
                 formDataImage.append("file", imageProject)
-            } */
+            }
             const postImage: { "data": { "name": string[] } } = await axios.post(`/project/image`, formDataImage, {
                 headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
             })
@@ -110,7 +114,7 @@ const CreateProject: NextPage = () => {
     return (
         <div>
             {
-                token ? <div className="h-screen bg-blue-600  flex flex-col items-center justify-center">
+                token ? <div className="bg-blue-600  flex flex-col items-center justify-center">
                     <p className="text-white text-xl">CREATE SKILL:</p>
                     <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center">
                         <input
@@ -218,13 +222,13 @@ const CreateProject: NextPage = () => {
                             onChange={e => handleProject(e)}
                             className="w-3/4 p-1 m-2 text-black"
                         ></textarea>
-                        {/* <input
+                        <input
                             type="file"
                             name="file"
                             autoComplete="img"
                             onChange={e => handleImage(e)}
                             className="w-1/4 p-1 m-1"
-                        ></input> */}
+                        ></input>
                         <button type='submit' className="bg-red-400 rounded-lg p-2 hover:bg-white hover:text-black">Upload</button>
                     </form>
                 </div> : <div>Not Authorized</div>
