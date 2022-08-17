@@ -6,7 +6,11 @@ import axios from 'axios'
 
 import { Skill, Tool } from '../../../interfaces'
 
-const CreateProject: NextPage = () => {
+class props {
+    "token": string | null
+}
+
+function CreateProject (props: props) {
 
     const [dataProject, setDataProject] = useState({
         name: "",

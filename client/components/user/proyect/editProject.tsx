@@ -3,15 +3,14 @@ import { NextPage } from 'next'
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import axios from 'axios'
-import { Skill, Tool } from '../../../interfaces'
+import { Project, Skill, Tool } from '../../../interfaces'
 
 class props {
     "token": string | null
-    "allTools": Array<Tool>
-    "allSkills": Array<Skill>
+    "allProjects": Array<Project>
 }
 
-const EditProject: NextPage = () => {
+function EditProject (props: props) {
 
     const router = useRouter()
 
@@ -32,6 +31,7 @@ const EditProject: NextPage = () => {
     const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
+    const [projectToEdit, setProjectToEdit] = useState<string>("")
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const [token, setToken] = useState<boolean>(false)
@@ -142,8 +142,8 @@ const EditProject: NextPage = () => {
             >
                 <option hidden>~</option>
                 {
-                    allProjects[0] ?
-                        allProjects?.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
+                    props.allProjects[0] ?
+                        props.allProjects?.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
                         : ""
                 }
             </select>
