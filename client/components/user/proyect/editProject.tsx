@@ -8,6 +8,8 @@ import { Project, Skill, Tool } from '../../../interfaces'
 class props {
     "token": string | null
     "allProjects": Array<Project>
+    "allSkills": Array<Skill>
+    "allTools": Array<Tool>
 }
 
 function EditProject (props: props) {
@@ -41,25 +43,7 @@ function EditProject (props: props) {
         if (Token) {
             setToken(!token)
         }
-        axios("/tool", {
-            headers: { "Authorization": `Bearer ${Token}` }
-        })
-            .then(data => setAllTools(data.data))
-            .catch(error => console.log(error))
-        axios("/skill", {
-            headers: { "Authorization": `Bearer ${Token}` }
-        })
-            .then(data => setAllSkills(data.data))
-            .catch(error => console.log(error))
-        axios(`/project/one?id=${router.query.id}`, {
-            headers: { "Authorization": `Bearer ${Token}` }
-        })
-            .then(data => {
-                setDataProject(data.data)
-                setSkillSelect(data.data.skills.map((elem: { id: string }) => elem.id))
-                setToolSelect(data.data.tools.map((elem: { id: string }) => elem.id))
-            })
-    }, [router.query.id, token])
+    }, [])
 
     const handleProject = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>): void => {
         setDataProject({

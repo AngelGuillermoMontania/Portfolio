@@ -8,6 +8,8 @@ import { Skill, Tool } from '../../../interfaces'
 
 class props {
     "token": string | null
+    "allSkills": Array<Skill>
+    "allTools": Array<Tool>
 }
 
 function CreateProject (props: props) {
@@ -25,8 +27,6 @@ function CreateProject (props: props) {
         isActive: true,
     })
 
-    const [allSkills, setAllSkills] = useState<Array<Skill>>([])
-    const [allTools, setAllTools] = useState<Array<Tool>>([])
     const [imageProject, setImageProject] = useState<File>(new File([], "new"))
     const [toolSelect, setToolSelect] = useState<Array<string>>([])
     const [skillSelect, setSkillSelect] = useState<Array<string>>([])
@@ -40,16 +40,6 @@ function CreateProject (props: props) {
         })
             .then(data => setToken(true))
             .catch(error => setToken(false))
-        axios("/tool", {
-            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
-        })
-            .then(data => setAllTools(data.data))
-            .catch(error => console.log(error))
-        axios("/skill", {
-            headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
-        })
-            .then(data => setAllSkills(data.data))
-            .catch(error => console.log(error))
     }, [])
 
     const handleProject = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>): void => {
@@ -88,7 +78,6 @@ function CreateProject (props: props) {
                 headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
             })
             const nameImageS3 = postImage.data.name
-            console.log(nameImageS3)
             const postDataSkill = await axios.post("/project", {
                 name: dataProject.name,
                 description: dataProject.description,
@@ -185,11 +174,11 @@ function CreateProject (props: props) {
                             >
                                 <option>~</option>
                                 {
-                                    allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
+                                    props.allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
                                 }
                             </select>
                             {
-                                allSkills?.map(skill => {
+                                props.allSkills?.map(skill => {
                                     if (skillSelect.includes(skill.id)) {
                                         return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setSkillSelect(skillSelect.filter(elem => elem !== skill.id))}>Eliminar {skill.name}</button>
                                     }
@@ -205,11 +194,11 @@ function CreateProject (props: props) {
                             >
                                 <option>~</option>
                                 {
-                                    allTools?.map(tool => <option key={tool.id} value={tool.id}>{tool.name}</option>)
+                                    props.allTools?.map(tool => <option key={tool.id} value={tool.id}>{tool.name}</option>)
                                 }
                             </select>
                             {
-                                allTools?.map(tool => {
+                                props.allTools?.map(tool => {
                                     if (toolSelect.includes(tool.id)) {
                                         return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setToolSelect(toolSelect.filter(elem => elem !== tool.id))}>Eliminar {tool.name}</button>
                                     }
