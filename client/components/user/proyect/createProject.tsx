@@ -110,7 +110,7 @@ const CreateProject: NextPage = () => {
     return (
         <div>
             {
-                token ? <div className="h-screen bg-blue-600  flex flex-col items-center justify-center">
+                token ? <div className="bg-blue-600  flex flex-col items-center justify-center">
                     <p className="text-white text-xl">CREATE SKILL:</p>
                     <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center">
                         <input

@@ -7,6 +7,7 @@ import axios from 'axios'
 
 import ButtonLogout from '../../../components/user/ButtonLogout'
 import { Tool } from '../../../interfaces'
+import CreateProject from '../../../components/user/proyect/createProject'
 
 const Project: NextPage = () => {
 
@@ -58,22 +59,9 @@ const Project: NextPage = () => {
                         </p>
                     </Link>
                     <div className='flex flex-col justify-around items-center'>
-                        <Link href={`project/create`}>
-                            <button className='bg-blue-600 p-4 rounded-xl hover:bg-blue-200'>
-                                Create
-                            </button>
-                        </Link>
+                        <CreateProject />
                         <div className='h-24 flex items-center justify-around w-1/2 text-black'>
-                            <select
-                                onChange={e => setProjectToEdit(e.target.value)}
-                            >
-                                <option hidden>~</option>
-                                {
-                                    allProjects[0] ?
-                                        allProjects?.map(project => <option value={project.id} key={project.id}>{project.name}</option>)
-                                        : ""
-                                }
-                            </select>
+                            
                             <Link href={`project/edit/${projectToEdit}`}>
                                 <button className='bg-blue-600 p-4 rounded-xl hover:bg-blue-200'>
                                     Edit
