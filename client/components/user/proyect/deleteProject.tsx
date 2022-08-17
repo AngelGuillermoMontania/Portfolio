@@ -44,3 +44,5 @@ function DeleteProject(props: props) {
         </div>
     )
 }
+
+export default DeleteProject
