@@ -11,7 +11,7 @@ import SectionProject from '../components/SectionProject';
 import SectionResume from '../components/SectionResume';
 import SectionContact from '../components/SectionContact';
 
-const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, contact }: InferGetServerSidePropsType<typeof getStaticProps>) => {
+const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, contact }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const animateOnScroll = (element: Element | null, speed = 100, offset = 0) => {
         if (element) {
@@ -336,7 +336,7 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
 
 export default Home
 
-export const getStaticProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
     const responseSkill = await axios('/skill')
     const allSkills = await responseSkill.data
     const responseTool = await axios('/tool')
