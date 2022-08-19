@@ -336,7 +336,7 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
 
 export default Home
 
-export const getStaticProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
     const responseSkill = await axios('/skill')
     const allSkills = await responseSkill.data
     const responseTool = await axios('/tool')
