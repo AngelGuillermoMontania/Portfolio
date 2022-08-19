@@ -104,7 +104,7 @@ function CreateProject(props: props) {
         <div>
             {
                 token ? <div className="bg-blue-600  flex flex-col items-center justify-center">
-                    <p className="text-white text-xl">CREATE SKILL:</p>
+                    <p className="text-white text-xl">CREATE PROJECT:</p>
                     <form onSubmit={e => onSubmit(e)} className="flex h-auto justify-around flex-wrap items-center">
                         <input
                             type="text"
@@ -180,7 +180,7 @@ function CreateProject(props: props) {
                             {
                                 props.allSkills?.map(skill => {
                                     if (skillSelect.includes(skill.id)) {
-                                        return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setSkillSelect(skillSelect.filter(elem => elem !== skill.id))}>Eliminar {skill.name}</button>
+                                        return <button key={skill.id} className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setSkillSelect(skillSelect.filter(elem => elem !== skill.id))}>Eliminar {skill.name}</button>
                                     }
                                 })
                             }
@@ -200,7 +200,7 @@ function CreateProject(props: props) {
                             {
                                 props.allTools?.map(tool => {
                                     if (toolSelect.includes(tool.id)) {
-                                        return <button className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setToolSelect(toolSelect.filter(elem => elem !== tool.id))}>Eliminar {tool.name}</button>
+                                        return <button key={tool.id} className='p-1 m-1 bg-red-500 rounded-lg' onClick={e => setToolSelect(toolSelect.filter(elem => elem !== tool.id))}>Eliminar {tool.name}</button>
                                     }
                                 })
                             }
