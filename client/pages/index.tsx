@@ -352,11 +352,11 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const allProjectsNoOrder = await responseProject.data
 
     const allProjects = allProjectsNoOrder.sort(function (a: Project, b: Project) {
-            if (a.dateEnd > b.dateEnd) {
-                return 1;
-            }
-            if (a.dateEnd < b.dateEnd) {
+            if (new Date(a.dateEnd) > new Date(b.dateEnd)) {
                 return -1;
+            }
+            if (new Date(a.dateEnd) < new Date(b.dateEnd)) {
+                return 1;
             }
             return 0;
         }
