@@ -11,7 +11,7 @@ import SectionProject from '../components/SectionProject';
 import SectionResume from '../components/SectionResume';
 import SectionContact from '../components/SectionContact';
 
-const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, contact }: InferGetServerSidePropsType<typeof getStaticProps>) => {
+const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, contact }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
     const animateOnScroll = (element: Element | null, speed = 100, offset = 0) => {
         if (element) {
