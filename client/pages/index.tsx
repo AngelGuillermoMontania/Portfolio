@@ -10,6 +10,7 @@ import SectionSkills from '../components/SectionSkills';
 import SectionProject from '../components/SectionProject';
 import SectionResume from '../components/SectionResume';
 import SectionContact from '../components/SectionContact';
+import { Project } from '../interfaces';
 
 const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, contact }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
@@ -348,7 +349,18 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const responseContact = await axios('/contact')
     const contact = await responseContact.data
     const responseProject = await axios('/project')
-    const allProjects = await responseProject.data
+    const allProjectsNoOrder = await responseProject.data
+
+    const allProjects = allProjectsNoOrder.sort(function (a: Project, b: Project) {
+            if (a.dateEnd > b.dateEnd) {
+                return 1;
+            }
+            if (a.dateEnd < b.dateEnd) {
+                return -1;
+            }
+            return 0;
+        }
+    )
 
     return {
         props: {
