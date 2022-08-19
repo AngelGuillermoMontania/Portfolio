@@ -23,8 +23,8 @@ const Home: NextPage = () => {
         axios("/auth/verify", {
             headers: { "Authorization": `Bearer ${sessionStorage.getItem("Token")}` }
         })
-        .then(data => setToken(true))
-        .catch(error => setToken(false))
+            .then(data => setToken(true))
+            .catch(error => setToken(false))
     }, [])
 
     return (

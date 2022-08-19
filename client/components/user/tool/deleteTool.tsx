@@ -9,7 +9,7 @@ class props {
     "allTools": Array<Tool>
 }
 
-function DeleteTool (props: props) {
+function DeleteTool(props: props) {
 
     const [toolSelect, setToolSelect] = useState<string>("")
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
@@ -18,10 +18,10 @@ function DeleteTool (props: props) {
         event.preventDefault()
         try {
             await axios.delete(`/tool/image?id=${toolSelect}`, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
-            const postDataTool = await axios.delete(`/tool?id=${toolSelect}`,{
-                headers: {"Authorization": `Bearer ${props.token}`}
+            const postDataTool = await axios.delete(`/tool?id=${toolSelect}`, {
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {

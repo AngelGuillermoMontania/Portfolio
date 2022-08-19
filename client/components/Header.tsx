@@ -26,17 +26,47 @@ function Header() {
                 duration: 3500
             })
         animeHeaderLogo.play()
+
+        const animeInitLogo = anime.timeline({
+            targets: '.svgG path',
+            delay: 2500,
+            easing: 'easeInOutSine',
+            complete: function (anim) {
+                const initLogo = document.querySelector('.svgG')
+                if (anim.completed) {
+                    initLogo?.setAttribute('style', 'display: none')
+                }
+            }
+        })
+            .add({
+                duration: 1000,
+                scale: .17,
+            })
+
+        animeInitLogo.play()
+
+        const animeInfinitLogo = anime({
+            targets: '.svgAnimeInfinit path',
+            strokeDashoffset: [anime.setDashoffset, 0],
+            easing: 'easeInOutSine',
+            duration: 2500,
+            delay: function (el, i) { return i * 250 },
+            loop: true,
+            endDelay: 4000,
+            direction: 'alternate',
+            stroke: [
+                { value: '#0000FF' },
+                { value: '#ffFFFF' },
+                { value: '#FF0000' },
+            ]
+        });
     })
 
     const handleDarkMode = (e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
         if (document.documentElement.classList.contains('dark')) {
             document.documentElement.classList.remove('dark')
-            console.log(e.currentTarget.children[0].classList.add('hidden'))
-            console.log(e.currentTarget.children[1].classList.remove('hidden'))
         } else {
             document.documentElement.classList.add('dark')
-            console.log(e.currentTarget.children[1].classList.add('hidden'))
-            console.log(e.currentTarget.children[0].classList.remove('hidden'))
         }
     }
 
@@ -82,7 +112,6 @@ function Header() {
                     <path className="stroke-[21px]" d="M711.997 351.568C712.704 364.565 574.791 398.762 471.536 395.322C388.932 392.569 350.326 395.322 315.326 395.322C305.073 387.832 -79.9314 425.673 31.08 444.2C51.0097 447.526 320.897 515.777 406.825 557.062C475.567 590.09 490.395 523.677 489.216 486.342C481.829 320.007 401.302 2.36452 471.536 11.1797C541.77 19.9949 225.954 477.23 169.551 542.918C113.148 608.605 320.503 410.679 410.074 355.51C470.278 318.429 610.468 303.291 576.238 385.862C533.451 489.075 268.563 586.497 164.247 500.486C80.7945 431.677 263.965 68.9026 598.483 43.2905C621.943 41.8558 660.663 43.9531 627.855 63.8196" stroke="#2707EA" />
                 </svg>
             </div>
-
 
             <a href='#about' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>ABOUT</a>
             <a href='#sectionSkills' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>SKILLS</a>

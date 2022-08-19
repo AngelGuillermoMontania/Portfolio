@@ -12,7 +12,7 @@ class props {
     "allTools": Array<Tool>
 }
 
-function CreateProject (props: props) {
+function CreateProject(props: props) {
 
     const [dataProject, setDataProject] = useState({
         name: "",

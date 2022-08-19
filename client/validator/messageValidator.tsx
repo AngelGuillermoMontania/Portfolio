@@ -10,24 +10,24 @@ export function validate(input: Message) {
         id: ""
     };
     if (!input.title) {
-        Object.defineProperty(errors, 'title', {value: 'Title is required'})
+        Object.defineProperty(errors, 'title', { value: 'Title is required' })
     } else if (!/^[a-zA-Z\sñáéíóúüª!:?'¡].{3,100}$/.test(input.title)) {
-        Object.defineProperty(errors, 'title', {value: 'Name is invalid (A-z, min 3)'})
+        Object.defineProperty(errors, 'title', { value: 'Name is invalid (A-z, min 3)' })
     };
     if (!input.company) {
-        Object.defineProperty(errors, 'company', {value: 'Company is required'})
+        Object.defineProperty(errors, 'company', { value: 'Company is required' })
     } else if (!/^[a-zA-Z\sñáéíóúüª!:?'¡].{3,100}$/.test(input.company)) {
-        Object.defineProperty(errors, 'company', {value: 'Company is invalid (A-z, min 3)'})
+        Object.defineProperty(errors, 'company', { value: 'Company is invalid (A-z, min 3)' })
     };
     if (!input.email) {
-        Object.defineProperty(errors, 'email', {value: 'Email is required'})
+        Object.defineProperty(errors, 'email', { value: 'Email is required' })
     } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(input.email)) {
-        Object.defineProperty(errors, 'email', {value: 'Email is invalid (A-z, min 3)'})
+        Object.defineProperty(errors, 'email', { value: 'Email is invalid (A-z, min 3)' })
     };
     if (!input.body) {
-        Object.defineProperty(errors, 'body', {value: 'Message is required'})
+        Object.defineProperty(errors, 'body', { value: 'Message is required' })
     } else if (!/^[a-zA-Z\sñáéíóúü:=%&$·"!¿/[ª!?'¡].{10,1000}$/.test(input.body)) {
-        Object.defineProperty(errors, 'body', {value: 'Message is invalid (min 10)'})
+        Object.defineProperty(errors, 'body', { value: 'Message is invalid (min 10)' })
     };
     /* if (!input.cost) {
         errors.cost = 'Cost is required'

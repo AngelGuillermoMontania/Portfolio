@@ -5,7 +5,6 @@ import { MouseEvent, useEffect } from 'react';
 import Photo from '../components/Photo';
 import axios from 'axios';
 import Header from '../components/Header';
-import { Project } from '../interfaces';
 import TextAbout from '../components/TextAbout';
 import SectionSkills from '../components/SectionSkills';
 import SectionProject from '../components/SectionProject';
@@ -28,7 +27,6 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
         const docSH = document.documentElement.scrollHeight;
         const docCH = document.documentElement.clientHeight;
 
-
         return (docST + bodyST) / (docSH - docCH) * 100
     }
 
@@ -42,23 +40,24 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
         elem?.classList.add('is-clicked');
     };
 
+    const onMouseUp = (elem: Element | null) => {
+        elem?.classList.remove('is-clicked');
+    };
+
+    const onMouseEnter = (elem: Element | null) => {
+        elem?.classList.remove('is-hidden');
+    };
+
+    const onMouseLeave = (elem: Element | null) => {
+        elem?.classList.add('is-hidden');
+    };
+
     useEffect(() => {
 
-        const isHiddenClass = 'is-hidden';
         const isLinkHoveredClass = 'is-link-hovered';
         const hasCustomCursorClass = 'has-custom-cursor';
         const cursorEl = document.querySelector('.cursor');
 
-
-        const onMouseUp = () => {
-            cursorEl?.classList.remove('is-clicked');
-        };
-        const onMouseEnter = () => {
-            cursorEl?.classList.remove(isHiddenClass);
-        };
-        const onMouseLeave = () => {
-            cursorEl?.classList.add(isHiddenClass);
-        };
         const handleLinkHoverEvents = () => {
             document.querySelectorAll('a, button, Link, .mouse-hover, input, textarea').forEach((el) => {
                 el.addEventListener("mouseover", () => cursorEl?.classList.add(isLinkHoveredClass));
@@ -66,18 +65,11 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
             });
         };
         const addEventListeners = () => {
-            /* document.addEventListener("mousedown", onMouseDown) */
-            document.addEventListener("mouseup", onMouseUp)
-            document.addEventListener("mouseenter", onMouseEnter)
-            document.addEventListener("mouseleave", onMouseLeave)
             handleLinkHoverEvents();
         }
 
         addEventListeners()
         document.body.classList.add(hasCustomCursorClass)
-
-
-
 
 
         window.addEventListener("load", () => {
@@ -92,44 +84,9 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
                         document.documentElement.classList.add('dark')
                         localStorage.theme = 'dark'
                     }
-                    console.log(localStorage.theme)
                 })
             }
         })
-
-        const animeInitLogo = anime.timeline({
-            targets: '.svgG path',
-            delay: 2500,
-            easing: 'easeInOutSine',
-            complete: function (anim) {
-                const initLogo = document.querySelector('.svgG')
-                if (anim.completed) {
-                    initLogo?.setAttribute('style', 'display: none')
-                }
-            }
-        })
-            .add({
-                duration: 1000,
-                scale: .17,
-            })
-
-        animeInitLogo.play()
-
-        const animeInfinitLogo = anime({
-            targets: '.svgAnimeInfinit path',
-            strokeDashoffset: [anime.setDashoffset, 0],
-            easing: 'easeInOutSine',
-            duration: 2500,
-            delay: function (el, i) { return i * 250 },
-            loop: true,
-            endDelay: 4000,
-            direction: 'alternate',
-            stroke: [
-                { value: '#0000FF' },
-                { value: '#ffFFFF' },
-                { value: '#FF0000' },
-            ]
-        });
 
         let animeSkill = anime({
             targets: '.skills div',
@@ -203,7 +160,7 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
             duration: 4000,
             easing: 'easeInOutQuad',
         })
-            ;
+
         const animeContentProject = anime({
             targets: '.contentProject',
             autoplay: false,
@@ -259,14 +216,11 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
             rotate: [0, 720]
         })
 
-
-
         const scrollPercent = () => {
             const bodyST = document.body.scrollTop;
             const docST = document.documentElement.scrollTop;
             const docSH = document.documentElement.scrollHeight;
             const docCH = document.documentElement.clientHeight;
-
 
             return (docST + bodyST) / (docSH - docCH) * 100
         }
@@ -297,7 +251,6 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
             animeTextCV.seek(animateOnScroll(divTextCV, 1000, 2200) * animeTextCV.duration)
             animeForm.seek(animateOnScroll(divForm, 3000, 4000) * animeForm.duration)
             animeIconsContact.seek(animateOnScroll(divIconsContact, 2500, 3000) * animeIconsContact.duration)
-
 
             if (window.pageYOffset > 300) {
                 anime({
@@ -339,7 +292,13 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
 
     return (
 
-        <div onMouseMove={(e) => onMouseMove(document.querySelector('.cursor'), e)} onMouseDown={(e) => onMouseDown(document.querySelector('.cursor'))}>
+        <div
+            onMouseMove={(e) => onMouseMove(document.querySelector('.cursor'), e)}
+            onMouseDown={(e) => onMouseDown(document.querySelector('.cursor'))}
+            onMouseUp={(e) => onMouseUp(document.querySelector('.cursor'))}
+            onMouseEnter={(e) => onMouseEnter(document.querySelector('.cursor'))}
+            onMouseLeave={(e) => onMouseLeave(document.querySelector('.cursor'))}
+        >
 
             <div className="cursor">
                 <div className="cursor__inner"></div>
@@ -378,8 +337,6 @@ const Home: NextPage = ({ allSkills, allTools, allSofts, about, allProjects, con
 export default Home
 
 export const getStaticProps: GetServerSideProps = async () => {
-    // Call an external API endpoint to get posts.
-    // You can use any data fetching library
     const responseSkill = await axios('/skill')
     const allSkills = await responseSkill.data
     const responseTool = await axios('/tool')

@@ -7,7 +7,7 @@ class props {
     "token": string | null
 }
 
-function CreateSoft (props: props) {
+function CreateSoft(props: props) {
 
     const [dataSoft, setDataSoft] = useState<Object>({
         name: ""
@@ -32,14 +32,14 @@ function CreateSoft (props: props) {
             const formDataImage: FormData = new FormData()
             formDataImage.append("file", imageSoft)
             const postImage: { "data": { "name": string } } = await axios.post(`/soft/image`, formDataImage, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             const nameImageS3: string = postImage.data.name
             const postDataSoft: Object = await axios.post("/soft", {
                 ...dataSoft,
                 image: nameImageS3
             }, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {

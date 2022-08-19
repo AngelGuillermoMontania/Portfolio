@@ -9,7 +9,7 @@ class props {
     "allSkills": Array<Skill>
 }
 
-function EditSkill (props: props) {
+function EditSkill(props: props) {
 
     const [dataSkill, setDataSkill] = useState<Object>({
         name: "",
@@ -34,18 +34,18 @@ function EditSkill (props: props) {
         event.preventDefault()
         let postImage
         try {
-            if(imageSkill.size === 0) {
+            if (imageSkill.size === 0) {
                 postImage = {
                     data: props.allSkills.find(elem => elem.id === skillSelect)
                 }
             } else {
                 await axios.delete(`/skill/image?id=${props.allSkills.find(elem => elem.id === skillSelect)?.id}`, {
-                    headers: {"Authorization": `Bearer ${props.token}`}
+                    headers: { "Authorization": `Bearer ${props.token}` }
                 })
                 const formDataImage: FormData = new FormData()
                 formDataImage.append("file", imageSkill)
                 postImage = await axios.post(`/skill/image`, formDataImage, {
-                    headers: {"Authorization": `Bearer ${props.token}`}
+                    headers: { "Authorization": `Bearer ${props.token}` }
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
@@ -53,7 +53,7 @@ function EditSkill (props: props) {
                 ...dataSkill,
                 image: nameImageS3
             }, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {

@@ -24,8 +24,6 @@ const SectionProject: React.FC<Props> = ({ allProjects }) => {
         })
     }, [])
 
-    console.log(allProjects)
-
     return (
         <div id='projects' className='w-[98%] mx-auto flex flex-col items-center pl-2 text-center'>
             <p className='text-5xl my-16 underline-offset-8 underline text-white dark:text-black'>Projects</p>

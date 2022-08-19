@@ -17,6 +17,7 @@ const About: NextPage = () => {
         location: "",
         englishLevel: ""
     })
+
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     useEffect(() => {

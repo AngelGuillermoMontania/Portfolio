@@ -9,13 +9,14 @@ class props {
     "allSofts": Array<Soft>
 }
 
-function EditSoft (props: props) {
+function EditSoft(props: props) {
 
     const [dataSoft, setDataSoft] = useState<Object>({
         name: "",
     })
     const [softSelect, setSoftSelect] = useState<string>("")
     const [imageSoft, setImageSoft] = useState<File>(new File([], "new"))
+
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const handleSoft = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -33,18 +34,18 @@ function EditSoft (props: props) {
         event.preventDefault()
         let postImage
         try {
-            if(imageSoft.size === 0) {
+            if (imageSoft.size === 0) {
                 postImage = {
                     data: props.allSofts.find(elem => elem.id === softSelect)
                 }
             } else {
                 await axios.delete(`/soft/image?id=${props.allSofts.find(elem => elem.id === softSelect)?.id}`, {
-                    headers: {"Authorization": `Bearer ${props.token}`}
+                    headers: { "Authorization": `Bearer ${props.token}` }
                 })
                 const formDataImage: FormData = new FormData()
                 formDataImage.append("file", imageSoft)
                 postImage = await axios.post(`/soft/image`, formDataImage, {
-                    headers: {"Authorization": `Bearer ${props.token}`}
+                    headers: { "Authorization": `Bearer ${props.token}` }
                 })
             }
             const nameImageS3: string = postImage.data.image || postImage.data.name
@@ -52,7 +53,7 @@ function EditSoft (props: props) {
                 ...dataSoft,
                 image: nameImageS3
             }, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {
@@ -61,7 +62,6 @@ function EditSoft (props: props) {
     }
 
     return (
-      
         <div className="h-1/3 flex flex-col items-center justify-center">
             <p className="text-white text-xl">EDIT TOOL:</p>
             <select onChange={e => setSoftSelect(e.target.value)} className="w-1/3 p-1 m-1">

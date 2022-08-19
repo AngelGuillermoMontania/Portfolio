@@ -9,7 +9,7 @@ class props {
     "allSofts": Array<Soft>
 }
 
-function DeleteSoft (props: props) {
+function DeleteSoft(props: props) {
 
     const [softSelect, setSoftSelect] = useState<string>("")
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
@@ -18,10 +18,10 @@ function DeleteSoft (props: props) {
         event.preventDefault()
         try {
             await axios.delete(`/soft/image?id=${softSelect}`, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
-            const postDataSoft = await axios.delete(`/soft?id=${softSelect}`,{
-                headers: {"Authorization": `Bearer ${props.token}`}
+            const postDataSoft = await axios.delete(`/soft?id=${softSelect}`, {
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {

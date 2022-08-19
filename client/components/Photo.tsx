@@ -71,7 +71,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -82,7 +81,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -93,7 +91,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -104,7 +101,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -115,7 +111,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -126,7 +121,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -137,7 +131,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -148,7 +141,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -159,7 +151,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -170,7 +161,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -181,7 +171,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -192,7 +181,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -203,7 +191,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -214,7 +201,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -225,7 +211,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -236,7 +221,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -247,7 +231,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -258,7 +241,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -269,7 +251,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -280,7 +261,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -291,7 +271,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -302,7 +281,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -313,7 +291,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -324,7 +301,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -335,7 +311,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -346,7 +321,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -357,7 +331,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -368,7 +341,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -379,7 +351,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -390,7 +361,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -401,7 +371,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -412,7 +381,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -423,7 +391,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -434,7 +401,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -445,7 +411,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -456,7 +421,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -588,7 +552,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -599,7 +562,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -610,7 +572,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -621,7 +582,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -632,7 +592,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -643,7 +602,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -654,7 +612,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -665,7 +622,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -676,7 +632,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -687,7 +642,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -698,7 +652,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -709,7 +662,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -720,7 +672,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -731,7 +682,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -742,7 +692,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -753,7 +702,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -764,7 +712,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -775,7 +722,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -786,7 +732,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -797,7 +742,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -808,7 +752,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -819,7 +762,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -830,7 +772,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -841,7 +782,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -852,7 +792,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -863,7 +802,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -874,7 +812,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -885,7 +822,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -896,7 +832,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -907,7 +842,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -918,7 +852,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -929,7 +862,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -940,7 +872,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -951,7 +882,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -962,7 +892,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -973,7 +902,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -984,7 +912,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -995,7 +922,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1006,7 +932,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1017,7 +942,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1028,7 +952,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1039,7 +962,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1050,7 +972,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1061,7 +982,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1072,7 +992,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1083,7 +1002,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1094,7 +1012,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1105,7 +1022,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1116,7 +1032,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1127,7 +1042,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1138,7 +1052,6 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute shadow-sm dark:shadow-black"
                     />
-
                 </div>
                 <div className='w-[20px] h-[20px] xl:w-[40px] xl:h-[40px]'>
                     <Image
@@ -1160,9 +1073,7 @@ const PhotoAnime: React.FC<Props> = ({ contact }) => {
                         layout="responsive"
                         className="el absolute"
                     />
-
                 </div>
-
             </div>
             <div className='flex w-full mt-8 justify-around items-center opacity-0 animeIconsInit'>
                 <a href={contact.linkedin} target="_blank" rel="noreferrer noopener">
