@@ -382,6 +382,13 @@ template {
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    @font-face {
+        font-family: 'Acme';
+        src: url('../public/fonts/Acme-Regular.ttf');
+    }
+}
+
 @layer components {
     .cursor {
         width: 20px;

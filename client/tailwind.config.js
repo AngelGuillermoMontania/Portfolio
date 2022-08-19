@@ -17,6 +17,9 @@ module.exports = {
                 'blackPrimary': '#1E1E1E',
                 'blackSecundary': '#2A2A2A',
             },
+            fontFamily: {
+                Acme: 'Acme'
+            }
         },
     },
     plugins: [],
