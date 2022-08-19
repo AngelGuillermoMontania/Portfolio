@@ -29,7 +29,7 @@ const SectionProject: React.FC<Props> = ({ allProjects }) => {
             <p className='text-5xl my-16 underline-offset-8 underline text-white dark:text-black'>Projects</p>
             <div className='flex w-full min-h-5/6 lg:max-w-screen-lg xl:max-w-screen-xl flex-wrap justify-around items-center'>
                 {
-                    allProjects.map((project: Project) =>
+                    allProjects ? allProjects.map((project: Project) =>
                         <div key={project.id} className='w-[45%] my-4 relative -top-8 animDivProject text-white dark:text-black'>
                             <div className='bg-blackSecundary border border-greenPrimary shadow-2xl shadow-black dark:shadow-black hover:shadow-xl transition-all w-1 max-w-[90%] h-1 relative containProject mx-auto my-2 rounded-2xl dark:bg-gray-200'>
                                 <p className='contentProject opacity-0 my-4 text-3xl'>{project.name}</p>
@@ -88,7 +88,7 @@ const SectionProject: React.FC<Props> = ({ allProjects }) => {
                                 </div>
                             </div>
                         </div>
-                    )
+                    ) : ""
                 }
             </div>
         </div>

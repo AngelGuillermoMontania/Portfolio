@@ -15,7 +15,7 @@ const Project: NextPage = () => {
 
     const [allProjects, setAllProjects] = useState<Array<Project>>([])
     const [allSkills, setAllSkills] = useState<Array<Skill>>([])
-    const [allTools, setAllTools] = useState<Array<Tool>>([])
+    const [allTools, setAllTools] = useState<Array<Tool>>([])   
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
     const [token, setToken] = useState<boolean>(false)

@@ -120,7 +120,7 @@ function EditProject(props: props) {
 
     return (
         <div className="bg-blue-800 flex flex-col items-center justify-center h-screen">
-            <p className="text-white text-xl">EDIT SKILL:</p>
+            <p className="text-white text-xl">EDIT PROJECT:</p>
             <select
                 onChange={e => setProjectToEdit(e.target.value)}
             >
