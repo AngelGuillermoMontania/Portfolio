@@ -24,58 +24,34 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AppController } from './app.controller';
 
 import 'dotenv/config';
-console.log(process.env.NODE_ENV)
 @Module({
   imports: [
-    process.env.DB_HOST
-      ? TypeOrmModule.forRoot({
-        type: 'postgres',
-        host: process.env.DB_HOST,
-        port: 5432,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: 'portfolio',
-        synchronize: true,
-        logging: false,
-        autoLoadEntities: true, //Automatic Load Models Database
-        entities: [
-          Project,
-          Skill,
-          Tool,
-          SoftSkill,
-          Resume,
-          About,
-          Contact,
-          Message,
-          User,
-        ], //Models DB
-      })
-      : TypeOrmModule.forRoot({
-        type: 'postgres',
-        host: '3001',
-        port: 5432,
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        synchronize: true,
-        logging: false,
-        ssl: {
-          rejectUnauthorized: false,
-        },
-        keepConnectionAlive: true,
-        autoLoadEntities: true, //Automatic Load Models Database
-        entities: [
-          Project,
-          Skill,
-          Tool,
-          SoftSkill,
-          Resume,
-          About,
-          Contact,
-          Message,
-          User,
-        ], //Models DB
-      }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: process.env.DB_HOST,
+      port: 5432,
+      username: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME || 'portfolio',
+      synchronize: true,
+      logging: false,
+      ssl: {
+        rejectUnauthorized: false,
+      },
+      keepConnectionAlive: true,
+      autoLoadEntities: true, //Automatic Load Models Database
+      entities: [
+        Project,
+        Skill,
+        Tool,
+        SoftSkill,
+        Resume,
+        About,
+        Contact,
+        Message,
+        User,
+      ], //Models DB
+    }),
     ProjectModule,
     AboutModule,
     ContactModule,
@@ -90,4 +66,4 @@ console.log(process.env.NODE_ENV)
   controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
