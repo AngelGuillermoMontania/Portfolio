@@ -12,7 +12,7 @@ class props {
     "allTools": Array<Tool>
 }
 
-function EditProject (props: props) {
+function EditProject(props: props) {
 
     const router = useRouter()
 
@@ -211,7 +211,6 @@ function EditProject (props: props) {
                         {
                             allSkills?.map(skill => <option key={skill.id} value={skill.id}>{skill.name}</option>)
                         }
-
                     </select>
                     {
                         allSkills.map(skill => {

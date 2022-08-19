@@ -5,7 +5,7 @@ axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
 export default function Document() {
     return (
-        <Html lang='es' className='scroll-smooth' onScroll={() => console.log("hello")}>
+        <Html lang='es' className='scroll-smooth'>
             <Head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" />

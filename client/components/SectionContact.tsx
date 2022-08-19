@@ -41,7 +41,6 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
 
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log("HELLO")
         try {
             if ((errors.title === "" && errors.company === "" && errors.body === "" && errors.email === "") && (message.title !== "" && message.company !== "" && message.body !== "" && message.email !== "")) {
                 const responsePostMessage = await axios.post("/message", {
@@ -50,7 +49,6 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
                     body: message.body,
                     email: message.email
                 })
-                console.log(responsePostMessage.data)
                 setsuccessMessage("Successfully sent")
                 setMessage({
                     title: "",
@@ -65,7 +63,7 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
                 Router.push("/")
             }, 2000)
         } catch (error) {
-            
+
         }
     }
 
@@ -139,7 +137,6 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
                             </mask>
                             <path d="M309.463 181.086L258.618 253.701L320.873 297.293L371.719 224.678L309.463 181.086Z" fill="#DF3621" mask="url(#path-16-inside-8_0_1)" />
                         </svg>
-
                     </a>
                     <a href={contact.mobile} target="_blank" rel="noreferrer noopener">
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -201,7 +198,6 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
                                 }
                             </div>
                         </div>
-
                         <div className='w-2/3 flex flex-col justify-center items-center relative'>
                             <label className='mx-2'>Message:</label>
                             <textarea

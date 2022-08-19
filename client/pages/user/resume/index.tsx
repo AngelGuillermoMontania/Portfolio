@@ -25,7 +25,7 @@ const Resume: NextPage = () => {
         })
             .then(data => setResumeDB(data.data[0]))
             .catch(error => console.log(error))
-    }, [token])
+    }, [])
 
     return (
         <div className="bg-slate-900 h-screen">

@@ -32,7 +32,6 @@ const Tool: NextPage = () => {
             .catch(error => setToken(false))
     }, [])
 
-
     return (
         <div className="bg-slate-900 h-screen">
             <Head>

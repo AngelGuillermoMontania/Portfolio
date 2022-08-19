@@ -7,7 +7,7 @@ class props {
     "token": string | null
 }
 
-function CreateTool (props: props) {
+function CreateTool(props: props) {
 
     const [dataSkill, setDataSkill] = useState<Object>({
         name: "",
@@ -33,14 +33,14 @@ function CreateTool (props: props) {
             const formDataImage: FormData = new FormData()
             formDataImage.append("file", imageSkill)
             const postImage: { "data": { "name": string } } = await axios.post(`/skill/image`, formDataImage, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             const nameImageS3: string = postImage.data.name
             const postDataSkill: Object = await axios.post("/skill", {
                 ...dataSkill,
                 image: nameImageS3
             }, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {

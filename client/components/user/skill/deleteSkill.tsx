@@ -9,7 +9,7 @@ class props {
     "allSkills": Array<Skill>
 }
 
-function DeleteSkill (props: props) {
+function DeleteSkill(props: props) {
 
     const [skillSelect, setSkillSelect] = useState<string>("")
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
@@ -18,10 +18,10 @@ function DeleteSkill (props: props) {
         event.preventDefault()
         try {
             await axios.delete(`/skill/image?id=${skillSelect}`, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
-            const deleteSkill = await axios.delete(`/skill?id=${skillSelect}`,{
-                headers: {"Authorization": `Bearer ${props.token}`}
+            const deleteSkill = await axios.delete(`/skill?id=${skillSelect}`, {
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {

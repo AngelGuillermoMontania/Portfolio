@@ -7,8 +7,8 @@ class props {
     "token": string | null
 }
 
-function EditSpanishResume (props: props) {
-    
+function EditSpanishResume(props: props) {
+
     const [resumeSpanish, setResumeSpanish] = useState<File>(new File([], "new"))
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
 
@@ -20,19 +20,19 @@ function EditSpanishResume (props: props) {
         event.preventDefault()
         try {
             await axios.delete(`/resume?resume=Spanish`, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             const formDataResume: FormData = new FormData()
             formDataResume.append("file", resumeSpanish)
             let postS3Resume = await axios.post(`/resume`, formDataResume, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             const nameResumeS3: string = postS3Resume.data.image || postS3Resume.data.name
             const putResume = await axios.put(`/resume`, {
                 "spanish": nameResumeS3,
                 "english": ""
             }, {
-                headers: {"Authorization": `Bearer ${props.token}`}
+                headers: { "Authorization": `Bearer ${props.token}` }
             })
             Router.push("/user")
         } catch (error) {

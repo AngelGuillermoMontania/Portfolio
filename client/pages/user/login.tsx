@@ -5,8 +5,6 @@ import Router from 'next/router'
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import axios from 'axios'
 
-
-
 const Home: NextPage = () => {
 
     const baseUrl = process.env.NEXT_PUBLIC_API
