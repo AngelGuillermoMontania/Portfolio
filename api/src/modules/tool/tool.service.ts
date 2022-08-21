@@ -1,14 +1,16 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
 import { Tool } from 'src/models/tool.entity';
 import { CreateUpdateToolDto } from './dto/create-update-tool.dto';
 
-import { createReadStream, existsSync, unlinkSync } from 'fs';
+import { createReadStream } from 'fs';
+import { s3Client } from 'src/libs/sampleClient';
 
-import { join } from 'path';
 import 'dotenv/config';
+
+const bucketName = process.env.AWS_BUCKET_NAME || ""
 
 @Injectable()
 export class ToolService {
@@ -25,9 +27,24 @@ export class ToolService {
     }
   }
 
+  async getImageTool(name: string) {
+    const bucketParams = {
+      Key: name,
+      Bucket: bucketName
+    }
+    var fileStream = s3Client.getObject(bucketParams).createReadStream();
+    return new StreamableFile(fileStream)
+  }
+
   async createImageTool(file: Express.Multer.File) {
-    const fileStream = createReadStream(file.path);
     try {
+      const fileStream = createReadStream(file.path)
+      const bucketParams = {
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+      }
+      await s3Client.upload(bucketParams).promise()
       return {
         name: file.filename,
       };
@@ -40,12 +57,13 @@ export class ToolService {
     try {
       const deleteImageSkill = await this.toolRepository.findOneBy({ id });
       if (deleteImageSkill) {
-        if (
-          existsSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))
-        ) {
-          unlinkSync(join(process.cwd(), '/assets/', deleteImageSkill?.image));
+        const bucketParams = {
+          Key: deleteImageSkill?.image,
+          Bucket: bucketName
         }
+        await s3Client.deleteObject(bucketParams).promise()
       }
+      return "success"
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3');
     }

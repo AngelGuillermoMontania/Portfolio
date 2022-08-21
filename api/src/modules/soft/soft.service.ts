@@ -1,12 +1,17 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { existsSync, unlinkSync } from 'fs';
-import { join } from 'path';
 
 import { Repository } from 'typeorm';
 import { SoftSkill } from 'src/models/softSkill.entity';
 import { CreateUpdateSoftDto } from './dto/create-update-soft.dto';
+
+import { createReadStream } from 'fs';
+import { s3Client } from 'src/libs/sampleClient';
+
+import 'dotenv/config';
+
+const bucketName = process.env.AWS_BUCKET_NAME || ""
 
 @Injectable()
 export class SoftService {
@@ -23,8 +28,24 @@ export class SoftService {
     }
   }
 
+  async getImageSoft(name: string) {
+    const bucketParams = {
+      Key: name,
+      Bucket: bucketName
+    }
+    let fileStream = s3Client.getObject(bucketParams).createReadStream();
+    return new StreamableFile(fileStream)
+  }
+
   async createImageSoft(file: Express.Multer.File) {
     try {
+      const fileStream = createReadStream(file.path)
+      const bucketParams = {
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+      }
+      await s3Client.upload(bucketParams).promise()
       return {
         name: file.filename,
       };
@@ -37,12 +58,13 @@ export class SoftService {
     try {
       const deleteImageSoft = await this.softRepository.findOneBy({ id });
       if (deleteImageSoft) {
-        if (
-          existsSync(join(process.cwd(), '/assets/', deleteImageSoft?.image))
-        ) {
-          unlinkSync(join(process.cwd(), '/assets/', deleteImageSoft?.image));
+        const bucketParams = {
+          Key: deleteImageSoft?.image,
+          Bucket: bucketName
         }
+        await s3Client.deleteObject(bucketParams).promise()
       }
+      return "success"
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3');
     }

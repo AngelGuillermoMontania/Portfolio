@@ -1,20 +1,23 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, InternalServerErrorException, StreamableFile } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+
 
 import { Repository } from 'typeorm';
 import { Skill } from 'src/models/skill.entity';
 import { CreateUpdateSkillDto } from './dto/create-update-skill.dto';
 
-import { existsSync, unlinkSync } from 'fs';
+import { createReadStream } from 'fs';
+import { s3Client } from 'src/libs/sampleClient';
 
-import { join } from 'path';
 import 'dotenv/config';
+
+const bucketName = process.env.AWS_BUCKET_NAME || ""
 
 @Injectable()
 export class SkillService {
   constructor(
     @InjectRepository(Skill) private skillRepository: Repository<Skill>,
-  ) {}
+  ) { }
   async getAllSkill() {
     try {
       const allSkills = await this.skillRepository.find();
@@ -24,12 +27,29 @@ export class SkillService {
     }
   }
 
+  async getImageSkill(name: string) {
+    const bucketParams = {
+      Key: name,
+      Bucket: bucketName
+    }
+    var fileStream = s3Client.getObject(bucketParams).createReadStream();
+    return new StreamableFile(fileStream)
+  }
+
   async createImageSkill(file: Express.Multer.File) {
     try {
+      const fileStream = createReadStream(file.path)
+      const bucketParams = {
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+      }
+      await s3Client.upload(bucketParams).promise()
       return {
         name: file.filename,
       };
     } catch (error) {
+      console.log(error)
       return new InternalServerErrorException('Database Error/S3');
     }
   }
@@ -38,12 +58,13 @@ export class SkillService {
     try {
       const deleteImageSkill = await this.skillRepository.findOneBy({ id });
       if (deleteImageSkill) {
-        if (
-          existsSync(join(process.cwd(), '/assets/', deleteImageSkill?.image))
-        ) {
-          unlinkSync(join(process.cwd(), '/assets/', deleteImageSkill?.image));
+        const bucketParams = {
+          Key: deleteImageSkill?.image,
+          Bucket: bucketName
         }
+        await s3Client.deleteObject(bucketParams).promise()
       }
+      return "success"
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3');
     }

@@ -7,73 +7,65 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 import { Resume } from 'src/models/resume.entity';
 import { Repository } from 'typeorm';
-
 import { CreateUpdateResumeDto } from './dto/create-update-resume.dto';
-import { createReadStream, unlinkSync } from 'fs';
 
-import { join } from 'path';
+import { createReadStream } from 'fs';
+import { s3Client } from 'src/libs/sampleClient';
+
 import 'dotenv/config';
+
+const bucketName = process.env.AWS_BUCKET_NAME || ""
 
 @Injectable()
 export class ResumeService {
   constructor(
     @InjectRepository(Resume) private resumeRepository: Repository<Resume>,
-  ) {}
+  ) { }
 
-  async viewResumeSpanish() {
+  async getResumeSpanish() {
     try {
       const Resume = await this.resumeRepository.find();
-      const file = createReadStream(
-        join(process.cwd(), `/assets/${Resume[0].spanish}`),
-      );
-      return new StreamableFile(file);
+      const bucketParams = {
+        Key: Resume[0].spanish,
+        Bucket: bucketName
+      }
+      let fileStream = s3Client.getObject(bucketParams).createReadStream();
+      return new StreamableFile(fileStream)
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
   }
 
-  async viewResumeEnglish() {
+  async getResumeEnglish() {
     try {
       const Resume = await this.resumeRepository.find();
-      const file = createReadStream(
-        join(process.cwd(), `/assets/${Resume[0].english}`),
-      );
-      return new StreamableFile(file);
-    } catch (error) {
-      return new InternalServerErrorException('Database Error');
-    }
-  }
-
-  async downloadResumeSpanish() {
-    try {
-      const Resume = await this.resumeRepository.find();
-      const file = createReadStream(
-        join(process.cwd(), `/assets/${Resume[0].spanish}`),
-      );
-      return new StreamableFile(file);
-    } catch (error) {
-      return new InternalServerErrorException('Database Error');
-    }
-  }
-
-  async downloadResumeEnglish() {
-    try {
-      const Resume = await this.resumeRepository.find();
-      const file = createReadStream(
-        join(process.cwd(), `/assets/${Resume[0].english}`),
-      );
-      return new StreamableFile(file);
+      const bucketParams = {
+        Key: Resume[0].english,
+        Bucket: bucketName
+      }
+      let fileStream = s3Client.getObject(bucketParams).createReadStream();
+      return new StreamableFile(fileStream)
     } catch (error) {
       return new InternalServerErrorException('Database Error');
     }
   }
 
   async createResumeS3(file: Express.Multer.File) {
-    const fileStream = createReadStream(file.path);
     try {
-      return {
-        name: file.filename,
-      };
+      try {
+        const fileStream = createReadStream(file.path)
+        const bucketParams = {
+          Bucket: bucketName,
+          Body: fileStream,
+          Key: file.filename
+        }
+        await s3Client.upload(bucketParams).promise()
+        return {
+          name: file.filename,
+        };
+      } catch (error) {
+        return new InternalServerErrorException('Database Error/S3');
+      }
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3');
     }
@@ -82,9 +74,17 @@ export class ResumeService {
   async destroyResumeS3(resume: string) {
     try {
       const resumeDB = await this.resumeRepository.find();
-      resume === 'Spanish'
-        ? unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.spanish))
-        : unlinkSync(join(process.cwd(), '/assets/', resumeDB[0]?.english));
+      if (resumeDB) {
+        resume === 'Spanish' ?
+          await s3Client.deleteObject({
+            Key: resumeDB[0].spanish,
+            Bucket: bucketName
+          }).promise()
+        : await s3Client.deleteObject({
+            Key: resumeDB[0].english,
+            Bucket: bucketName
+          }).promise()
+      }
       return {
         name: resume === 'Spanish' ? resumeDB[0].spanish : resumeDB[0].english,
       };
