@@ -41,9 +41,8 @@ export class ProjectController {
   }
 
   @Get('image')
-  getImages(@Query('name') name: string): StreamableFile {
-    const file = createReadStream(join(process.cwd(), `/assets/${name}`));
-    return new StreamableFile(file);
+  getImages(@Query('name') name: string): Promise<StreamableFile> {
+    return this.projectService.getImageProject(name)
   }
 
   @UseGuards(JwtAuthGuard)

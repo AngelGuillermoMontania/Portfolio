@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  StreamableFile,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
@@ -15,9 +16,12 @@ import { Repository } from 'typeorm';
 //DTO
 import { CreateUpdateProjectDto } from './dto/create-update-project.dto';
 
-import { existsSync, unlinkSync } from 'fs';
-import { join } from 'path';
+import { createReadStream } from 'fs';
+import { s3Client } from 'src/libs/sampleClient';
+
 import 'dotenv/config';
+
+const bucketName = process.env.AWS_BUCKET_NAME || ""
 
 @Injectable()
 export class ProjectService {
@@ -60,8 +64,24 @@ export class ProjectService {
     }
   }
 
+  async getImageProject(name: string) {
+    const bucketParams = {
+      Key: name,
+      Bucket: bucketName
+    }
+    let fileStream = s3Client.getObject(bucketParams).createReadStream();
+    return new StreamableFile(fileStream)
+  }
+
   async createImageProject(file: Express.Multer.File) {
     try {
+      const fileStream = createReadStream(file.path)
+      const bucketParams = {
+        Bucket: bucketName,
+        Body: fileStream,
+        Key: file.filename
+      }
+      await s3Client.upload(bucketParams).promise()
       return {
         name: file.filename,
       };
@@ -72,21 +92,15 @@ export class ProjectService {
 
   async destroyImagesProject(id: string) {
     try {
-      const deleteImagesProject = await this.projectRepository.findOneBy({
-        id,
-      });
-      if (deleteImagesProject) {
-        if (
-          existsSync(join(process.cwd(), '/assets/', deleteImagesProject.image))
-        ) {
-          unlinkSync(
-            join(process.cwd(), '/assets/', deleteImagesProject.image),
-          );
+      const deleteImageProject = await this.projectRepository.findOneBy({ id });
+      if (deleteImageProject) {
+        const bucketParams = {
+          Key: deleteImageProject?.image,
+          Bucket: bucketName
         }
+        await s3Client.deleteObject(bucketParams).promise()
       }
-      return {
-        names: deleteImagesProject?.image,
-      };
+      return "success"
     } catch (error) {
       return new InternalServerErrorException('Database Error/S3');
     }

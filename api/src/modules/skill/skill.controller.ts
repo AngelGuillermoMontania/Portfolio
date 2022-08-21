@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotAcceptableException,
   Post,
   Put,
   Query,
@@ -12,15 +13,19 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
 
 import { createReadStream } from 'fs';
 import { join } from 'path';
 
 import { storageMulterFile } from 'src/configMulter';
+import { s3Client } from 'src/libs/sampleClient';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateSkillDto } from './dto/create-update-skill.dto';
 import { SkillService } from './skill.service';
+
+const bucketName = process.env.AWS_BUCKET_NAME || ""
 
 @Controller('skill')
 export class SkillController {
@@ -32,9 +37,8 @@ export class SkillController {
   }
 
   @Get('image')
-  getImages(@Query('name') name: string): StreamableFile {
-    const file = createReadStream(join(process.cwd(), `/assets/${name}`));
-    return new StreamableFile(file);
+  getImages(@Query('name') name: string): Promise<StreamableFile> {
+    return this.skillService.getImageSkill(name)
   }
 
   @UseGuards(JwtAuthGuard)
@@ -44,8 +48,8 @@ export class SkillController {
       storage: storageMulterFile,
     }),
   )
-  postImageSkill(@UploadedFile() file: Express.Multer.File) {
-    return this.skillService.createImageSkill(file);
+  async postImageSkill(@UploadedFile() file: Express.Multer.File) {
+    return this.skillService.createImageSkill(file)
   }
 
   @UseGuards(JwtAuthGuard)

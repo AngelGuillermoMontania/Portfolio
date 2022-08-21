@@ -9,17 +9,11 @@ export const storageMulterFile: multer.StorageEngine = diskStorage({
     }-${actualDate.getDate()}-${Date.now()}${extname(file.originalname)}`;
     cb(null, newFilename);
   },
-  destination: './assets',
 });
 
-export const storageMulterFiles: multer.StorageEngine = diskStorage({
+export const storageResumeMulterFile: multer.StorageEngine = diskStorage({
   filename: (req, file, cb) => {
-    let order = 0;
-    const actualDate: Date = new Date();
-    const newFilename = `${++order}-${actualDate.getFullYear()}-${
-      actualDate.getMonth() + 1
-    }-${actualDate.getDate()}-${Date.now()}${extname(file.originalname)}`;
+    const newFilename = `${file.originalname}`;
     cb(null, newFilename);
   },
-  destination: './assets',
 });

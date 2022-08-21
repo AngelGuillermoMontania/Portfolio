@@ -15,7 +15,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-import { storageMulterFile } from 'src/configMulter';
+import { storageResumeMulterFile } from 'src/configMulter';
 import { JwtAuthGuard } from '../auth/jwt-auth.ward';
 
 import { CreateUpdateResumeDto } from './dto/create-update-resume.dto';
@@ -29,44 +29,47 @@ export class ResumeController {
   @Header('Content-Type', 'application/pdf')
   @Header(
     'Content-Disposition',
-    'inline; filename="AngelMontaña_SpanishCV.pdf"',
+    'inline',
   )
   viewSpanish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.viewResumeSpanish();
+    return this.resumeService.getResumeSpanish();
   }
+
   @Get('view/english')
   @Header('Content-Type', 'application/pdf')
   @Header(
     'Content-Disposition',
-    'inline; filename="AngelMontaña_EnglishCV.pdf"',
+    'inline',
   )
   viewEnglish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.viewResumeEnglish();
+    return this.resumeService.getResumeEnglish();
   }
+
   @Get('download/spanish')
   @Header('Content-Type', 'application/pdf')
   @Header(
     'Content-Disposition',
-    'attachment; filename="AngelMontaña_SpanishCV.pdf"',
+    'attachment',
   )
   downloadSpanish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.downloadResumeSpanish();
+    return this.resumeService.getResumeSpanish();
   }
+
   @Get('download/english')
   @Header('Content-Type', 'application/pdf')
   @Header(
     'Content-Disposition',
-    'attachment; filename="AngelMontaña_EnglishCV.pdf"',
+    'attachment',
   )
   downloadEnglish(): Promise<StreamableFile | InternalServerErrorException> {
-    return this.resumeService.downloadResumeEnglish();
+    return this.resumeService.getResumeEnglish();
   }
 
   @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(
     FileInterceptor('file', {
-      storage: storageMulterFile,
+      storage: storageResumeMulterFile,
     }),
   )
   postResumeS3(@UploadedFile() file: Express.Multer.File) {
