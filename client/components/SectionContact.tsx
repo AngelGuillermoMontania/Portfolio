@@ -68,7 +68,7 @@ const SectionContact: React.FC<Props> = ({ contact }) => {
     }
 
     return (
-        <div id='contact' className='h-[3000px] w-full text-white dark:text-black'>
+        <div id='contact' className='h-[3800px] w-full text-white dark:text-black'>
             <div className='sticky h-screen top-0 flex flex-col items-center justify-around'>
                 <p className='text-5xl underline-offset-8 mt-8 underline'>Contact</p>
                 <div className='flex w-3/4 mx-auto mt-8 justify-around animeIconsContact'>
