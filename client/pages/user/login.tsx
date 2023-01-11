@@ -15,7 +15,6 @@ const Home: NextPage = () => {
     })
 
     axios.defaults.baseURL = process.env.NEXT_PUBLIC_PORTFOLIO_API
-
     const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
