@@ -39,7 +39,7 @@ import 'dotenv/config';
         rejectUnauthorized: false,
       },
       keepConnectionAlive: true,
-      autoLoadEntities: true, //Automatic Load Models Database
+      autoLoadEntities: false, //Automatic Load Models Database
       entities: [
         Project,
         Skill,
