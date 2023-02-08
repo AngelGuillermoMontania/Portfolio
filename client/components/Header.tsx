@@ -115,7 +115,7 @@ function Header() {
 
             <a href='#about' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>ABOUT</a>
             <a href='#sectionSkills' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>SKILLS</a>
-            <a href='#projects' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>PROJECTS</a>
+            <a href='#experience' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>EXPERIENCE</a>
             <a href='#resume' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>RESUME</a>
             <a href='#contact' className='my-4 font-bold relative z-50 hover:scale-125 duration-500 transition-all'>CONTACT</a>
             <button onClick={(e) => handleDarkMode(e)} className='bg-blackPrimary border-double border border-white py-1 px-3 shadow-lg hover:shadow-sm hover:scale-110 transition-all shadow-black rounded-lg dark:bg-white dark:border-black'>

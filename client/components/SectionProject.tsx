@@ -25,8 +25,8 @@ const SectionProject: React.FC<Props> = ({ allProjects }) => {
     }, [])
 
     return (
-        <div id='projects' className='w-[98%] mx-auto flex flex-col items-center pl-2 text-center'>
-            <p className='text-5xl my-16 underline-offset-8 underline text-white dark:text-black'>Projects</p>
+        <div id='experience' className='w-[98%] mx-auto flex flex-col items-center pl-2 text-center'>
+            <p className='text-5xl my-16 underline-offset-8 underline text-white dark:text-black'>Experience</p>
             <div className='flex w-full min-h-5/6 lg:max-w-screen-lg xl:max-w-screen-xl flex-wrap justify-around items-center'>
                 {
                     allProjects ? allProjects.map((project: Project) =>
