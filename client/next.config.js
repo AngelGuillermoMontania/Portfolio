@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     domains: [
-      'portfolio-production-3145.up.railway.app',
+      process.env.NEXT_PUBLIC_PORTFOLIO_API.slice(8,-1),
       'localhost'
     ]
   },
